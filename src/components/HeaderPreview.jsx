@@ -9,7 +9,7 @@ const HeaderPreview = () => {
     ctaLink: "/dealers",
     navLinks: [
       { text: "Home", url: "/" },
-      { text: "Models", url: "/models" },
+      { text: "Technology", url: "/technology" },
       { text: "About", url: "/about" },
       { text: "Contact", url: "/contact" }
     ]
@@ -56,14 +56,16 @@ const HeaderPreview = () => {
       className={`header ${isScrolled ? 'header--scrolled' : ''}`}
       style={{
         background: '#fff',
-        borderBottom: '1px solid #E0E0E0', /* border-color */
+        borderBottom: '1px solid #e0e0e0', /* border-color */
         position: 'sticky',
         top: 0,
         zIndex: 100,
         boxShadow: isScrolled
-          ? '0 4px 10px rgba(0, 0, 0, 0.08)' /* shadow-medium */
-          : '0 2px 4px rgba(0, 0, 0, 0.05)', /* shadow-light */
-        transition: 'box-shadow 0.3s ease'
+          ? '0 4px 12px rgba(0,0,0,0.1)' /* shadow-medium */
+          : '0 2px 4px rgba(0,0,0,0.05)', /* shadow-light */
+        transition: 'box-shadow 0.3s ease',
+        width: '100%',
+        boxSizing: 'border-box'
       }}
     >
       <div
@@ -71,10 +73,12 @@ const HeaderPreview = () => {
         style={{
           maxWidth: '1200px', /* max-width */
           margin: '0 auto',
-          padding: '15px 20px', /* spacing-md spacing-lg */
+          padding: '15px 20px', /* spacing-md spacing-lg - reduced padding for better fit */
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          width: '100%',
+          boxSizing: 'border-box'
         }}
       >
         <div
@@ -82,32 +86,34 @@ const HeaderPreview = () => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '10px' /* spacing-md */
+            gap: '10px', /* spacing-md */
+            flexShrink: 0 /* Prevent logo from shrinking */
           }}
         >
           <div
             className="header__logo-image"
             style={{
-              width: '60px', /* Smaller logo */
-              height: '40px',
-              objectFit: 'contain',
+              width: '40px', /* Reduced size for better fit */
+              height: '40px', /* Reduced size for better fit */
               backgroundColor: '#f0f0f0',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: '4px'
+              borderRadius: '4px',
+              flexShrink: 0 /* Prevent from shrinking */
             }}
           >
-            <span style={{ color: '#666', fontSize: '10px', fontWeight: 'bold' }}>LOGO</span>
+            <span style={{ color: '#666', fontSize: '8px', fontWeight: 'bold' }}>LOGO</span>
           </div>
           <span
             className="header__logo-text"
             style={{
-              fontSize: '18px', /* Slightly larger font */
+              fontSize: '16px', /* Reduced size for better fit */
               fontWeight: '700',
-              color: '#1A1A1A', /* primary-color */
+              color: '#333', /* primary-color */
               letterSpacing: '0.5px',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap' /* Prevent text wrapping */
             }}
           >
             {headerData.brandName}
@@ -119,7 +125,9 @@ const HeaderPreview = () => {
           className="header__nav"
           style={{
             display: 'flex',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexGrow: 1,
+            justifyContent: 'center' /* Center the navigation */
           }}
         >
           <ul
@@ -127,9 +135,10 @@ const HeaderPreview = () => {
             style={{
               display: 'flex',
               listStyle: 'none',
-              gap: '20px', /* Larger gap for better alignment */
+              gap: '15px', /* Reduced gap for better fit */
               margin: 0,
-              padding: 0
+              padding: 0,
+              justifyContent: 'center' /* Center the list items */
             }}
           >
             {headerData.navLinks.map((link, index) => (
@@ -139,18 +148,19 @@ const HeaderPreview = () => {
                   className="header__nav-link"
                   style={{
                     textDecoration: 'none',
-                    color: '#1A1A1A', /* text-color */
+                    color: '#333', /* text-color - reduced for better contrast */
                     fontWeight: '500', /* Lighter font weight */
                     position: 'relative',
                     padding: '8px 0',
-                    fontSize: '16px', /* Slightly larger font */
-                    transition: 'color 0.3s ease'
+                    fontSize: '14px', /* Reduced size for better fit */
+                    transition: 'color 0.3s ease',
+                    whiteSpace: 'nowrap', /* Prevent text wrapping */
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.color = '#E4002B'; /* accent-color */
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.color = '#1A1A1A'; /* text-color */
+                    e.target.style.color = '#333'; /* text-color */
                   }}
                   onFocus={(e) => {
                     e.target.style.outline = '2px solid #E4002B'; /* accent-color */
@@ -177,21 +187,31 @@ const HeaderPreview = () => {
               </li>
             ))}
           </ul>
+        </nav>
 
+        {/* CTA Button - moved to the right */}
+        <div
+          className="header__cta-wrapper"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            flexShrink: 0 /* Prevent CTA from shrinking */
+          }}
+        >
           <a
             href={headerData.ctaLink}
             className="header__cta-button"
             style={{
               backgroundColor: '#E4002B', /* cta-bg */
               color: '#fff',
-              padding: '10px 20px', /* Better button sizing */
+              padding: '8px 16px', /* Reduced size for better fit */
               borderRadius: '50px',
-              fontWeight: '600', /* Slightly bolder */
-              fontSize: '16px', /* Slightly larger font */
+              fontWeight: '500', /* Lighter font weight */
+              fontSize: '14px', /* Reduced size for better fit */
               textDecoration: 'none',
               display: 'inline-block',
-              marginLeft: '25px', /* More space from nav */
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              whiteSpace: 'nowrap' /* Prevent text wrapping */
             }}
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = '#B60022'; /* cta-hover */
@@ -211,7 +231,7 @@ const HeaderPreview = () => {
           >
             {headerData.ctaText}
           </a>
-        </nav>
+        </div>
 
         {/* Mobile Menu Toggle */}
         <button
@@ -225,7 +245,9 @@ const HeaderPreview = () => {
             border: 'none',
             cursor: 'pointer',
             padding: '5px',
-            alignItems: 'center'
+            alignItems: 'center',
+            marginLeft: '15px', /* Space from CTA button */
+            flexShrink: 0 /* Prevent toggle from shrinking */
           }}
           aria-label="Toggle navigation menu"
         >
@@ -234,7 +256,7 @@ const HeaderPreview = () => {
             style={{
               width: '24px',
               height: '3px',
-              backgroundColor: '#1A1A1A', /* primary-color */
+              backgroundColor: '#333', /* primary-color */
               borderRadius: '2px',
               transition: 'all 0.3s ease'
             }}
@@ -244,7 +266,7 @@ const HeaderPreview = () => {
             style={{
               width: '24px',
               height: '3px',
-              backgroundColor: '#1A1A1A', /* primary-color */
+              backgroundColor: '#333', /* primary-color */
               borderRadius: '2px',
               transition: 'all 0.3s ease'
             }}
@@ -254,7 +276,7 @@ const HeaderPreview = () => {
             style={{
               width: '24px',
               height: '3px',
-              backgroundColor: '#1A1A1A', /* primary-color */
+              backgroundColor: '#333', /* primary-color */
               borderRadius: '2px',
               transition: 'all 0.3s ease'
             }}
@@ -269,13 +291,13 @@ const HeaderPreview = () => {
           display: isMobileMenuOpen ? 'flex' : 'none',
           flexDirection: 'column',
           background: '#fff',
-          borderTop: '1px solid #E0E0E0', /* border-color */
+          borderTop: '1px solid #e0e0e0', /* border-color */
           width: '100%',
           position: 'absolute',
           top: '100%',
           left: 0,
           zIndex: 99,
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.08)' /* shadow-medium */
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)' /* shadow-medium */
         }}
       >
         <ul
@@ -283,14 +305,17 @@ const HeaderPreview = () => {
           style={{
             listStyle: 'none',
             padding: '15px', /* spacing-md */
-            margin: 0
+            margin: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px' /* spacing-sm */
           }}
         >
           {headerData.navLinks.map((link, index) => (
             <li
               key={index}
               style={{
-                borderBottom: '1px solid #E0E0E0', /* border-color */
+                borderBottom: '1px solid #e0e0e0', /* border-color */
                 padding: '8px 0' /* spacing-sm */
               }}
             >
@@ -300,12 +325,12 @@ const HeaderPreview = () => {
                 style={{
                   display: 'block',
                   padding: '8px 0', /* spacing-sm */
-                  color: '#1A1A1A', /* text-color */
+                  color: '#333', /* text-color */
                   textDecoration: 'none',
                   fontWeight: '500',
-                  borderBottom: '1px solid #E0E0E0', /* border-color */
+                  borderBottom: '1px solid #e0e0e0', /* border-color */
                   paddingBottom: '10px', /* spacing-md */
-                  fontSize: '14px', /* font-size-sm */
+                  fontSize: '14px', /* Reduced size for better fit */
                   transition: 'color 0.3s ease'
                 }}
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -313,7 +338,7 @@ const HeaderPreview = () => {
                   e.target.style.color = '#E4002B'; /* accent-color */
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.color = '#1A1A1A'; /* text-color */
+                  e.target.style.color = '#333'; /* text-color */
                 }}
                 onFocus={(e) => {
                   e.target.style.outline = '2px solid #E4002B'; /* accent-color */
@@ -334,10 +359,10 @@ const HeaderPreview = () => {
               style={{
                 backgroundColor: '#E4002B', /* cta-bg */
                 color: '#fff',
-                padding: '8px 15px', /* spacing-sm spacing-md */
+                padding: '8px 16px', /* Reduced size for better fit */
                 borderRadius: '50px',
                 fontWeight: '500',
-                fontSize: '14px', /* font-size-sm */
+                fontSize: '14px', /* Reduced size for better fit */
                 textDecoration: 'none',
                 display: 'inline-block',
                 width: '100%',
@@ -377,6 +402,16 @@ const HeaderPreview = () => {
 
           .header__menu-toggle {
             display: flex !important;
+          }
+
+          .header__cta-wrapper {
+            display: none; /* Hide desktop CTA on mobile */
+          }
+        }
+
+        @media (min-width: 769px) {
+          .header__mobile-nav {
+            display: none !important;
           }
         }
       `}</style>

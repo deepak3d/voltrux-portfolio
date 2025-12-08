@@ -20,6 +20,8 @@ export default defineConfig({
 				'./src/styles/custom.css', // Link to your custom CSS file
 				'./src/styles/article-list-preview.css', // Link to article list preview styles
 				'./src/styles/testdrive-form-preview.css', // Link to test drive form preview styles
+				'./src/styles/footer-preview.css', // Link to footer preview styles
+				'./src/styles/header-preview.css', // Link to header preview styles
 			],
 			sidebar: [
 				{
@@ -40,6 +42,7 @@ export default defineConfig({
 						{ label: 'Component Catalog', slug: 'components/component-catalog' },
 						{ label: 'Article List', slug: 'components/article-list' },
 						{ label: 'Header', slug: 'components/header' },
+						{ label: 'Footer', slug: 'components/footer' },
 						{ label: 'Test Drive Form', slug: 'components/test-drive' },
 						{ label: 'Truck Lister', slug: 'components/truck-lister' },
 						{ label: '3D Configurator', slug: 'components/3d-configurator' },

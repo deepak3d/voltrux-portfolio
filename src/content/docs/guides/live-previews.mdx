@@ -1,0 +1,264 @@
+---
+title: Adding Live Previews to Starlight Documentation
+description: Complete guide for creating interactive component previews in Starlight documentation
+---
+
+# Adding Live Previews to Starlight Documentation
+
+This guide outlines the complete process for adding live, interactive previews to your Starlight documentation site. Follow these steps to create dynamic component showcases.
+
+## Prerequisites
+
+Before adding live previews, ensure your Starlight project meets these requirements:
+
+- Astro project with Starlight integration
+- MDX support enabled
+- Node.js and a package manager (npm, yarn, or bun)
+
+## Step 1: Install Required Dependencies
+
+To use React components in your MDX files, you need to install the following packages:
+
+```bash
+npm install react react-dom @astrojs/react
+# OR
+yarn add react react-dom @astrojs/react
+# OR
+bun install react react-dom @astrojs/react
+```
+
+## Step 2: Configure Astro
+
+Update your `astro.config.mjs` file to include the React integration:
+
+```js
+// @ts-check
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+import react from '@astrojs/react';  // Add this import
+import mdx from '@astrojs/mdx';
+
+export default defineConfig({
+  integrations: [
+    react(),  // Add this before other integrations
+    starlight({
+      // your starlight config
+    }),
+    mdx(),
+  ],
+});
+```
+
+## Step 3: Create the Component
+
+Create your React component in the `src/components` directory:
+
+```jsx
+// src/components/MyComponentPreview.jsx
+import React from 'react';
+
+const MyComponentPreview = () => {
+  return (
+    <div className="my-component-preview">
+      {/* Your component JSX */}
+    </div>
+  );
+};
+
+export default MyComponentPreview;
+```
+
+## Step 4: Add Styles
+
+Create a CSS file for your component's styles:
+
+```css
+/* src/styles/my-component-preview.css */
+.my-component-preview {
+  /* Add your styles here */
+}
+```
+
+## Step 5: Import Styles
+
+Import the styles either in your component file or add them to your Starlight configuration:
+
+```js
+// In astro.config.mjs
+starlight({
+  customCss: [
+    './src/styles/my-component-preview.css',
+  ],
+  // other config
+}),
+```
+
+## Step 6: Use in MDX
+
+Import and use your component in MDX files:
+
+```mdx
+---
+title: My Component
+---
+
+import MyComponentPreview from '../components/MyComponentPreview.jsx';
+
+# My Component
+
+## Live Preview
+
+<MyComponentPreview />
+
+## Documentation
+
+Your documentation content here...
+```
+
+## Rules and Best Practices
+
+### Component Creation Rules
+
+1. **Location**: Place components in `src/components/` directory
+2. **Naming**: Use PascalCase for component names (e.g., `ButtonPreview.jsx`)
+3. **File Extension**: Use `.jsx` for React components
+4. **Export**: Always use default export for MDX components
+
+### Styling Rules
+
+1. **CSS Approach**: Use external CSS files for styling
+2. **Class Naming**: Use BEM methodology or descriptive class names
+3. **Scope**: Prefix classes with component name to avoid conflicts
+4. **Global Styles**: Add shared styles to Starlight's `customCss` array
+5. **CSS Variables**: When using CSS variables, ensure they don't conflict with Starlight's theme variables
+6. **Direct Values**: For components that might conflict with theme styles, use direct color/spacing values instead of CSS variables
+
+### MDX Integration Rules
+
+1. **Import Path**: Use relative paths from the MDX file to the component
+2. **Import Location**: Place imports at the top of the MDX file after frontmatter
+3. **Placement**: Position the component where you want the live preview to appear
+4. **Props**: Pass necessary props to make the component configurable
+
+### Performance Rules
+
+1. **Bundle Size**: Keep components lightweight
+2. **Dependencies**: Avoid heavy external libraries in previews
+3. **Images**: Use placeholder images or low-res versions in previews
+4. **Complexity**: Simplify complex components for documentation previews
+
+### Content Organization
+
+1. **Structure**: Follow the pattern: Live Preview → Code Examples → Details
+2. **Context**: Provide sufficient context around the live preview
+3. **Alternative**: Include visual mockups as fallback for non-interactive elements
+4. **Accessibility**: Ensure previews are accessible and include alt text
+
+### Theme Compatibility Rules
+
+1. **CSS Conflicts**: Avoid defining CSS variables in component styles that might conflict with Starlight's theme
+2. **Sidebar Styling**: If custom theme colors affect sidebar appearance, update `custom.css` with appropriate variables:
+   - `--sl-sidebar-active-link-text`: Text color for active sidebar items
+   - `--sl-sidebar-active-link-bg`: Background color for active sidebar items
+3. **Theme Variables**: When customizing the theme, use Starlight's variable naming convention to maintain compatibility
+4. **Testing**: Always test custom styles in both light and dark themes
+5. **Specificity**: Use `!important` sparingly, only when necessary to override Starlight's default styles
+
+### Configuration Rules
+
+1. **Integration Order**: Add `@astrojs/react` before other integrations in `astro.config.mjs`
+2. **CSS Loading**: Load base/custom CSS files before component-specific CSS in Starlight's `customCss` array
+3. **Dependencies**: Ensure all necessary dependencies (`react`, `react-dom`, `@astrojs/react`) are installed
+4. **File Structure**: Maintain consistent directory structure (`src/components/`, `src/styles/`) for easy maintenance
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Module Not Found**:
+   - Verify the import path is correct
+   - Check that React dependencies are installed
+   - Ensure React integration is in your Astro config
+
+2. **Styles Not Applying**:
+   - Verify CSS file path is correct
+   - Check that CSS is included in Starlight's `customCss`
+   - Inspect class names for typos
+
+3. **Interactive Elements Not Working**:
+   - Confirm React is properly configured
+   - Check browser console for errors
+   - Verify component state hooks are implemented correctly
+
+## Advanced Techniques
+
+### Using Sample Data
+
+Include sample data directly in the component to demonstrate functionality:
+
+```jsx
+const MyComponentPreview = () => {
+  const sampleData = [
+    { id: 1, name: 'Sample Item 1' },
+    { id: 2, name: 'Sample Item 2' },
+  ];
+
+  return (
+    <div>
+      {sampleData.map(item => (
+        <div key={item.id}>{item.name}</div>
+      ))}
+    </div>
+  );
+};
+```
+
+### Dynamic Props
+
+Allow MDX to pass props to your preview components:
+
+```jsx
+const MyComponentPreview = ({ variant = 'default', size = 'medium' }) => {
+  // Component implementation using props
+};
+```
+
+## Example: Complete Implementation
+
+Here's a complete example of a button component preview:
+
+```jsx
+// src/components/ButtonPreview.jsx
+import React, { useState } from 'react';
+
+const ButtonPreview = () => {
+  const [clickCount, setClickCount] = useState(0);
+
+  return (
+    <div style={{ padding: '20px', backgroundColor: '#f5f5f5' }}>
+      <h3>Button Preview</h3>
+      <button 
+        onClick={() => setClickCount(clickCount + 1)}
+        style={{
+          padding: '10px 20px',
+          backgroundColor: '#007acc',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}
+      >
+        Clicked {clickCount} times
+      </button>
+    </div>
+  );
+};
+
+export default ButtonPreview;
+```
+
+## Conclusion
+
+By following these steps and rules, you can create rich, interactive previews in your Starlight documentation. These previews help users better understand your components by providing hands-on experience directly in the documentation.
+
+Remember to test your previews across different devices and browsers to ensure they work as expected in all environments.
