@@ -2,10 +2,12 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import mermaid from 'astro-mermaid'; // Import astro-mermaid
+import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
+		mdx(),
 		starlight({
 			title: 'Voltrux Motors Engineering',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/your-username/voltrux-motors' }],
@@ -25,9 +27,14 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'Guides',
+					items: [{ label: 'Live Previews', slug: 'guides/live-previews' }],
+				},
+				{
 					label: 'Component Library',
 					items: [
 						{ label: 'Component Catalog', slug: 'components/component-catalog' },
+						{ label: 'Article List', slug: 'components/article-list' },
 						{ label: 'Test Drive Form', slug: 'components/test-drive' },
 						{ label: 'Truck Lister', slug: 'components/truck-lister' },
 						{ label: '3D Configurator', slug: 'components/3d-configurator' },
