@@ -12,6 +12,9 @@ export default defineConfig({
 			customCss: [
 				'./src/styles/custom.css', // Link to your custom CSS file
 			],
+			expressiveCode: {
+				themes: ['github-dark', 'github-light'],
+			},
 			sidebar: [
 				{
 					label: 'Overview',
