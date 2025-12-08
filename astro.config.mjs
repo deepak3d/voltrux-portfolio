@@ -7,7 +7,6 @@ import mdx from '@astrojs/mdx';
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
-		mdx(),
 		starlight({
 			title: 'Voltrux Motors Engineering',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/your-username/voltrux-motors' }],
@@ -57,6 +56,7 @@ export default defineConfig({
 				},
 			],
 		}),
+		mdx(),
 		mermaid(), // Add astro-mermaid integration here
 	],
 });
