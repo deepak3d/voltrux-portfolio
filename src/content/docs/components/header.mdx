@@ -1,0 +1,486 @@
+---
+title: Header Component
+description: Comprehensive guide for the Header component in Voltrux Motors
+---
+
+import HeaderPreview from '../../../components/HeaderPreview.jsx';
+
+This document provides a detailed overview of the `header` component, which is used to display the main navigation with logo, navigation links, call-to-action button, and mobile-friendly navigation with hamburger menu.
+
+## Component Preview
+
+### Live Preview
+
+Here's a live preview of the Header component (interactive version):
+
+<HeaderPreview />
+
+The Header component supports a responsive layout that adapts to different screen sizes. Here's what you'll see when the component is rendered:
+
+### Desktop View
+- A sticky header with white background and subtle shadow
+- Brand logo with image on the left
+- Navigation links in a horizontal row in the center
+- Call-to-action button on the right
+- The header remains fixed at the top when scrolling
+
+### Mobile View
+- Navigation links are hidden
+- Hamburger menu icon appears on the right
+- Tapping the hamburger menu reveals a vertical navigation menu
+- Call-to-action button appears in the mobile menu
+
+### Interactive Features
+- **Scroll effect**: When scrolling down, the header shadow becomes more pronounced
+- **Hover effects**: Navigation links highlight on hover
+- **Responsive design**: Layout automatically adjusts based on screen size
+- **Mobile menu**: Toggle menu visibility by clicking the hamburger icon
+
+### Visual Mockup
+
+Here's a detailed representation of the component when rendered in a browser:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  [LOGO] Voltrux Motors                           [HOME] [MODELS] [TECH] [ABOUT]  │
+│                                                                      [CTA BTN]  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                 │
+│                                    MAIN CONTENT                                 │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+Mobile View:
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│  [LOGO] Voltrux Motors                                           [☰]           │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  [HOME]                                                                         │
+│  [MODELS]                                                                       │
+│  [TECHNOLOGY]                                                                   │
+│  [ABOUT]                                                                        │
+│  [CONTACT]                                                                      │
+│  [FIND A DEALER]  (CTA Button)                                                  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                 │
+│                                    MAIN CONTENT                                 │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Overview
+
+The Header component is a responsive navigation component for the Voltrux Motors website. It features a sticky positioning, brand logo, main navigation, call-to-action button, and mobile-friendly navigation with hamburger menu.
+
+## Features
+
+- Sticky header that remains at the top when scrolling
+- Responsive design with desktop and mobile layouts
+- Accessible navigation with focus states
+- Mobile-friendly hamburger menu
+- Scroll effect with enhanced shadow
+
+## Component Structure
+
+The Header component consists of several key CSS classes that define its functionality and appearance:
+
+### .content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          jcr:description="Voltrux Motors Header Component"
+          jcr:primaryType="cq:Component"
+          jcr:title="Header"
+          componentGroup="Voltrux Motors - Structure"/>
+```
+
+### header.html
+
+```html
+<header class="header">
+  <div class="header__container">
+    <div class="header__logo">
+      <img src="${model.logoPath @ context='uri'}" alt="${model.logoAltText}" class="header__logo-image" />
+      <span class="header__logo-text">${model.brandName}</span>
+    </div>
+    
+    <nav class="header__nav">
+      <ul class="header__nav-list">
+        <sly data-sly-list.navItem="${model.navLinks}">
+          <li>
+            <a href="${navItem.url}" class="header__nav-link">${navItem.text}</a>
+          </li>
+        </sly>
+      </ul>
+      <a href="${model.ctaLink @ context='uri'}" class="header__cta-button">${model.ctaText}</a>
+    </nav>
+    
+    <button class="header__menu-toggle" aria-label="Toggle navigation menu">
+      <span class="header__menu-icon"></span>
+      <span class="header__menu-icon"></span>
+      <span class="header__menu-icon"></span>
+    </button>
+  </div>
+  
+  <nav class="header__mobile-nav">
+    <ul class="header__mobile-list">
+      <sly data-sly-list.navItem="${model.navLinks}">
+        <li>
+          <a href="${navItem.url}" class="header__mobile-link">${navItem.text}</a>
+        </li>
+      </sly>
+      <li>
+        <a href="${model.ctaLink @ context='uri'}" class="header__cta-button--mobile">${model.ctaText}</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+```
+
+## CSS Styles
+
+The component uses the following CSS file and class definitions:
+
+### header.css
+
+```css
+/* header.css - Voltrux Motors Header Component */
+.header {
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-light);
+}
+
+.header__container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.header__logo-image {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+.header__logo-text {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.header__nav {
+  display: flex;
+}
+
+.header__nav-list {
+  display: flex;
+  list-style: none;
+  gap: var(--spacing-lg);
+}
+
+.header__nav-link {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  position: relative;
+}
+
+.header__nav-link:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.header__cta-button,
+.header__cta-button--mobile {
+  background-color: var(--cta-bg);
+  color: #fff;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.header__cta-button:focus,
+.header__cta-button--mobile:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.header__menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.header__menu-icon {
+  width: 24px;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.header__mobile-nav {
+  display: none;
+  flex-direction: column;
+  background: #fff;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+}
+
+.header__mobile-nav--active {
+  display: flex;
+}
+
+.header__mobile-list {
+  list-style: none;
+  padding: var(--spacing-lg);
+}
+
+.header__mobile-link {
+  display: block;
+  padding: var(--spacing-sm) 0;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header__mobile-link:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .header__nav,
+  .header__cta {
+    display: none;
+  }
+  .header__menu-toggle {
+    display: flex;
+  }
+}
+
+.header--scrolled {
+  box-shadow: var(--shadow-medium);
+}
+```
+
+### CSS Class Descriptions
+
+#### Main Container
+- `.header` - Main header container with sticky positioning, border and shadow
+- `.header__container` - Centered container with flex layout for alignment
+
+#### Brand Elements
+- `.header__logo` - Logo container with flex layout for image and text
+- `.header__logo-image` - Logo image with fixed width and object fit
+- `.header__logo-text` - Brand name text with font size and bold weight
+
+#### Navigation Elements
+- `.header__nav` - Main navigation container
+- `.header__nav-list` - Navigation list with flex layout and spacing
+- `.header__nav-link` - Individual navigation links with styling and focus state
+
+#### Call-to-Action
+- `.header__cta-button` - Main CTA button with accent background and styling
+- `.header__cta-button--mobile` - Mobile CTA button version with similar styling
+
+#### Mobile Menu
+- `.header__menu-toggle` - Hamburger menu toggle button (hidden by default)
+- `.header__menu-icon` - Individual menu icon bar with styling
+- `.header__mobile-nav` - Mobile navigation container (hidden by default)
+- `.header__mobile-nav--active` - Active mobile navigation state
+- `.header__mobile-list` - Mobile navigation list with padding
+- `.header__mobile-link` - Individual mobile navigation links with styling
+
+#### Responsive Effects
+- Media queries for mobile screens (768px) hide desktop navigation and show mobile menu toggle
+- Responsive layout adjusts for different screen sizes
+- Hover and focus states for interactive elements
+- Sticky header positioning for consistent navigation
+
+## Responsive Behavior
+
+### Mobile Layout (≤768px)
+
+```css
+@media (max-width: 768px) {
+  .header__nav,
+  .header__cta {
+    display: none;  /* Hides desktop navigation and CTA */
+  }
+  .header__menu-toggle {
+    display: flex;  /* Shows hamburger menu */
+  }
+}
+```
+
+### Mobile-Specific Behavior
+- Desktop navigation and CTA button are hidden
+- Hamburger menu toggle becomes visible
+- Mobile navigation slides in when activated
+- Mobile CTA button appears in mobile menu
+
+## Accessibility
+
+- Focus states are implemented for all interactive elements
+- Keyboard navigation support through focus indicators
+- Semantic HTML structure for navigation elements
+- Proper contrast ratios maintained
+
+## Variables Used
+
+The component relies on CSS custom properties (variables) defined elsewhere in the project:
+- `--border-color`
+- `--max-width`
+- `--spacing-lg`
+- `--spacing-md`
+- `--spacing-sm`
+- `--font-size-lg`
+- `--primary-color`
+- `--text-color`
+- `--cta-bg`
+- `--accent-color`
+- `--shadow-light`
+- `--shadow-medium`
+
+## States
+
+- **Normal**: Standard appearance with light shadow
+- **Scrolled**: Enhanced shadow when user scrolls down
+- **Active/Focus**: Outline for keyboard navigation
+- **Mobile Menu Open**: Different layout showing mobile navigation
+
+## Usage Notes
+
+- The component is designed to work with the overall design system variables
+- Responsive breakpoints are set at 768px for mobile adaptation
+- The sticky positioning keeps the header visible during scrolling
+- Mobile menu implementation requires JavaScript for toggling active class
+
+## Dependencies
+
+*   **Sling Model:** `com.voltrux.aem.core.models.HeaderModel`
+*   **Super Type:** None
+
+## Previewing in AEM
+
+To properly preview the Header component:
+
+### Prerequisites
+- AEM instance running (6.5 or later)
+- Voltrux site structure deployed
+
+### Steps to Preview
+
+1. **Deploy the Component**
+   ```bash
+   # Use your build tool to deploy to AEM
+   mvn clean install -PautoInstallPackage
+   ```
+
+2. **Create or Navigate to a Page**
+   - Go to your site in AEM (e.g., `http://localhost:4502/sites`)
+   - Create a new page or edit an existing one
+
+3. **Add the Component**
+   - Enter edit mode by clicking the "Edit" button
+   - Drag the "Header" component from the component panel to your page
+   - Configure using the dialog:
+     - Set the "Brand Name"
+     - Upload the "Logo Image"
+     - Add navigation links
+     - Configure CTA button text and link
+
+4. **Preview the Component**
+   - Click "Page Information" → "View as Published" or use Preview mode
+   - Test responsive behavior by resizing the browser window
+   - Verify sticky functionality by scrolling
+
+### Troubleshooting Preview Issues
+- If styling is missing: Ensure that client libraries are properly configured
+- If mobile menu doesn't work: Check that the JavaScript is loaded and no console errors exist
+
+## Component Folder Structure
+
+The Header component follows the standard AEM component structure:
+
+```
+voltrux/
+└── components/
+    └── structure/
+        └── header/
+            ├── .content.xml
+            ├── _cq_dialog/
+            │   └── .content.xml
+            ├── header.html
+            └── css/
+                └── header.css
+```
+
+### Component Files Location
+
+- **Server-side files:**
+  - `apps/voltrux/components/structure/header/.content.xml` - Component definition
+  - `apps/voltrux/components/structure/header/header.html` - Component template
+  - `apps/voltrux/components/structure/header/css/header.css` - Component styling
+  - `apps/voltrux/components/structure/header/_cq_dialog/.content.xml` - Dialog configuration
+  
+- **Client-side libraries:**
+  - `apps/voltrux/clientlibs/structure/header/css/header.css` - Frontend CSS
+  - `apps/voltrux/clientlibs/structure/header/js/header.js` - Frontend JavaScript for mobile menu
+
+## JavaScript Functionality
+
+The header component includes JavaScript for enhanced functionality:
+
+### Mobile Menu Toggle
+- Toggles the mobile navigation menu when the hamburger button is clicked
+- Updates the aria-expanded attribute for accessibility
+- Adds/removes the `header__mobile-nav--active` class to show/hide the menu
+
+### Scroll Effect
+- Adds the `header--scrolled` class when the user scrolls more than 50px
+- Enhances the shadow effect to indicate scroll position
+- Improves visual hierarchy when scrolling
+
+### Sample JavaScript Code
+```javascript
+/* header.js - Voltrux Motors Header Component */
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("menu-toggle");
+  const mobileNav = document.getElementById("mobile-nav");
+  const header = document.querySelector(".header");
+
+  if (toggle && mobileNav) {
+    toggle.addEventListener("click", () => {
+      mobileNav.classList.toggle("header__mobile-nav--active");
+      toggle.classList.toggle("header__menu-toggle--active");
+      toggle.setAttribute("aria-expanded", mobileNav.classList.contains("header__mobile-nav--active"));
+    });
+  }
+
+  window.addEventListener("scroll", () => {
+    header.classList.toggle("header--scrolled", window.scrollY > 50);
+  });
+});
+```

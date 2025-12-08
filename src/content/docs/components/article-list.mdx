@@ -1,0 +1,720 @@
+---
+title: Article List Component
+description: Comprehensive guide for the Article List component in Voltrux Motors
+---
+
+import ArticleListPreview from '../../../components/ArticleListPreview.jsx';
+
+This document provides a detailed overview of the `articlelist` component, which is used to display a collection of articles with featured content, category filtering, and responsive design.
+
+## Component Preview
+
+### Live Preview
+
+Here's a live preview of the Article List component (interactive version):
+
+<ArticleListPreview />
+
+The Article List component supports interactive filtering and a responsive layout that adapts to different screen sizes. Here's a description of what you would see when the component is rendered:
+
+### Desktop View
+- A featured article is prominently displayed at the top in a two-column grid layout (image on one side, content on the other)
+- Category filter buttons appear in a horizontal row below the featured article
+- Remaining articles are displayed in a responsive grid format (typically 2-3 columns)
+
+### Mobile View
+- Featured article appears full-width with image above content
+- Category filters become a scrollable horizontal row or stack vertically
+- Article grid adjusts to 1 column for better readability on small screens
+
+### Interactive Features
+- **Category filtering**: Clicking on category buttons highlights the selected category and filters the displayed articles
+- **Hover effects**: Article cards display a subtle shadow and border color change on hover
+- **Image hover**: Article images slightly scale up when hovered
+- **Responsive design**: Layout automatically adjusts based on screen size
+
+### Visual Mockup
+
+Here's a detailed representation of the component when rendered in a browser:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                           Voltrux Motors - Article List                         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  ┌───────────────────────────────────────────────────────────────────────────┐  │
+│  │                        FEATURED ARTICLE CARD                              │  │
+│  │  ┌─────────────────────────────────────────────────────────────────────┐  │  │
+│  │  │  [Image: 800x600px - Featured Article Image]                        │  │  │
+│  │  │  ┌─────────────────────────────────────────────────────────────────┐  │  │
+│  │  │  │  TECHNOLOGY  │  The Future of Electric Trucks: A Comprehensive   │  │  │
+│  │  │  │            │  Overview of Voltrux's Revolutionary Features      │  │  │
+│  │  │  │            │                                                      │  │  │
+│  │  │  │  By John Smith • Dec 5, 2025 • 8 min read         [READ ARTICLE]  │  │  │
+│  │  │  └─────────────────────────────────────────────────────────────────┘  │  │
+│  │  └───────────────────────────────────────────────────────────────────────┘  │
+│  └───────────────────────────────────────────────────────────────────────────┘  │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  [ALL] [TECHNOLOGY] [DESIGN] [ENGINEERING] [NEWS] [SUSTAINABILITY]              │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
+│  │ [Image:    │  │ [Image:     │  │ [Image:     │  │ [Image:     │            │
+│  │ 400x300px] │  │ 400x300px]  │  │ 400x300px]  │  │ 400x300px]  │            │
+│  │            │  │             │  │             │  │             │            │
+│  │ DESIGN     │  │ ENGINEERING │  │ NEWS        │  │ TECHNOLOGY  │            │
+│  │ Top Design │  │ Innovating  │  │ Latest      │  │ Battery     │            │
+│  │ Trends for │  │ Truck       │  │ News from   │  │ Tech        │            │
+│  │ 2026 Trucks│  │ Safety      │  │ Voltrux HQ  │  │ Updates     │            │
+│  │John Smith  │  │John Smith   │  │John Smith   │  │John Smith   │            │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘            │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  [Load More Articles]                                                             │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Desktop View:**
+- Featured article section with 50/50 split between image and content
+- Horizontal category filter bar
+- Responsive article grid (typically 3-4 columns)
+- Hover effects on article cards (shadow enhancement and slight scale)
+
+**Mobile View:**
+- Featured article with image above content
+- Vertical or scrollable category filter row
+- Single column article grid
+- Touch-friendly buttons and navigation
+
+### Interactive Elements
+
+1. **Category Filtering**:
+   - Buttons highlight when selected
+   - Articles filter dynamically without page reload
+   - "All" category shows all articles
+
+2. **Hover Effects**:
+   - Article cards gain shadow and border accent
+   - Images scale up slightly (105%)
+   - Article titles change color
+   - Read more buttons gain a subtle glow
+
+3. **Responsive Behavior**:
+   - Grid columns adjust based on screen width
+   - Font sizes scale appropriately
+   - Touch targets remain accessible on mobile
+
+## Component Structure
+
+The Article List component consists of several key files that define its functionality and appearance:
+
+### .content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          jcr:description="Voltrux Motors Article list Component"
+          jcr:primaryType="cq:Component"
+          jcr:title="Article list"
+          componentGroup="Voltrux Motors - Content"/>
+```
+
+### _cq_dialog/.content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured" jcr:title="Article List (Landing Page)"
+          sling:resourceType="cq/gui/components/authoring/dialog">
+    <content jcr:primaryType="nt:unstructured"
+             sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs">
+                <items jcr:primaryType="nt:unstructured">
+                    <settings jcr:primaryType="nt:unstructured"
+                              jcr:title="Content Source"
+                              sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+
+                            <!-- Field to set the root path for content query -->
+                            <rootPath jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                      fieldLabel="Root Path for Articles"
+                                      name="./rootPath"
+                                      rootPath="/content"
+                                      placeholder="/content/voltrux/en/blog"/>
+
+                            <!-- Multifield for Category Filters -->
+                            <categories jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                        fieldLabel="Article Categories (Filters)">
+                                <field jcr:primaryType="nt:unstructured"
+                                       sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                       name="./categories"
+                                       value="All"/>
+                            </categories>
+
+                            <helpText jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/text"
+                                      text="Note: In the final implementation, the Sling Model will query child resources beneath the Root Path to populate the list."/>
+                        </items>
+                    </settings>
+                </items>
+            </tabs>
+        </items>.
+    </content>
+</jcr:root>
+```
+
+### articlelist.html
+
+```html
+<sly data-sly-use.model="com.voltrux.aem.core.models.ArticleListModel"/>
+
+<!-- New: Added data-component hook for JS -->
+<section class="article-list" data-component="article-list">
+    <div class="container">
+
+        <!-- Placeholder is now handled by _cq_editConfig.xml -->
+
+        <sly data-sly-test="${model.articles && model.articles.size > 0}">
+
+            <!-- Featured Article (First Article in the list) -->
+            <sly data-sly-list.featuredArticle="${model.articles}" data-sly-test.isFeatured="${featuredArticleList.first}">
+                <div class="featured-article-card">
+
+                    <div class="featured-article-image">
+                        <img
+                                src="${featuredArticle.imageSrc @ context='uri'}"
+                                alt="${featuredArticle.title}"
+                                onerror="this.onerror=null; this.src='https://placehold.co/800x600/F2F2F2/666?text=Featured+Image';"
+                        />
+                    </div>
+
+                    <div class="featured-article-content">
+                        <span class="article-category">${featuredArticle.category}</span>
+                        <h2>${featuredArticle.title @ context='html'}</h2>
+                        <p class="excerpt">${featuredArticle.excerpt @ context='html'}</p>
+
+                        <div class="article-meta">
+                            <div class="meta-item">
+                                <!-- User Icon Placeholder -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                <span>${featuredArticle.author}</span>
+                            </div>
+                            <div class="meta-item">
+                                <!-- Calendar Icon Placeholder -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                                <span>${featuredArticle.date}</span>
+                            </div>
+                            <div>${featuredArticle.readTime}</div>
+                        </div>
+
+                        <a href="${featuredArticle.path @ context='uri'}" class="cta-button">
+                            Read Article
+                            <!-- Arrow Icon Placeholder -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
+                    </div>
+
+                </div>
+            </sly>
+
+            <!-- Category Filter (Static for now, but configured via model) -->
+            <div class="category-filter">
+                <sly data-sly-list.category="${model.categories}">
+                    <!-- New: Added data-filter attribute -->
+                    <button data-filter="${category.slug}">
+                        ${category.name}
+                    </button>
+                </sly>
+            </div>
+
+            <!-- Articles Grid (All articles except the first one) -->
+            <div class="articles-grid">
+                <sly data-sly-list.article="${model.articles}" data-sly-test.isGridItem="${!articleList.first}">
+                    <!-- New: Added data-category attribute -->
+                    <a href="${article.path @ context='uri'}" class="article-card" data-category="${article.categorySlug}">
+                        <div class="article-card-image">
+                            <img
+                                    src="${article.imageSrc @ context='uri'}"
+                                    alt="${article.title}"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/400x300/F2F2F2/666?text=Article+Image';"
+                            />
+                        </div>
+                        <div class="article-card-content">
+                            <span class="category-label">${article.category}</span>
+                            <h3>${article.title @ context='html'}</h3>
+                            <p class="card-excerpt">${article.excerpt @ context='html'}</p>
+                            <div class="card-meta">
+                                <span>${article.author}</span>
+                                <span>${article.readTime}</span>
+                            </div>
+                        </div>
+                    </a>
+                </sly>
+            </div>
+
+        </sly>
+    </div>
+</section>
+```
+
+### _cq_editConfig.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:EditConfig">
+
+    <!-- This node defines the text that appears when the component is empty -->
+    <cq:emptytext
+            jcr:primaryType="nt:unstructured"
+            text="Please configure the Article List component or add articles."/>
+</jcr:root>
+```
+
+## CSS Styles
+
+The component uses the following CSS file and class definitions:
+
+### articlelist.css
+
+```css
+/* Voltrux Article List Component Styles */
+
+.article-list {
+  padding: 40px 0;
+  background-color: var(--neutral-color);
+}
+
+.article-list .container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* --- Featured Article Section --- */
+
+.featured-article-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  margin-bottom: 60px;
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--spacing-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+}
+
+ @media (min-width: 1024px) {
+  .featured-article-card {
+    grid-template-columns: 1fr 1fr;
+    gap: 0; /* Gaps handled by padding */
+  }
+}
+
+.featured-article-image {
+  height: 300px; /* Default height for mobile/tablet */
+  overflow: hidden;
+}
+
+.featured-article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+ @media (min-width: 1024px) {
+  .featured-article-image {
+    height: auto;
+  }
+}
+
+.featured-article-content {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+ @media (min-width: 1024px) {
+  .featured-article-content {
+    padding: 40px 60px;
+  }
+}
+
+.article-category {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: rgba(228, 0, 43, 0.1); /* accent/10 */
+  border: 1px solid var(--accent-color);
+  border-radius: 4px;
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+  text-transform: uppercase;
+}
+
+.article-list h2 {
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-color);
+}
+
+.article-list .excerpt {
+  color: var(--text-muted);
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.article-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-lg);
+}
+
+ @media (min-width: 640px) {
+  .article-meta {
+    flex-direction: row;
+    gap: var(--spacing-lg);
+  }
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-item svg {
+    /* Using placeholders for icons, ensure icons are present or use font-icons */
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.cta-button {
+  background-color: var(--cta-bg);
+  color: white;
+  padding: 12px 24px;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cta-button:hover {
+  background-color: var(--cta-hover);
+  box-shadow: var(--shadow-light);
+}
+
+/* --- Category Filters --- */
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-bottom: 40px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: var(--spacing-md);
+}
+
+.category-filter button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  background: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+.category-filter button:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background-color: rgba(228, 0, 43, 0.05);
+}
+
+/* New 'active' state for the selected filter button */
+.category-filter button.active {
+  border-color: var(--accent-color);
+  color: #fff;
+  background-color: var(--accent-color);
+}
+
+/* --- Articles Grid --- */
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.article-card {
+  text-decoration: none;
+  color: var(--text-color);
+  display: block;
+  border: 1px solid var(--border-color);
+  border-radius: var(--spacing-sm);
+  overflow: hidden;
+  background-color: white;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* New 'hidden' state for filtered-out cards */
+.article-card.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+  /* We hide them completely so they don't take up space */
+  display: none;
+}
+
+.article-card:hover {
+  border-color: var(--accent-color);
+  box-shadow: var(--shadow-medium);
+}
+
+.article-card-image {
+  height: 192px; /* h-48 */
+  overflow: hidden;
+  background-color: var(--neutral-color);
+}
+
+.article-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.article-card:hover .article-card-image img {
+  transform: scale(1.05);
+}
+
+.article-card-content {
+  padding: var(--spacing-md);
+}
+
+.article-card .category-label {
+  font-size: var(--font-size-sm);
+  color: var(--accent-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.article-card h3 {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  transition: color 0.3s ease;
+}
+
+.article-card:hover h3 {
+    color: var(--accent-color);
+}
+
+.article-card .card-excerpt {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.article-card .card-meta {
+  display: flex;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+```
+
+### CSS Class Descriptions
+
+#### Main Container
+- `.article-list` - Main container with padding and background color
+- `.container` - Centered container with max-width and padding
+
+#### Featured Article Section
+- `.featured-article-card` - Grid container for featured article with responsive layout
+- `.featured-article-image` - Image container with fixed height
+- `.featured-article-content` - Content area with padding and text styling
+- `.article-category` - Category tag styling with background and border
+
+#### Article List Section
+- `.category-filter` - Horizontal flex container for filter buttons
+- `.category-filter button` - Filter button styling with hover and active states
+- `.category-filter button.active` - Active filter button styling
+- `.articles-grid` - Grid layout for article cards
+- `.article-card` - Individual article card with hover effects
+- `.article-card-image` - Image container for article cards
+- `.article-card-content` - Content area for each card
+- `.category-label` - Category label styling
+- `.article-card h3` - Article title styling with hover effect
+- `.card-excerpt` - Excerpt text styling
+- `.card-meta` - Metadata styling for author and read time
+
+#### Typography & Content
+- `.article-list h2` - Featured article title
+- `.excerpt` - Excerpt text styling
+- `.article-meta` - Container for metadata with responsive layout
+- `.meta-item` - Individual metadata item with flex layout
+- `.cta-button` - Call-to-action button styling with hover effects
+
+#### Responsive Effects
+- Uses responsive breakpoints to adjust layout for different screen sizes
+- Mobile-first approach with media queries for tablets and desktops
+- Hover effects including scaling and color changes
+
+## Dependencies
+
+*   **Sling Model:** `com.voltrux.aem.core.models.ArticleListModel`
+*   **Super Type:** None
+
+## Previewing in AEM
+
+To properly preview the Article List component with live functionality:
+
+### Prerequisites
+- AEM instance running (6.5 or later)
+- Voltrux site structure deployed
+- Sample article content created
+
+### Steps to Preview
+
+1. **Deploy the Component**
+   ```bash
+   # Use your build tool to deploy to AEM
+   mvn clean install -PautoInstallPackage
+   ```
+
+2. **Create or Navigate to a Page**
+   - Go to your site in AEM (e.g., `http://localhost:4502/sites`)
+   - Create a new page or edit an existing one
+   
+3. **Add the Component**
+   - Enter edit mode by clicking the "Edit" button
+   - Drag the "Article List" component from the component panel to your page
+   - Configure using the dialog:
+     - Set the "Root Path for Articles" 
+     - Add desired categories to filter
+
+4. **Preview the Component**
+   - Click "Page Information" → "View as Published" or use Preview mode
+   - Test category filtering by clicking different category buttons
+   - Verify responsive behavior by resizing the browser window
+
+### Troubleshooting Preview Issues
+- If content doesn't appear: Verify that your "Root Path" contains article content
+- If styling is missing: Ensure client libraries are properly configured
+- If filtering doesn't work: Check that the JavaScript is loaded and no console errors exist
+
+### Example Implementation
+
+```html
+<!-- Example usage in a page template -->
+<div class="page-content">
+  <!-- Other components -->
+
+  <!-- Article List Component -->
+  <sly data-sly-resource="${'articlelist-component' @ resourceType='voltrux/components/content/articlelist',
+                          rootPath='/content/voltrux/en/blog',
+                          categories=['Technology', 'Design', 'Engineering']}"></sly>
+
+  <!-- Other components -->
+</div>
+```
+
+### JavaScript Interaction
+
+The component includes JavaScript functionality for category filtering:
+
+```javascript
+// Example JavaScript for category filtering
+document.addEventListener('DOMContentLoaded', function() {
+  const component = document.querySelector('[data-component="article-list"]');
+  const filterButtons = component.querySelectorAll('.category-filter button');
+  const articleCards = component.querySelectorAll('.article-card');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const filterValue = this.getAttribute('data-filter');
+
+      // Update active state
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+
+      // Filter articles
+      articleCards.forEach(card => {
+        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+```
+
+## Component Folder Structure
+
+The Article List component follows the standard AEM component structure:
+
+```
+voltrux/
+└── components/
+    └── content/
+        └── articlelist/
+            ├── .content.xml
+            ├── _cq_dialog/
+            │   └── .content.xml
+            ├── _cq_editConfig.xml
+            ├── articlelist.html
+            └── css/
+                └── articlelist.css
+```
+
+### Component Files Location
+
+- **Server-side files**: Located in the AEM application at `/apps/voltrux/components/content/articlelist`
+- **Client-side assets**: CSS and JavaScript files are typically located in `/etc/clientlibs/voltrux/components/articlelist` or referenced via client library categories
+- **Sling Model**: Located at `com.voltrux.aem.core.models.ArticleListModel`
+
+## Component Implementation Notes
+
+- The component uses Sling Models to fetch and format article data
+- Placeholder images are implemented using placehold.co service for fallback
+- SVG icons are used for consistent iconography
+- Data attributes are added for JavaScript interaction
+- The component includes error handling for missing images
+- CSS classes are organized with BEM methodology for maintainability

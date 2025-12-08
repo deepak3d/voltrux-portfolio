@@ -1,19 +1,76 @@
 /* src/styles/custom.css */
 :root {
-    --voltrux-teal: #008080;
-    --voltrux-teal-darker: #006666; /* Darker teal for accessible contrast on light backgrounds (4.54:1) */
-    --voltrux-teal-rgb: 0, 128, 128;
+    --vxt-voltrux-red: #E4002B; /* Voltrux brand red */
+    --vxt-voltrux-red-darker: #B60022; /* Darker red for accessible contrast */
+    --vxt-voltrux-red-rgb: 228, 0, 43;
 }
 
-/* Light theme uses the darker, more accessible teal for links and accents */
+/* Light theme uses the darker, more accessible red for links and accents */
 [data-theme='light'] {
-    --sl-color-accent-low: rgba(var(--voltrux-teal-rgb), 0.1);
-    --sl-color-accent-high: var(--voltrux-teal-darker);
+    --sl-color-accent-low: rgba(var(--vxt-voltrux-red-rgb), 0.1);
+    --sl-color-accent-high: var(--vxt-voltrux-red-darker);
+
+    /* Ensure active sidebar text is visible */
+    --sl-color-white: #ffffff;
+    --sl-color-gray-1: #f8f9fa;
+    --sl-color-gray-2: #e9ecef;
+    --sl-color-gray-3: #dee2e6;
+    --sl-color-gray-4: #ced4da;
+    --sl-color-gray-5: #adb5bd;
+    --sl-color-gray-6: #6c757d;
+    --sl-color-gray-7: #495057;
+    --sl-color-gray-8: #343a40;
+    --sl-color-gray-9: #212529;
+
+    /* Text colors */
+    --sl-color-text-invert: var(--sl-color-white);
+    --sl-color-text: var(--sl-color-gray-8);
+    --sl-color-text-muted: var(--sl-color-gray-6);
+
+    /* Active sidebar item colors */
+    --sl-sidebar-active-link-text: var(--vxt-voltrux-red-darker);
+    --sl-sidebar-active-link-bg: rgba(var(--vxt-voltrux-red-rgb), 0.1);
 }
 
-/* Dark theme can use the original, brighter teal as it has good contrast on dark backgrounds */
+/* Dark theme can use the original, brighter red as it has good contrast on dark backgrounds */
 [data-theme='dark'] {
-    --sl-color-accent-low: rgba(var(--voltrux-teal-rgb), 0.25);
-    --sl-color-accent-high: var(--voltrux-teal);
+    --sl-color-accent-low: rgba(var(--vxt-voltrux-red-rgb), 0.25);
+    --sl-color-accent-high: var(--vxt-voltrux-red);
+
+    /* Dark theme specific colors */
+    --sl-color-white: #f8f9fa;
+    --sl-color-gray-1: #e9ecef;
+    --sl-color-gray-2: #dee2e6;
+    --sl-color-gray-3: #ced4da;
+    --sl-color-gray-4: #adb5bd;
+    --sl-color-gray-5: #6c757d;
+    --sl-color-gray-6: #495057;
+    --sl-color-gray-7: #343a40;
+    --sl-color-gray-8: #212529;
+    --sl-color-gray-9: #121417;
+
+    /* Text colors */
+    --sl-color-text-invert: var(--sl-color-gray-9);
+    --sl-color-text: var(--sl-color-gray-2);
+    --sl-color-text-muted: var(--sl-color-gray-4);
+
+    /* Active sidebar item colors */
+    --sl-sidebar-active-link-text: var(--vxt-voltrux-red);
+    --sl-sidebar-active-link-bg: rgba(var(--vxt-voltrux-red-rgb), 0.15);
+}
+
+/* Additional sidebar styling for active items */
+.sidebar-content .sidebar-group .sidebar-item.active > .sidebar-link,
+.sidebar-content .sidebar-group .sidebar-link.active {
+    color: var(--sl-sidebar-active-link-text) !important;
+    background-color: var(--sl-sidebar-active-link-bg);
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Ensure text contrast in active sidebar items */
+.sidebar-content .sidebar-group .sidebar-item.active > .sidebar-link *,
+.sidebar-content .sidebar-group .sidebar-link.active * {
+    color: var(--sl-sidebar-active-link-text) !important;
 }
 

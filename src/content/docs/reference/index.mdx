@@ -1,0 +1,319 @@
+---
+title: Project Reference Guide
+description: Comprehensive reference guide for the Voltrux Motors project including standards, conventions, and best practices
+---
+
+# Project Reference Guide
+
+This comprehensive reference guide provides essential information about the Voltrux Motors project including coding standards, architectural principles, best practices, and technical conventions.
+
+## Project Standards
+
+### Naming Conventions
+
+#### Java Classes and Packages
+- **Package names**: `com.voltrux.aem.core` (lowercase, dot-separated)
+- **Class names**: `ArticleListModel` (PascalCase, noun-based)
+- **Method names**: `getArticleList()` (camelCase, verb-based)
+- **Variable names**: `articleTitle` (camelCase, descriptive)
+- **Constants**: `DEFAULT_ARTICLE_COUNT` (UPPER_SNAKE_CASE)
+
+#### AEM Components
+- **Resource type**: `voltrux/components/content/articlelist`
+- **Component folders**: `apps/voltrux/components/content/articlelist`
+- **Dialog path**: `_cq_dialog`
+- **Edit config**: `_cq_editConfig.xml`
+
+#### HTL Templates
+- **File extension**: `.html`
+- **Variable naming**: `articleList` (camelCase)
+- **Data-sly attributes**: `data-sly-test`, `data-sly-list`, etc.
+
+#### CSS Classes
+- **BEM methodology**: `component__element--modifier`
+- **Example**: `article-list__card--featured`
+- **Namespace**: Use `voltrux-` prefix when needed to avoid conflicts
+
+### Code Style Guidelines
+
+#### Java Code Style
+```java
+// Proper formatting for multi-line method calls
+public List<Article> getArticles(String category, 
+                                int offset, 
+                                int limit,
+                                boolean includeSubcategories) {
+    // Proper indentation and spacing
+    if (category == null || category.isEmpty()) {
+        category = "all"; // Default value assignment
+    }
+    
+    // Method implementation
+    return articleRepository.findByCategory(
+        category, 
+        PageRequest.of(offset, limit)
+    );
+}
+```
+
+#### HTL Template Style
+```html
+<!-- Proper formatting for HTL templates -->
+<sly data-sly-use.model="com.voltrux.aem.core.models.ArticleListModel" />
+
+<div class="article-list" data-sly-test="${model.articles.size > 0}">
+    <sly data-sly-list.article="${model.articles}">
+        <article class="article-list__item" data-category="${article.category}">
+            <h2>${article.title @ context='html'}</h2>
+            <p>${article.excerpt @ context='html'}</p>
+        </article>
+    </sly>
+</div>
+
+<!-- Empty state -->
+<div class="article-list__empty" data-sly-test="${!model.articles || model.articles.size == 0}">
+    <p>No articles found.</p>
+</div>
+```
+
+#### CSS Style
+```css
+/* Proper CSS formatting with BEM methodology */
+.article-list {
+    padding: 2rem 0;
+    background-color: var(--neutral-color);
+}
+
+.article-list__item {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.article-list__item--featured {
+    border-color: var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.article-list__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+```
+
+## Architecture Principles
+
+### Separation of Concerns
+- **Presentation Layer**: HTL templates for structure, CSS for styling
+- **Business Logic**: Sling Models for data processing
+- **Data Access**: JPA repositories or direct JCR access
+- **Controllers**: Servlets for complex server-side operations
+
+### AEM-Specific Architecture
+- **Component-Based**: Reusable, self-contained components
+- **Template-Based**: Consistent page layouts through templates
+- **Content-First**: Focus on structured content management
+- **Cloud-Ready**: Architecture supports both AEM as a Cloud Service and traditional AEM
+
+### Frontend Architecture
+- **Progressive Enhancement**: Core functionality works without JavaScript
+- **Component-First**: Atomic design principles
+- **Performance Focused**: Optimized asset delivery and caching
+- **Mobile-First**: Responsive design approach
+
+## Development Workflow
+
+### Feature Development Process
+1. **Research**: Understand requirements and existing code
+2. **Design**: Plan component structure and interactions
+3. **Implement**: Write code following project standards
+4. **Test**: Write unit tests and perform manual testing
+5. **Review**: Submit pull request for code review
+6. **Deploy**: Merge to develop after approval
+
+### Code Review Checklist
+- [ ] Code follows project style guidelines
+- [ ] New functionality is properly tested
+- [ ] Security considerations are addressed
+- [ ] Performance impacts are minimal
+- [ ] Documentation is updated if needed
+- [ ] No breaking changes introduced
+- [ ] Code is maintainable and readable
+
+### Testing Strategy
+- **Unit Tests**: Test individual methods and classes
+- **Integration Tests**: Test component interactions
+- **End-to-End Tests**: Test user journeys
+- **Performance Tests**: Measure page load times and resource usage
+- **Security Tests**: Validate input sanitization and access controls
+
+## Technical Standards
+
+### Security Best Practices
+- **Input Validation**: Always validate and sanitize user input
+- **Output Encoding**: Use proper context encoding in HTL
+- **Authentication**: Implement proper session management
+- **Authorization**: Check permissions before accessing resources
+- **CSRF Protection**: Use AEM's built-in CSRF protection
+- **XSS Prevention**: Validate and encode all dynamic content
+
+### Performance Optimization
+- **Component Caching**: Use AEM's caching mechanisms appropriately
+- **Client Libraries**: Minimize and optimize CSS/JS delivery
+- **Image Optimization**: Use proper formats and lazy loading
+- **Query Optimization**: Optimize JCR queries for performance
+- **Resource Loading**: Implement proper resource preloading
+
+### Accessibility Standards
+- **WCAG 2.1 AA**: Follow accessibility guidelines
+- **Semantic HTML**: Use proper HTML elements
+- **ARIA Labels**: Provide proper screen reader support
+- **Keyboard Navigation**: Ensure full keyboard operability
+- **Color Contrast**: Maintain proper contrast ratios
+
+## Deployment Standards
+
+### Package Structure
+```
+voltrux-all/
+├── apps/
+│   ├── voltrux/
+│   │   ├── components/
+│   │   ├── templates/
+│   │   └── clientlibs/
+├── config/
+│   └── org.apache.sling.caconfig...
+├── content/
+│   └── home/
+└── libs/ (optional overlays)
+```
+
+### Client Library Categories
+- `voltrux.dependencies`: Third-party libraries
+- `voltrux.core`: Core JavaScript and CSS
+- `voltrux.components`: Component-specific code
+- `voltrux.editor`: Authoring-specific code (not loaded on publish)
+
+### OSGi Services
+- Use proper service interfaces
+- Implement lifecycle methods properly
+- Use DS annotations for component registration
+- Handle service dependencies gracefully
+
+## Error Handling
+
+### Exception Handling Strategy
+```java
+@Model(adaptables = SlingHttpServletRequest.class, adapters = ArticleListModel.class)
+public class ArticleListModel {
+    private static final Logger LOG = LoggerFactory.getLogger(ArticleListModel.class);
+    
+    @PostConstruct
+    protected void initModel() {
+        try {
+            articles = loadArticles();
+        } catch (RepositoryException e) {
+            LOG.error("Failed to load articles", e);
+            articles = Collections.emptyList(); // Default value on error
+        }
+    }
+}
+```
+
+### Logging Standards
+- **DEBUG**: Detailed diagnostic information
+- **INFO**: General operational information
+- **WARN**: Potential issues that don't stop operation
+- **ERROR**: Errors that affect functionality
+- **FATAL**: Critical errors that stop operation
+
+## AEM Specific Conventions
+
+### Sling Models Best Practices
+- Use appropriate injection annotations
+- Implement proper initialization in @PostConstruct
+- Handle null values gracefully
+- Cache expensive operations when appropriate
+- Use Optional for nullable return types
+
+### HTL Expression Language
+- Use context-aware escaping: `${property @ context='html'}`
+- Prefer data-sly attributes over inline scripts
+- Use predicates appropriately: `data-sly-test="${condition}"`
+- Use list and resource inclusion effectively
+
+### Component Design
+- Make components configurable through dialogs
+- Ensure components work in different contexts
+- Follow responsive design principles
+- Implement proper fallback content
+- Use AEM's built-in features appropriately
+
+## Quality Assurance
+
+### Code Quality Metrics
+- **Test Coverage**: Maintain >80% code coverage
+- **Code Complexity**: Keep complexity below 10 per method
+- **Duplication**: Minimize code duplication
+- **Maintainability**: Ensure code is easily maintainable
+
+### Performance Benchmarks
+- **Page Load Time**: &lt;3 seconds on 3G connection
+- **DOM Size**: &lt;1500 nodes for optimal performance
+- **Resource Size**: Minimize JavaScript and CSS bundle sizes
+- **Server Response Time**: &lt;500ms for API calls
+
+## Troubleshooting
+
+### Common Issues and Solutions
+
+#### Component Not Rendering
+- Check resource type configuration
+- Verify JCR node structure
+- Validate HTL template syntax
+- Check Sling Model implementation
+
+#### Performance Issues
+- Analyze client library dependencies
+- Review AEM dispatcher configuration
+- Optimize JCR queries
+- Implement proper caching strategies
+
+#### Security Vulnerabilities
+- Ensure proper input validation
+- Verify output encoding
+- Check permission configurations
+- Validate third-party library versions
+
+## Versioning and Dependencies
+
+### Semantic Versioning
+- **MAJOR**: Breaking changes that require manual migration
+- **MINOR**: New features, backwards-compatible
+- **PATCH**: Bug fixes, backwards-compatible
+
+### Dependency Management
+- Use Maven for Java dependencies
+- Keep dependencies up-to-date
+- Monitor security vulnerabilities
+- Use only approved third-party libraries
+
+## Documentation Standards
+
+### Component Documentation
+Each component should include:
+- Purpose and functionality description
+- Configuration options and parameters
+- Code examples and usage patterns
+- Test and validation procedures
+
+### API Documentation
+- Clear endpoint descriptions
+- Parameter and response documentation
+- Authentication requirements
+- Error response codes and messages
+
+This reference guide serves as the definitive source for standards, conventions, and best practices for the Voltrux Motors project, ensuring consistency and quality across all development efforts.

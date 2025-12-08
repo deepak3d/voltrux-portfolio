@@ -1,0 +1,366 @@
+---
+title: Sling Models
+description: Comprehensive guide for Sling Models implementation in Voltrux Motors
+---
+
+# Sling Models
+
+This document provides a comprehensive overview of Sling Models utilized in the Voltrux Motors project. Sling Models are a core part of the AEM architecture, providing Java-based business logic to HTL components.
+
+## Overview
+
+Sling Models provide a way to encapsulate business logic in Java POJOs (Plain Old Java Objects) that can be easily accessed from HTL (HTML Template Language) scripts. They offer type-safe access to JCR content and can be used to implement complex business logic separate from presentation.
+
+## Core Sling Models
+
+### ArticleListModel
+
+The `ArticleListModel` is used by the Article List component to retrieve and process article content.
+
+#### Package and Class
+```java
+package com.voltrux.aem.core.models;
+
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+
+@Model(adaptables = SlingHttpServletRequest.class, adapters = ArticleListModel.class, resourceType = "voltrux/components/content/articlelist")
+public class ArticleListModel {
+
+    @SlingObject
+    private SlingHttpServletRequest request;
+
+    @ValueMapValue
+    @Default(values = "/content/dam")
+    private String rootPath;
+
+    @ValueMapValue
+    @Default(values = "All")
+    private String[] categories;
+
+    private List<Article> articles;
+    private List<Category> categoriesList;
+
+    @PostConstruct
+    protected void initModel() {
+        // Initialize the model and load articles from JCR
+        loadArticles();
+        processCategories();
+    }
+
+    // Getters for properties used in HTL
+    public List<Article> getArticles() { return articles; }
+    public List<Category> getCategories() { return categoriesList; }
+    public String getRootPath() { return rootPath; }
+}
+```
+
+#### Article Inner Class
+```java
+public class Article {
+    private String title;
+    private String excerpt;
+    private String author;
+    private String date;
+    private String readTime;
+    private String path;
+    private String imageSrc;
+    private String category;
+    private String categorySlug;
+
+    // Getters and setters
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    // ... other getters and setters
+}
+```
+
+### TestDriveFormModel
+
+The `TestDriveFormModel` provides data and configuration for the Test Drive Form component.
+
+#### Package and Class
+```java
+package com.voltrux.aem.core.models;
+
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+
+@Model(adaptables = SlingHttpServletRequest.class, adapters = TestDriveFormModel.class, resourceType = "voltrux/components/content/testdriveform")
+public class TestDriveFormModel {
+
+    @SlingObject
+    private SlingHttpServletRequest request;
+
+    @ValueMapValue
+    @Default(values = "Book Your Test Drive")
+    private String title;
+
+    @ValueMapValue
+    @Default(values = "Select your preferred model and time slot")
+    private String subtitle;
+
+    @ValueMapValue
+    @Default(values = "/bin/voltrux/testdrive")
+    private String servletPath;
+
+    @ValueMapValue
+    @Default(values = "Thank you! Your test drive request has been submitted successfully.")
+    private String successMessage;
+
+    @ValueMapValue
+    @Default(values = "Why Test Drive a Voltrux?")
+    private String whyTitle;
+
+    private List<DropdownOption> locations;
+    private List<DropdownOption> models;
+    private List<DropdownOption> times;
+    private List<String> whyItems;
+
+    @PostConstruct
+    protected void initModel() {
+        // Initialize form options and content
+        loadFormOptions();
+        loadWhyItems();
+    }
+
+    // Getters
+    public String getTitle() { return title; }
+    public String getSubtitle() { return subtitle; }
+    public String getServletPath() { return servletPath; }
+    public String getSuccessMessage() { return successMessage; }
+    public String getWhyTitle() { return whyTitle; }
+    public List<DropdownOption> getLocations() { return locations; }
+    public List<DropdownOption> getModels() { return models; }
+    public List<DropdownOption> getTimes() { return times; }
+    public List<String> getWhyItems() { return whyItems; }
+    
+    // Get CSRF token for form security
+    public String getCsrfToken() {
+        // Implementation to retrieve CSRF token
+        return request.getResourceResolver().adaptTo(CsrfToken.class).getToken();
+    }
+}
+```
+
+### HeaderModel
+
+The `HeaderModel` provides data for the Header component including navigation links and branding information.
+
+#### Package and Class
+```java
+package com.voltrux.aem.core.models;
+
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.Default;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+
+@Model(adaptables = SlingHttpServletRequest.class, adapters = HeaderModel.class, resourceType = "voltrux/components/structure/header")
+public class HeaderModel {
+
+    @SlingObject
+    private SlingHttpServletRequest request;
+
+    @ValueMapValue
+    @Default(values = "Voltrux Motors")
+    private String brandName;
+
+    @ValueMapValue
+    @Default(values = "/content/dam/logo.png")
+    private String logoPath;
+
+    @ValueMapValue
+    @Default(values = "Voltrux Motors Logo")
+    private String logoAltText;
+
+    @ValueMapValue
+    @Default(values = "/dealers")
+    private String ctaLink;
+
+    @ValueMapValue
+    @Default(values = "Find a Dealer")
+    private String ctaText;
+
+    private List<NavLink> navLinks;
+
+    @PostConstruct
+    protected void initModel() {
+        // Initialize navigation links and header content
+        loadNavigationLinks();
+    }
+
+    // Getters
+    public String getBrandName() { return brandName; }
+    public String getLogoPath() { return logoPath; }
+    public String getLogoAltText() { return logoAltText; }
+    public String getCtaLink() { return ctaLink; }
+    public String getCtaText() { return ctaText; }
+    public List<NavLink> getNavLinks() { return navLinks; }
+}
+```
+
+## Model Annotations
+
+### @Model Annotation
+The `@Model` annotation defines the Sling Model and specifies its adaptable types, adapter classes, and resource type.
+
+```java
+@Model(
+    adaptables = SlingHttpServletRequest.class,  // What objects can this model adapt from
+    adapters = MyModel.class,                    // What interfaces/classes this model provides
+    resourceType = "my-project/components/my-component", // Component resource type
+    defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL // Injection strategy
+)
+```
+
+### Common Injectors
+
+#### @ValueMapValue
+Injects values from the resource's ValueMap (properties stored in JCR).
+
+```java
+@ValueMapValue
+@Default(values = "Default Value")
+private String myProperty;
+```
+
+#### @SlingObject
+Injects Sling API objects such as SlingHttpServletRequest, Resource, or ResourceResolver.
+
+```java
+@SlingObject
+private SlingHttpServletRequest request;
+```
+
+#### @Self
+Injects the current object (typically the SlingHttpServletRequest).
+
+```java
+@Self
+private SlingHttpServletRequest request;
+```
+
+#### @ScriptVariable
+Injects variables that are available in the current script scope.
+
+```java
+@ScriptVariable
+private Page currentPage;
+```
+
+## Best Practices
+
+### 1. Keep Models Focused
+- Each model should have a single responsibility
+- Models should correspond to specific components
+- Avoid overly complex models with too many responsibilities
+
+### 2. Use Proper Error Handling
+```java
+@PostConstruct
+protected void initModel() {
+    try {
+        // Initialize model properties
+        loadContent();
+    } catch (Exception e) {
+        // Log error and set default values
+        LOG.error("Error initializing model", e);
+        setDefaultValues();
+    }
+}
+```
+
+### 3. Cache Expensive Operations
+```java
+private List<Article> cachedArticles;
+
+private List<Article> getArticles() {
+    if (cachedArticles == null) {
+        cachedArticles = loadArticles();
+    }
+    return cachedArticles;
+}
+```
+
+### 4. Use Optional for Nullable Values
+```java
+@ValueMapValue
+private Optional<String> optionalProperty;
+
+public String getOptionalProperty() {
+    return optionalProperty.orElse("default value");
+}
+```
+
+## Dependencies
+
+- **Sling Models API**: Core dependency for creating Sling Models
+- **OSGi Annotations**: For component registration
+- **Sling Core**: For Sling-specific functionality
+- **JCR API**: For JCR content access
+- **SLF4J**: For logging
+
+## Testing Sling Models
+
+Sling Models should be unit tested to ensure proper functionality:
+
+```java
+@ExtendWith({SlingMockitoExtension.class})
+class ArticleListModelTest {
+
+    @Mock
+    private SlingHttpServletRequest request;
+
+    @Mock
+    private Resource resource;
+
+    @InjectMocks
+    private ArticleListModel model;
+
+    @Test
+    void shouldInitializeModel() {
+        // Set up mocks and test model initialization
+        when(request.getResource()).thenReturn(resource);
+        // Add more mock behavior as needed
+        
+        // Verify behavior
+        model.initModel();
+        assertNotNull(model.getArticles());
+    }
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Model Not Found**: Verify the resourceType in the @Model annotation matches the component's resource type.
+2. **Dependency Injection Failures**: Check that the required objects are available in the execution context.
+3. **Performance Issues**: Avoid expensive operations in getters; use caching when appropriate.
+4. **Null Pointer Exceptions**: Use Optional or defensive coding practices.
+
+## Security Considerations
+
+- Validate and sanitize all user inputs accessed through models
+- Implement proper access control checks
+- Follow OWASP security guidelines for AEM applications
+- Use CSRF tokens for form submissions
+
+This comprehensive overview covers the essential Sling Models used in the Voltrux Motors project, their implementations, and best practices for development and maintenance.

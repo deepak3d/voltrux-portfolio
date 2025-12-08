@@ -1,0 +1,271 @@
+/* Voltrux Article List Component Styles for Preview */
+
+.article-list {
+  padding: 40px 0;
+  background-color: #F2F2F2; /* neutral-color */
+}
+
+.article-list .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- Featured Article Section --- */
+
+.featured-article-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 60px;
+  background-color: #fff;
+  border: 1px solid #E0E0E0; /* border-color */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.featured-article-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .featured-article-card {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+}
+
+.featured-article-image {
+  height: 300px;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .featured-article-image {
+    height: auto;
+  }
+}
+
+.featured-article-content {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .featured-article-content {
+    padding: 40px 60px;
+  }
+}
+
+.article-category {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: rgba(228, 0, 43, 0.1);
+  border: 1px solid #E4002B; /* accent-color */
+  border-radius: 4px;
+  color: #E4002B; /* accent-color */
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.article-list h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1A1A1A; /* primary-color */
+}
+
+.article-list .excerpt {
+  color: #666; /* text-muted */
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.article-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  color: #666; /* text-muted */
+  margin-bottom: 20px;
+}
+
+@media (min-width: 640px) {
+  .article-meta {
+    flex-direction: row;
+    gap: 20px;
+  }
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-item svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.cta-button {
+  background-color: #E4002B; /* cta-bg */
+  color: white;
+  padding: 12px 24px;
+  font-weight: 700;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cta-button:hover {
+  background-color: #B60022; /* cta-hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Category Filters --- */
+
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #E0E0E0; /* border-color */
+  padding-bottom: 15px;
+}
+
+.category-filter button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 1px solid #E0E0E0; /* border-color */
+  color: #1A1A1A; /* text-color */
+  background: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 600;
+  background-color: #fff;
+}
+
+.category-filter button:hover {
+  border-color: #E4002B; /* accent-color */
+  color: #E4002B; /* accent-color */
+  background-color: rgba(228, 0, 43, 0.05);
+}
+
+/* New 'active' state for the selected filter button */
+.category-filter button.active {
+  border-color: #E4002B; /* accent-color */
+  color: #fff;
+  background-color: #E4002B; /* accent-color */
+}
+
+/* --- Articles Grid --- */
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.article-card {
+  text-decoration: none;
+  color: #1A1A1A; /* text-color */
+  display: block;
+  border: 1px solid #E0E0E0; /* border-color */
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* New 'hidden' state for filtered-out cards */
+.article-card.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  border: none;
+  /* We hide them completely so they don't take up space */
+  display: none;
+}
+
+.article-card:hover {
+  border-color: #E4002B; /* accent-color */
+  box-shadow: 0 4px 10px rgba(228, 0, 43, 0.2);
+}
+
+.article-card-image {
+  height: 192px;
+  overflow: hidden;
+  background-color: #F2F2F2; /* neutral-color */
+}
+
+.article-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.article-card:hover .article-card-image img {
+  transform: scale(1.05);
+}
+
+.article-card-content {
+  padding: 15px;
+}
+
+.article-card .category-label {
+  font-size: 14px;
+  color: #E4002B; /* accent-color */
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.article-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  transition: color 0.3s ease;
+}
+
+.article-card:hover h3 {
+    color: #E4002B; /* accent-color */
+}
+
+.article-card .card-excerpt {
+  color: #666; /* text-muted */
+  font-size: 14px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.article-card .card-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+  color: #666; /* text-muted */
+}

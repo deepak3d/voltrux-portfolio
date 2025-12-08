@@ -1,0 +1,562 @@
+---
+title: OSGi Configurations
+description: Comprehensive guide for OSGi configurations in Voltrux Motors
+---
+
+# OSGi Configurations
+
+This document provides a comprehensive overview of OSGi configurations utilized in the Voltrux Motors project. OSGi configurations allow for dynamic, runtime configuration of AEM components and services without requiring code changes.
+
+## Overview
+
+OSGi configurations in AEM provide a powerful way to configure services and components dynamically. They allow developers to externalize configuration parameters, making applications more flexible and easier to maintain across different environments.
+
+## Configuration Types
+
+### Factory Configurations
+
+Factory configurations allow creating multiple instances of the same configuration type:
+
+#### Example: Email Service Configuration Factory
+```json
+// apps/voltrux/config/com.voltrux.aem.core.email.EmailService~us.json
+{
+  "enabled": true,
+  "smtpHost": "smtp.voltrux.com",
+  "smtpPort": 587,
+  "fromAddress": "noreply@voltrux-motors.com",
+  "fromName": "Voltrux Motors US",
+  "region": "US",
+  "useSSL": true,
+  "connectionTimeout": 10000
+}
+```
+
+```json
+// apps/voltrux/config/com.voltrux.aem.core.email.EmailService~eu.json
+{
+  "enabled": true,
+  "smtpHost": "smtp-eu.voltrux.com",
+  "smtpPort": 587,
+  "fromAddress": "noreply@voltrux-motors.eu",
+  "fromName": "Voltrux Motors EU",
+  "region": "EU",
+  "useSSL": true,
+  "connectionTimeout": 10000
+}
+```
+
+### Service Configurations
+
+Service configurations apply to specific OSGi services:
+
+#### Example: Article Search Service Configuration
+```json
+// apps/voltrux/config/com.voltrux.aem.core.services.ArticleSearchService.json
+{
+  "enabled": true,
+  "defaultResultsPerPage": 12,
+  "maxResultsPerPage": 50,
+  "defaultSortField": "articleDate",
+  "defaultSortOrder": "desc",
+  "searchFields": [
+    "articleTitle",
+    "articleDescription",
+    "articleTags",
+    "articleCategory"
+  ],
+  "resultTemplatePath": "/content/voltrux/templates/article-list",
+  "cacheExpirySeconds": 300,
+  "includeSubcategories": true
+}
+```
+
+## Core Configuration Examples
+
+### Content Services Configuration
+
+#### Article List Service Configuration
+```java
+package com.voltrux.aem.core.config;
+
+import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+
+@ObjectClassDefinition(
+    name = "Voltrux Article List Service Configuration",
+    description = "Configuration for Article List service"
+)
+public @interface ArticleListServiceConfig {
+    
+    @AttributeDefinition(
+        name = "Number of articles to fetch",
+        description = "Maximum number of articles to retrieve in a single request"
+    )
+    int maxArticles() default 10;
+    
+    @AttributeDefinition(
+        name = "Default category",
+        description = "Default category to use when none is specified"
+    )
+    String defaultCategory() default "all";
+    
+    @AttributeDefinition(
+        name = "Cache duration (seconds)",
+        description = "Duration in seconds to cache article lists"
+    )
+    int cacheDuration() default 300;
+    
+    @AttributeDefinition(
+        name = "Enable category filtering",
+        description = "Whether to enable category filtering functionality"
+    )
+    boolean enableFiltering() default true;
+    
+    @AttributeDefinition(
+        name = "Filter fields",
+        description = "List of fields available for filtering"
+    )
+    String[] filterFields() default {"category", "author", "date"};
+}
+```
+
+#### Implementation using the Configuration
+```java
+package com.voltrux.aem.core.services.impl;
+
+import com.voltrux.aem.core.config.ArticleListServiceConfig;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.metatype.annotations.Designate;
+
+@Component(
+    immediate = true,
+    service = ArticleListService.class
+)
+@Designate(ocd = ArticleListServiceConfig.class)
+public class ArticleListServiceImpl implements ArticleListService {
+    
+    private int maxArticles;
+    private String defaultCategory;
+    private int cacheDuration;
+    private boolean enableFiltering;
+    private String[] filterFields;
+    
+    @Activate
+    @Modified
+    protected void activate(ArticleListServiceConfig config) {
+        this.maxArticles = config.maxArticles();
+        this.defaultCategory = config.defaultCategory();
+        this.cacheDuration = config.cacheDuration();
+        this.enableFiltering = config.enableFiltering();
+        this.filterFields = config.filterFields();
+    }
+    
+    // Service implementation using the configuration values
+    @Override
+    public List<Article> getArticles(String category, int offset, int limit) {
+        int actualLimit = Math.min(limit, maxArticles);
+        // Implementation using configuration values
+        return fetchArticles(category, offset, actualLimit);
+    }
+    
+    @Override
+    public boolean isFilteringEnabled() {
+        return enableFiltering;
+    }
+    
+    @Override
+    public String[] getFilterFields() {
+        return filterFields;
+    }
+}
+```
+
+### Email Service Configuration
+
+#### Email Service Configuration Interface
+```java
+package com.voltrux.aem.core.config;
+
+import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+
+@ObjectClassDefinition(
+    name = "Voltrux Email Service Configuration",
+    description = "Configuration for Email Service"
+)
+public @interface EmailServiceConfig {
+    
+    @AttributeDefinition(
+        name = "SMTP Host",
+        description = "SMTP server host address"
+    )
+    String smtpHost() default "localhost";
+    
+    @AttributeDefinition(
+        name = "SMTP Port",
+        description = "SMTP server port"
+    )
+    int smtpPort() default 25;
+    
+    @AttributeDefinition(
+        name = "SMTP Username",
+        description = "Username for SMTP authentication"
+    )
+    String smtpUsername() default "";
+    
+    @AttributeDefinition(
+        name = "SMTP Password",
+        description = "Password for SMTP authentication"
+    )
+    String smtpPassword() default "";
+    
+    @AttributeDefinition(
+        name = "From Address",
+        description = "Default 'From' email address"
+    )
+    String fromAddress() default "noreply@voltrux-motors.com";
+    
+    @AttributeDefinition(
+        name = "From Name",
+        description = "Default 'From' name"
+    )
+    String fromName() default "Voltrux Motors";
+    
+    @AttributeDefinition(
+        name = "Enable SSL",
+        description = "Enable SSL for SMTP connection"
+    )
+    boolean enableSSL() default false;
+    
+    @AttributeDefinition(
+        name = "Connection Timeout",
+        description = "Connection timeout in milliseconds"
+    )
+    int connectionTimeout() default 10000;
+    
+    @AttributeDefinition(
+        name = "Socket Timeout",
+        description = "Socket timeout in milliseconds"
+    )
+    int socketTimeout() default 10000;
+}
+```
+
+#### Email Service Implementation
+```java
+package com.voltrux.aem.core.email;
+
+import com.voltrux.aem.core.config.EmailServiceConfig;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.metatype.annotations.Designate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
+@Component(
+    immediate = true,
+    service = EmailService.class
+)
+@Designate(ocd = EmailServiceConfig.class)
+public class EmailServiceImpl implements EmailService {
+    
+    private static final Logger LOG = LoggerFactory.getLogger(EmailServiceImpl.class);
+    
+    private String smtpHost;
+    private int smtpPort;
+    private String smtpUsername;
+    private String smtpPassword;
+    private String fromAddress;
+    private String fromName;
+    private boolean enableSSL;
+    private int connectionTimeout;
+    private int socketTimeout;
+    
+    private Session session;
+    
+    @Activate
+    @Modified
+    protected void activate(EmailServiceConfig config) {
+        this.smtpHost = config.smtpHost();
+        this.smtpPort = config.smtpPort();
+        this.smtpUsername = config.smtpUsername();
+        this.smtpPassword = config.smtpPassword();
+        this.fromAddress = config.fromAddress();
+        this.fromName = config.fromName();
+        this.enableSSL = config.enableSSL();
+        this.connectionTimeout = config.connectionTimeout();
+        this.socketTimeout = config.socketTimeout();
+        
+        this.session = createSession();
+    }
+    
+    private Session createSession() {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.port", String.valueOf(smtpPort));
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", String.valueOf(enableSSL));
+        props.put("mail.smtp.connectiontimeout", String.valueOf(connectionTimeout));
+        props.put("mail.smtp.timeout", String.valueOf(socketTimeout));
+        
+        return Session.getInstance(props, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(smtpUsername, smtpPassword);
+            }
+        });
+    }
+    
+    @Override
+    public boolean sendEmail(String to, String subject, String content) {
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(fromAddress, fromName));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setContent(content, "text/html; charset=utf-8");
+            
+            Transport.send(message);
+            LOG.info("Email sent successfully to: {}", to);
+            return true;
+        } catch (Exception e) {
+            LOG.error("Failed to send email to: {}", to, e);
+            return false;
+        }
+    }
+}
+```
+
+### Cache Configuration
+
+#### Cache Service Configuration
+```json
+// apps/voltrux/config/com.voltrux.aem.core.cache.CacheService.json
+{
+  "enabled": true,
+  "defaultExpiry": 300,
+  "maxSize": 1000,
+  "regions": [
+    "article-cache",
+    "product-cache",
+    "navigation-cache"
+  ],
+  "regionExpiries": {
+    "article-cache": 600,
+    "product-cache": 900,
+    "navigation-cache": 1800
+  },
+  "evictionStrategy": "LRU",
+  "enableStatistics": true
+}
+```
+
+## Configuration Management
+
+### Environment-Specific Configurations
+
+Different configurations for different environments:
+
+#### Development Environment
+```json
+// apps/voltrux/config.author/com.voltrux.aem.core.config.DevelopmentConfig.json
+{
+  "environment": "development",
+  "loggingLevel": "DEBUG",
+  "enableCache": false,
+  "logSlowQueries": true,
+  "maxConcurrentUsers": 50
+}
+```
+
+#### Production Environment
+```json
+// apps/voltrux/config.publish/com.voltrux.aem.core.config.ProductionConfig.json
+{
+  "environment": "production",
+  "loggingLevel": "INFO",
+  "enableCache": true,
+  "cacheSize": 10000,
+  "maxConcurrentUsers": 1000
+}
+```
+
+### Configuration Validation
+
+Implement configuration validation to ensure values are within acceptable ranges:
+
+```java
+package com.voltrux.aem.core.config;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.propertytypes.ServiceRanking;
+
+@Component(
+    service = org.osgi.service.cm.ConfigurationListener.class
+)
+@ServiceRanking(-1000)
+public class ConfigurationValidator implements org.osgi.service.cm.ConfigurationListener {
+    
+    @Override
+    public void configurationEvent(org.osgi.service.cm.ConfigurationEvent event) {
+        if (event.getType() == org.osgi.service.cm.ConfigurationEvent.CM_UPDATED) {
+            validateConfiguration(event.getPid());
+        }
+    }
+    
+    private void validateConfiguration(String pid) {
+        // Implementation to validate configuration values
+        // Could check ranges, required values, etc.
+    }
+}
+```
+
+## Best Practices
+
+### 1. Use Descriptive Names
+Configuration property names should be clear and descriptive:
+
+```java
+@AttributeDefinition(
+    name = "Maximum number of articles to display",
+    description = "The maximum number of articles to fetch and display in the list component"
+)
+int maxArticles() default 10;
+```
+
+### 2. Provide Good Defaults
+Always provide sensible default values:
+
+```java
+@AttributeDefinition(
+    name = "Cache expiration time",
+    description = "Number of seconds after which cached data expires"
+)
+int cacheExpirySeconds() default 300; // 5 minutes default
+```
+
+### 3. Validate Configuration Values
+Implement validation logic to ensure configuration values are within acceptable ranges:
+
+```java
+@Component(service = Runnable.class)
+public class ConfigValidationService implements Runnable {
+    
+    @Reference
+    private ConfigurationAdmin configAdmin;
+    
+    @Override
+    public void run() {
+        validateConfigurations();
+    }
+    
+    private void validateConfigurations() {
+        try {
+            Configuration[] configs = configAdmin.listConfigurations("(service.factoryPid=*)");
+            for (Configuration config : configs) {
+                validateConfiguration(config.getProperties());
+            }
+        } catch (Exception e) {
+            LOG.error("Error validating configurations", e);
+        }
+    }
+    
+    private void validateConfiguration(Dictionary<String, Object> properties) {
+        // Validate individual configuration properties
+        if (properties.get("maxArticles") != null) {
+            int maxArticles = ((Integer) properties.get("maxArticles")).intValue();
+            if (maxArticles < 1 || maxArticles > 100) {
+                LOG.warn("Invalid maxArticles value: {}. Should be between 1 and 100.", maxArticles);
+            }
+        }
+    }
+}
+```
+
+### 4. Secure Sensitive Data
+For sensitive information like passwords, use encrypted storage:
+
+```java
+@AttributeDefinition(
+    name = "Database password",
+    description = "Password for database connection (encrypted)",
+    isPassword = true
+)
+String dbPassword() default "";
+```
+
+### 5. Document Configuration Impact
+Clearly document how each configuration parameter affects system behavior:
+
+```java
+@AttributeDefinition(
+    name = "Article query batch size",
+    description = "Number of articles to fetch in each batch when querying. " +
+                 "Larger values improve performance but use more memory. " +
+                 "Recommended values: 10-50 for production, 5-10 for development."
+)
+int queryBatchSize() default 20;
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Configuration Not Applied**: Verify that the configuration PID matches the service annotation
+2. **Property Type Mismatches**: Ensure configuration values match the expected Java types
+3. **Factory Configurations Not Working**: Check that the factory PID follows the correct naming pattern
+4. **Configuration Values Ignored**: Verify that the @Designate annotation points to the correct configuration interface
+
+### Debugging Configurations
+
+Enable debug logging for OSGi configuration:
+
+```bash
+# Set log level for configuration debugging
+org.apache.felix.configadmin=DEBUG
+org.apache.sling.caconfig=DEBUG
+```
+
+### Configuration Status Check
+
+You can check configuration status through the AEM Web Console:
+
+- Navigate to `http://localhost:4502/system/console/configMgr`
+- Look for your service configurations
+- Verify that they are in "Active" state
+
+## Migration Strategies
+
+### Migrating Configuration Between Environments
+
+Use AEM's configuration packages to migrate configurations between environments:
+
+1. Create a package containing your configuration nodes
+2. Install the package on the target environment
+3. Verify that the configurations are properly applied
+
+### Configuration Versioning
+
+Implement a versioning strategy for your configurations:
+
+```json
+{
+  "configVersion": "1.2.0",
+  "featureFlags": [
+    "enableAdvancedSearch",
+    "showBetaFeatures"
+  ],
+  "maxResults": 20,
+  "enableCaching": true
+}
+```
+
+This comprehensive overview covers the essential OSGi configuration implementations used in the Voltrux Motors project, their implementations, and best practices for development, security, and maintenance.

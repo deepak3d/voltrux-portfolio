@@ -1,0 +1,582 @@
+---
+title: Test Drive Form Component
+description: Comprehensive guide for the Test Drive Form component in Voltrux Motors
+---
+
+import TestDriveFormPreview from '../../../components/TestDriveFormPreview.jsx';
+
+This document provides a detailed overview of the `testdriveform` component, which allows users to schedule test drives for Voltrux vehicles.
+
+## Component Preview
+
+### Live Preview
+
+Here's a live preview of the Test Drive Form component (interactive version):
+
+<TestDriveFormPreview />
+
+The Test Drive Form component includes:
+- A comprehensive form for user information
+- Dropdown selections for location, model, and time
+- Informational section highlighting benefits of test driving
+- Responsive design that works on all devices
+- Form validation and submission feedback
+
+### Visual Mockup
+
+Here's a detailed representation of the component when rendered in a browser:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                        VOLTRUX TEST DRIVE FORM                                │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  BOOK YOUR TEST DRIVE                                │  WHY TEST DRIVE A        │
+│                                                       │  VOLTRUX?               │
+│  First Name*                                         │                          │
+│  [_______________________]                           │  ✓ Experience cutting-   │
+│                                                      │    edge technology      │
+│  Last Name*                                          │                          │
+│  [_______________________]                           │  ✓ Feel the power of     │
+│                                                      │    premium electric     │
+│  Email*                                              │    engines              │
+│  [_______________________]                           │                          │
+│                                                      │  ✓ Explore luxury        │
+│  Phone                                               │    features designed    │
+│  [_______________________]                           │    for comfort          │
+│                                                      │                          │
+│  Preferred Location*                                 │  ✓ Discover revolutionary│
+│  ▼ [Downtown Showroom     ]                         │    safety systems       │
+│                                                      │                          │
+│  Preferred Model*                                    │  ✓ Test autonomous       │
+│  ▼ [Voltrux V-8         ]                           │    driving capabilities │
+│                                                      │                          │
+│  Preferred Time*                                     │  CONTACT & LOCATION      │
+│  ▼ [10:00 AM            ]                           │  INFO                    │
+│                                                      │  For any questions,      │
+│                                                      │  please contact us at    │
+│  [ BOOK NOW ]                                        │  (555) 123-4567 or visit │
+│                                                      │  any of our locations    │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Dependencies
+
+- **Sling Model:** `com.voltrux.aem.core.models.TestDriveFormModel`
+- **Super Type:** None
+
+## Files
+
+### .content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          jcr:primaryType="cq:Component"
+          jcr:title="Test Drive Component"
+          componentGroup="Voltrux Motors - Content"/>
+```
+
+### _cq_dialog/.content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Test Drive Form Properties"
+          sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                    maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <!-- Tab 1: Main Settings -->
+                    <main
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Main"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true"
+                            icon="textLeft">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <heading
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                    level="{Long}3"
+                                                    text="Form Content"/>
+                                            <well
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <title
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Title"
+                                                            name="./title"
+                                                            fieldDescription="The main title displayed above the form."
+                                                            emptyText="e.g., Book Your Test Drive"/>
+                                                    <subtitle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Subtitle"
+                                                            name="./subtitle"
+                                                            fieldDescription="A short description under the main title."
+                                                            emptyText="e.g., Select your preferred model..."/>
+                                                </items>
+                                            </well>
+                                            <heading
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                    level="{Long}3"
+                                                    text="Form Configuration"/>
+                                            <well
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <servletPath
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Form Servlet Path"
+                                                            name="./servletPath"
+                                                            fieldDescription="Path to the servlet that handles the submission. (Developers only)."
+                                                            emptyText="/bin/voltrux/testdrive"/>
+                                                    <successMessage
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                                            fieldLabel="Success Message"
+                                                            name="./successMessage"
+                                                            fieldDescription="Message shown to the user after a successful submission."/>
+                                                </items>
+                                            </well>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </main>
+
+                    <!-- Tab 2: Info Boxes -->
+                    <infoBoxes
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Info Boxes"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true"
+                            icon="checklist">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <heading
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                    level="{Long}3"
+                                                    text="Why Test Drive"/>
+                                            <well
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <whyTitle
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                            fieldLabel="Section Title"
+                                                            name="./whyTitle"
+                                                            fieldDescription="Title for the 'Why Test Drive' section."
+                                                            emptyText="Why Test Drive a Voltrux?"/>
+                                                    <whyItems
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            fieldDescription="Add key reasons or features for the test drive."
+                                                            fieldLabel="Selling Points"
+                                                            composite="{Boolean}true">
+                                                        <field
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                                name="./whyItems">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <text
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Item Text"
+                                                                        name="./text"
+                                                                        emptyText="e.g., Cutting-edge technology"/>
+                                                            </items>
+                                                        </field>
+                                                    </whyItems>
+                                                </items>
+                                            </well>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </infoBoxes>
+
+                    <!-- Tab 3: Other Info -->
+                    <otherInfoTab
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Other Info"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true"
+                            icon="devicePin">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured">
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <heading
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                    level="{Long}3"
+                                                    text="Contact &amp; Location Info"/>
+                                            <well
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <otherInfo
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="cq/gui/components/authoring/dialog/richtext"
+                                                            fieldLabel="Contact &amp; Location Content"
+                                                            name="./otherInfo"
+                                                            useFixedInlineToolbar="{Boolean}true"
+                                                            fieldDescription="Use the Rich Text Editor to add content like contact details and location addresses.">
+                                                        <rtePlugins jcr:primaryType="nt:unstructured">
+                                                            <format jcr:primaryType="nt:unstructured" features="*"/>
+                                                            <lists jcr:primaryType="nt:unstructured" features="*"/>
+                                                            <links jcr:primaryType="nt:unstructured" features="*"/>
+                                                            <justify jcr:primaryType="nt:unstructured" features="*"/>
+                                                        </rtePlugins>
+                                                        <uiSettings jcr:primaryType="nt:unstructured">
+                                                            <cui jcr:primaryType="nt:unstructured">
+                                                                <inline
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        toolbar="[format#bold,format#italic,format#underline,#justifyJustify,#listsUl,#listsOl,#linksModifyLink,#linksUnlink]">
+                                                                </inline>
+                                                            </cui>
+                                                        </uiSettings>
+                                                    </otherInfo>
+                                                </items>
+                                            </well>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </otherInfoTab>
+
+                    <!-- Tab 4: Form Options -->
+                    <formOptions
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Form Options"
+                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                            margin="{Boolean}true"
+                            icon="select">
+                        <items jcr:primaryType="nt:unstructured">
+                            <columns
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns"
+                                    margin="{Boolean}true">
+                                <items jcr:primaryType="nt:unstructured"> <!-- <-- FIX: Was jcr:primaryT -->
+                                    <column
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <heading
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/heading"
+                                                    level="{Long}3"
+                                                    text="Form Dropdown Values"/>
+                                            <well
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/well">
+                                                <items jcr:primaryType="nt:unstructured">
+                                                    <locations
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            fieldDescription="Add available dealership locations."
+                                                            composite="{Boolean}true">
+                                                        <field
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                                name="./locations"
+                                                                fieldLabel="Location">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <text
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Display Text"
+                                                                        name="./text"
+                                                                        fieldDescription="e.g., Downtown Showroom (This is shown to the user)"/>
+                                                                <value
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Submission Value"
+                                                                        name="./value"
+                                                                        fieldDescription="e.g., downtown-showroom (This is sent to the servlet)"/>
+                                                            </items>
+                                                        </field>
+                                                    </locations>
+                                                    <models
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            fieldDescription="Add available vehicle models."
+                                                            composite="{Boolean}true">
+                                                        <field
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                                name="./models"
+                                                                fieldLabel="Model">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <text
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Display Text"
+                                                                        name="./text"
+                                                                        fieldDescription="e.g., Voltrux V-8"/>
+                                                                <value
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Submission Value"
+                                                                        name="./value"
+                                                                        fieldDescription="e.g., v-8"/>
+                                                            </items>
+                                                        </field>
+                                                    </models>
+                                                    <times
+                                                            jcr:primaryType="nt:unstructured"
+                                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                                            fieldDescription="Add available time slots."
+                                                            composite="{Boolean}true">
+                                                        <field
+                                                                jcr:primaryType="nt:unstructured"
+                                                                sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                                                name="./times"
+                                                                fieldLabel="Time Slot">
+                                                            <items jcr:primaryType="nt:unstructured">
+                                                                <text
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Display Text"
+                                                                        name="./text"
+                                                                        fieldDescription="e.g., 10:00 AM"/>
+                                                                <value
+                                                                        jcr:primaryType="nt:unstructured"
+                                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                                        fieldLabel="Submission Value"
+                                                                        name="./value"
+                                                                        fieldDescription="e.g., 10:00"/>
+                                                            </items>
+                                                        </field>
+                                                    </times>
+                                                </items>
+                                            </well>
+                                        </items>
+                                    </column>
+                                </items>
+                            </columns>
+                        </items>
+                    </formOptions>
+
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
+```
+
+### testdriveform.html
+
+```html
+<!--/*
+    Test Drive Form Component
+    - Uses TestDriveFormModel
+    - Renders a form and info boxes
+    - Includes client library for AJAX submission
+*/-->
+<sly data-sly-use.model="${'com.voltrux.aem.core.models.TestDriveFormModel' @ slingRequest=request}" />
+
+<div class="test-drive-container" data-cmp-is="test-drive-${resource.name}">
+
+    <div class="test-drive-form-col">
+        <div class="form-header">
+            <h2 data-sly-test="${model.title}">${model.title}</h2>
+            <p data-sly-test="${model.subtitle}">${model.subtitle}</p>
+        </div>
+
+        <!--/* Form Wrapper */-->
+        <div class="form-wrapper">
+            <!--/* Success Message */-->
+            <div id="form-success-${resource.name}" class="form-message success" style="display:none;">
+                ${model.successMessage @ context='html'}
+            </div>
+
+            <!--/* Error Message */-->
+            <div id="form-error-${resource.name}" class="form-message error" style="display:none;">
+                <p>There was an error submitting your request. Please try again.</p>
+                <span class="error-details"></span>
+            </div>
+
+            <!--/* The Form */-->
+            <form id="form-${resource.name}"
+                  method="POST"
+                  action="${model.servletPath}"
+                  data-success-msg-id="form-success-${resource.name}"
+                  data-error-msg-id="form-error-${resource.name}">
+
+                <!--/* Hidden CSRF Token */-->
+                <input type="hidden" name=":cq_csrf_token" value="${model.csrfToken}">
+
+                <!--/* Standard Form Fields */-->
+                <div class="form-group">
+                    <label for="firstName">First Name*</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name*</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+
+                <!--/* Dynamic Dropdown: Locations */-->
+                <div class="form-group" data-sly-test="${model.locations.size > 0}">
+                    <label for="location">Preferred Location*</label>
+                    <select id="location" name="location" required>
+                        <option value="" disabled selected>Select a location</option>
+                        <sly data-sly-list.location="${model.locations}">
+                            <option value="${location.value}">${location.text}</option>
+                        </sly>
+                    </select>
+                </div>
+
+                <!--/* Dynamic Dropdown: Models */-->
+                <div class="form-group" data-sly-test="${model.models.size > 0}">
+                    <label for="model">Preferred Model*</label>
+                    <select id="model" name="model" required>
+                        <option value="" disabled selected>Select a model</option>
+                        <sly data-sly-list.modelItem="${model.models}">
+                            <option value="${modelItem.value}">${modelItem.text}</option>
+                        </sly>
+                    </select>
+                </div>
+
+                <!--/* Dynamic Dropdown: Times */-->
+                <div class="form-group" data-sly-test="${model.times.size > 0}">
+                    <label for="time">Preferred Time*</label>
+                    <select id="time" name="time" required>
+                        <option value="" disabled selected>Select a time</option>
+                        <sly data-sly-list.time="${model.times}">
+                            <option value="${time.value}">${time.text}</option>
+                        </sly>
+                    </select>
+                </div>
+
+                <!--/* Submit Button */-->
+                <div class="form-group button-group">
+                    <button type="submit" class="cta-button">Book Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--/* Info Column */-->
+    <div class="test-drive-info-col">
+        <!--/* Why Test Drive Section */-->
+        <div class="info-box why-voltrux">
+            <h3 data-sly-test="${model.whyTitle}">${model.whyTitle}</h3>
+            <ul data-sly-list.item="${model.whyItems}">
+                <li>${item.text}</li>
+            </ul>
+        </div>
+
+        <!--/* Other Info Section (Help/Locations) */-->
+        <div class="info-box other-info" data-sly-test="${model.otherInfo}">
+            ${model.otherInfo @ context='html'}
+        </div>
+    </div>
+</div>
+```
+
+### _cq_editConfig.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:EditConfig">
+
+    <!-- This node defines the text that appears when the component is empty -->
+    <cq:emptytext
+            jcr:primaryType="nt:unstructured"
+            text="Please configure the Test Drive Form component."/>
+</jcr:root>
+```
+
+## CSS Styles
+The component uses the following CSS classes:
+
+### Main Container
+- `.test-drive-container` - Main container with flex layout and responsive design
+- `.test-drive-form-col` - Form column that takes 2/3 space
+- `.test-drive-info-col` - Info column with neutral background and padding
+
+### Form Header
+- `.form-header h2` - Form title with XXL font size and bold weight
+- `.form-header p` - Form subtitle with large font size and muted color
+
+### Form Elements
+- `.form-group` - Form field container with margin
+- `.form-group label` - Label styling with bold weight
+- `.form-group input` - Input field styling with border and padding
+- `.form-group select` - Select dropdown styling with border and padding
+
+### Form Buttons
+- `.cta-button` - Submit button with accent background and hover effects
+- `.cta-button:hover` - Hover effect with darker background
+- `.cta-button:disabled` - Disabled state styling
+
+### Messages
+- `.form-message` - Form message container with padding and rounded corners
+- `.form-message.success` - Success message styling with green background
+- `.form-message.error` - Error message styling with red background
+- `.error-details` - Error details styling with monospace font
+
+### Info Boxes
+- `.info-box` - Info section container with margin
+- `.info-box h3` - Info section title with XL font size and border bottom
+- `.info-box ul` - List styling with no bullets
+- `.info-box ul li` - List item with checkmark icon
+- `.why-voltrux ul li::before` - Checkmark icon for benefit list items
+
+### Responsive Effects
+- Media query for mobile screens changes layout to column
+- Mobile-specific styling with info column moved to top
+- Responsive form layout that adapts to screen size

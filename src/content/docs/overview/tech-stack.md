@@ -2,55 +2,93 @@
 title: Tech Stack
 ---
 
-The Voltrux project utilizes a modern frontend build process managed in the `ui.frontend` module, alongside standard AEM editable templates.
+The Voltrux project utilizes a comprehensive technology stack for both the AEM implementation and documentation system.
 
-## Frontend Build Dependencies
+## Documentation Stack
 
-The frontend build process relies on the following key `devDependencies`:
+The project's documentation is built using modern web technologies:
 
-```json
-{
-  "@babel/core": "^7.0.0",
-  "@babel/plugin-proposal-class-properties": "^7.3.3",
-  "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
-  "@typescript-eslint/eslint-plugin": "^5.7.0",
-  "@typescript-eslint/parser": "^5.7.0",
-  "acorn": "^6.1.0",
-  "aem-clientlib-generator": "^1.8.0",
-  "aemsync": "^4.0.1",
-  "autoprefixer": "^9.2.1",
-  "browserslist": "^4.2.1",
-  "chokidar-cli": "^3.0.0",
-  "clean-webpack-plugin": "^3.0.0",
-  "copy-webpack-plugin": "^10.1.0",
-  "css-loader": "^6.5.1",
-  "css-minimizer-webpack-plugin": "^3.2.0",
-  "cssnano": "^5.0.12",
-  "eslint": "^8.4.1",
-  "eslint-webpack-plugin": "^3.1.1",
-  "glob-import-loader": "^1.2.0",
-  "html-webpack-plugin": "^5.5.0",
-  "mini-css-extract-plugin": "^2.4.5",
-  "postcss": "^8.2.15",
-  "postcss-loader": "^3.0.0",
-  "sass": "^1.45.0",
-  "sass-loader": "^12.4.0",
-  "source-map-loader": "^0.2.4",
-  "style-loader": "^0.14.1",
-  "terser-webpack-plugin": "^5.2.5",
-  "ts-loader": "^9.2.6",
-  "tsconfig-paths-webpack-plugin": "^3.2.0",
-  "typescript": "^4.8.2",
-  "webpack": "^5.76.0",
-  "webpack-cli": "^4.9.1",
-  "webpack-dev-server": "^4.6.0",
-  "webpack-merge": "^5.8.0"
-}
-```
+- **[Starlight](https://starlight.astro.build/)**: Documentation framework built on Astro
+- **[Astro](https://astro.build/)**: Static site builder for better performance
+- **[MDX](https://mdxjs.com/)**: Markdown with embedded React components
+- **[React](https://reactjs.org/)**: Interactive components in documentation
+- **[TypeScript](https://www.typescriptlang.org/)**: Type-safe development
 
-## AEM Templates
+## Frontend Technologies
 
-The project defines the following editable templates for page creation:
+### Modern Build Tools
+- **[Vite](https://vitejs.dev/)**: Fast development server and build tool
+- **[ESBuild](https://esbuild.github.io/)**: Fast JavaScript bundling
+- **[PostCSS](https://postcss.org/)**: CSS processing and transformations
+- **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework (when needed)
 
--   `page-content`
--   `xf-web-variation`
+### Package Management
+- **[Bun](https://bun.sh/)**: Fast JavaScript runtime and package manager
+- **[npm](https://www.npmjs.com/)**: Traditional package management support
+
+## Backend & AEM Technologies
+
+### Core Platform
+- **Adobe Experience Manager (AEM)**: Content management platform
+- **Apache Sling**: Web framework for AEM
+- **OSGi**: Service-oriented architecture framework
+- **Apache Jackrabbit Oak**: Content repository
+
+### Java Technologies
+- **Java 11+**: Core platform for AEM
+- **Maven**: Build automation and dependency management
+- **Sling Models**: Java-based content models
+- **HTL (HTML Template Language)**: Server-side templating
+
+### Services & Integration
+- **Servlets**: Server-side request processing
+- **JAX-RS**: REST API development
+- **OSGi Services**: Component architecture
+- **Apache Felix**: OSGi implementation
+
+## Development Tools
+
+### Code Quality
+- **[ESLint](https://eslint.org/)**: JavaScript/TypeScript linting
+- **[Prettier](https://prettier.io/)**: Code formatting
+- **[SonarQube](https://www.sonarqube.org/)**: Continuous code quality inspection
+
+<!-- ### Testing
+- **[Junit](https://junit.org/)**: Java unit testing
+- **[Mockito](https://site.mockito.org/)**: Java mocking framework
+- **[Cypress](https://www.cypress.io/)**: End-to-end testing
+- **[Sling Testing Tools](https://sling.apache.org/documentation/development/test-reactor.html)**: AEM-specific testing
+
+### CI/CD & DevOps
+- **[GitHub Actions](https://github.com/features/actions)**: Continuous integration and deployment
+- **[Maven](https://maven.apache.org/)**: Build automation
+- **[Docker](https://www.docker.com/)**: Containerization
+- **[Jenkins](https://www.jenkins.io/)**: Alternative CI/CD pipeline support
+
+## Cloud & Infrastructure
+
+### Hosting & Deployment
+- **AEM as a Cloud Service**: Cloud-native AEM hosting
+- **Adobe I/O Runtime**: Serverless computing
+- **Content Delivery Network (CDN)**: Global content distribution
+- **Apache Dispatcher**: Web server and cache layer
+
+### Monitoring & Analytics
+- **Adobe Analytics**: Web analytics and data collection
+- **Application Performance Monitoring (APM)**: System performance tracking
+- **Log Management**: Centralized log aggregation and analysis
+
+## Architecture Patterns
+
+### Design Principles
+- **Component-based Architecture**: Reusable, modular components
+- **Separation of Concerns**: Clear separation between presentation, business logic, and data
+- **Progressive Enhancement**: Core functionality works without JavaScript
+- **Responsive Design**: Mobile-first approach
+
+### Integration Patterns
+- **API-first Design**: Service-oriented architecture
+- **Event-driven Architecture**: Asynchronous processing
+- **Microservices**: Decoupled service architecture (where applicable) -->
+
+This technology stack provides a robust foundation for building scalable, maintainable, and high-performance digital experiences while supporting efficient documentation and development processes.

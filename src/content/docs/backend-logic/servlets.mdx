@@ -1,0 +1,566 @@
+---
+title: Servlets
+description: Comprehensive guide for Servlets implementation in Voltrux Motors
+---
+
+# Servlets
+
+This document provides a comprehensive overview of Servlets utilized in the Voltrux Motors project. Servlets handle server-side processing for forms, APIs, and other dynamic content requirements.
+
+## Overview
+
+Servlets in AEM extend the standard Java Servlet specification to provide server-side processing capabilities. They handle HTTP requests, process business logic, and return responses in various formats including JSON, XML, or HTML.
+
+## Core Servlets
+
+### Test Drive Form Servlet
+
+The `TestDriveFormServlet` processes submissions from the Test Drive Form component.
+
+#### Package and Class
+```java
+package com.voltrux.aem.core.servlets;
+
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@Component(
+    service = Servlet.class,
+    property = {
+        "sling.servlet.paths=/bin/voltrux/testdrive",
+        "sling.servlet.methods=POST"
+    }
+)
+public class TestDriveFormServlet extends SlingAllMethodsServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TestDriveFormServlet.class);
+
+    @Override
+    protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) 
+            throws ServletException, IOException {
+        
+        try {
+            // Validate CSRF token
+            if (!validateCsrfToken(request)) {
+                response.setStatus(SlingHttpServletResponse.SC_FORBIDDEN);
+                writeJsonResponse(response, Map.of("status", "error", "message", "Invalid security token"));
+                return;
+            }
+
+            // Extract form parameters
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String location = request.getParameter("location");
+            String model = request.getParameter("model");
+            String time = request.getParameter("time");
+
+            // Validate required fields
+            if (firstName == null || firstName.trim().isEmpty() ||
+                lastName == null || lastName.trim().isEmpty() ||
+                email == null || email.trim().isEmpty() ||
+                location == null || location.trim().isEmpty() ||
+                model == null || model.trim().isEmpty() ||
+                time == null || time.trim().isEmpty()) {
+                
+                response.setStatus(SlingHttpServletResponse.SC_BAD_REQUEST);
+                writeJsonResponse(response, Map.of("status", "error", "message", "All required fields must be filled"));
+                return;
+            }
+
+            // Process the form submission
+            boolean success = processTestDriveRequest(firstName, lastName, email, phone, location, model, time);
+            
+            if (success) {
+                // Send confirmation email
+                sendConfirmationEmail(email, firstName, lastName);
+                
+                // Log the submission
+                LOG.info("Test drive request submitted: {} {} - {} - {} - {} - {}", 
+                        firstName, lastName, email, location, model, time);
+                
+                // Return success response
+                writeJsonResponse(response, Map.of("status", "success", "message", "Your test drive request has been submitted successfully"));
+            } else {
+                response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                writeJsonResponse(response, Map.of("status", "error", "message", "Failed to submit test drive request"));
+            }
+            
+        } catch (Exception e) {
+            LOG.error("Error processing test drive form", e);
+            response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            writeJsonResponse(response, Map.of("status", "error", "message", "An error occurred while processing your request"));
+        }
+    }
+
+    private boolean validateCsrfToken(SlingHttpServletRequest request) {
+        // Implementation for validating CSRF token
+        // This is a simplified example - in practice, use AEM's CSRF protection
+        return true;
+    }
+
+    private boolean processTestDriveRequest(String firstName, String lastName, String email, 
+                                          String phone, String location, String model, String time) {
+        // Implementation for processing the test drive request
+        // This might involve saving to a CRM system, sending to marketing automation, etc.
+        return true;
+    }
+
+    private void sendConfirmationEmail(String email, String firstName, String lastName) {
+        // Implementation for sending confirmation email
+        // This might use AEM's email service or an external provider
+    }
+
+    private void writeJsonResponse(SlingHttpServletResponse response, Map<String, Object> data) 
+            throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(data));
+    }
+}
+```
+
+### Article Search Servlet
+
+The `ArticleSearchServlet` provides search capabilities for articles with filtering and pagination.
+
+#### Package and Class
+```java
+package com.voltrux.aem.core.servlets;
+
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.resource.ValueMap;
+import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.jcr.query.Query;
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.*;
+
+@Component(
+    service = Servlet.class,
+    property = {
+        "sling.servlet.paths=/bin/voltrux/search/articles",
+        "sling.servlet.methods=GET"
+    }
+)
+public class ArticleSearchServlet extends SlingAllMethodsServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ArticleSearchServlet.class);
+
+    @Override
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) 
+            throws ServletException, IOException {
+        
+        try {
+            // Get parameters
+            String category = request.getParameter("category");
+            String query = request.getParameter("query");
+            int offset = Integer.parseInt(request.getParameter("offset"));
+            int limit = Integer.parseInt(request.getParameter("limit"));
+            
+            // Perform search
+            List<Map<String, Object>> articles = searchArticles(category, query, offset, limit);
+            int totalCount = getArticleCount(category, query);
+            
+            // Build response
+            Map<String, Object> result = new HashMap<>();
+            result.put("articles", articles);
+            result.put("total", totalCount);
+            result.put("offset", offset);
+            result.put("limit", limit);
+            result.put("hasMore", (offset + limit) < totalCount);
+            
+            writeJsonResponse(response, result);
+            
+        } catch (Exception e) {
+            LOG.error("Error in article search servlet", e);
+            response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            writeJsonResponse(response, Map.of("status", "error", "message", "Search failed"));
+        }
+    }
+
+    private List<Map<String, Object>> searchArticles(String category, String query, int offset, int limit) {
+        // Implementation for searching articles using JCR queries
+        // This is a simplified example
+        List<Map<String, Object>> results = new ArrayList<>();
+        
+        // Implementation would query JCR content
+        // Example query: "SELECT * FROM [nt:base] AS s WHERE s.[sling:resourceType] = 'voltrux/components/content/article' AND..."
+        
+        return results;
+    }
+
+    private int getArticleCount(String category, String query) {
+        // Implementation for getting total count of articles matching criteria
+        return 0;
+    }
+
+    private void writeJsonResponse(SlingHttpServletResponse response, Map<String, Object> data) 
+            throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(data));
+    }
+}
+```
+
+### Vehicle Configuration Servlet
+
+The `VehicleConfigServlet` handles saving and retrieving vehicle configurations from the 3D Configurator.
+
+#### Package and Class
+```java
+package com.voltrux.aem.core.servlets;
+
+import org.apache.sling.api.SlingHttpServletRequest;
+import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+
+@Component(
+    service = Servlet.class,
+    property = {
+        "sling.servlet.paths=/bin/voltrux/configure/vehicle",
+        "sling.servlet.methods=POST,GET"
+    }
+)
+public class VehicleConfigServlet extends SlingAllMethodsServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(VehicleConfigServlet.class);
+
+    @Override
+    protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) 
+            throws ServletException, IOException {
+        
+        try {
+            // Extract configuration parameters
+            String userId = request.getParameter("userId");
+            String model = request.getParameter("model");
+            String color = request.getParameter("color");
+            String wheels = request.getParameter("wheels");
+            String interior = request.getParameter("interior");
+            String[] accessories = request.getParameterValues("accessories");
+
+            // Validate input
+            if (model == null || model.trim().isEmpty()) {
+                response.setStatus(SlingHttpServletResponse.SC_BAD_REQUEST);
+                writeJsonResponse(response, Map.of("status", "error", "message", "Model is required"));
+                return;
+            }
+
+            // Save configuration
+            String configId = saveConfiguration(userId, model, color, wheels, interior, accessories);
+            
+            LOG.info("Vehicle configuration saved: {} - User: {}", configId, userId);
+            
+            // Return success response
+            writeJsonResponse(response, Map.of(
+                "status", "success", 
+                "configId", configId,
+                "message", "Configuration saved successfully"
+            ));
+            
+        } catch (Exception e) {
+            LOG.error("Error saving vehicle configuration", e);
+            response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            writeJsonResponse(response, Map.of("status", "error", "message", "Failed to save configuration"));
+        }
+    }
+
+    @Override
+    protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) 
+            throws ServletException, IOException {
+        
+        try {
+            String configId = request.getParameter("configId");
+            String userId = request.getParameter("userId");
+            
+            if (configId == null) {
+                response.setStatus(SlingHttpServletResponse.SC_BAD_REQUEST);
+                writeJsonResponse(response, Map.of("status", "error", "message", "Configuration ID is required"));
+                return;
+            }
+
+            // Retrieve configuration
+            Map<String, Object> config = getConfiguration(configId, userId);
+            
+            if (config != null) {
+                writeJsonResponse(response, Map.of(
+                    "status", "success",
+                    "configuration", config
+                ));
+            } else {
+                response.setStatus(SlingHttpServletResponse.SC_NOT_FOUND);
+                writeJsonResponse(response, Map.of("status", "error", "message", "Configuration not found"));
+            }
+            
+        } catch (Exception e) {
+            LOG.error("Error retrieving vehicle configuration", e);
+            response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            writeJsonResponse(response, Map.of("status", "error", "message", "Failed to retrieve configuration"));
+        }
+    }
+
+    private String saveConfiguration(String userId, String model, String color, 
+                                   String wheels, String interior, String[] accessories) {
+        // Implementation for saving configuration
+        // This might save to a database or JCR
+        return "config-" + System.currentTimeMillis();
+    }
+
+    private Map<String, Object> getConfiguration(String configId, String userId) {
+        // Implementation for retrieving configuration
+        // This might retrieve from a database or JCR
+        Map<String, Object> config = new HashMap<>();
+        config.put("id", configId);
+        config.put("model", "Voltrux V-8");
+        config.put("color", "#000000");
+        config.put("wheels", "Standard");
+        config.put("interior", "Leather Black");
+        return config;
+    }
+
+    private void writeJsonResponse(SlingHttpServletResponse response, Map<String, Object> data) 
+            throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        response.getWriter().write(mapper.writeValueAsString(data));
+    }
+}
+```
+
+## Servlet Registration
+
+### Declarative Services Annotations
+
+Servlets are registered using OSGi Declarative Services annotations:
+
+```java
+@Component(
+    service = Servlet.class,
+    property = {
+        "sling.servlet.paths=/bin/my-servlet",
+        "sling.servlet.methods=GET,POST",
+        "sling.servlet.extensions=json",
+        "sling.servlet.selectors=myselector"
+    }
+)
+```
+
+### Property Descriptions
+- `sling.servlet.paths`: Defines the servlet path(s)
+- `sling.servlet.methods`: HTTP methods the servlet handles (GET, POST, PUT, DELETE)
+- `sling.servlet.extensions`: File extensions the servlet handles (html, json, xml)
+- `sling.servlet.selectors`: HTL selectors for the servlet
+
+## Best Practices
+
+### 1. Input Validation
+Always validate input parameters to prevent security vulnerabilities:
+
+```java
+private String validateInput(String input) {
+    if (input == null || input.trim().isEmpty()) {
+        throw new IllegalArgumentException("Input cannot be null or empty");
+    }
+    // Sanitize input to prevent XSS
+    return StringEscapeUtils.escapeHtml4(input.trim());
+}
+```
+
+### 2. Error Handling
+Implement comprehensive error handling with appropriate HTTP status codes:
+
+```java
+@Override
+protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) 
+        throws ServletException, IOException {
+    try {
+        // Process request
+        processRequest(request, response);
+    } catch (ValidationException e) {
+        response.setStatus(SlingHttpServletResponse.SC_BAD_REQUEST);
+        LOG.error("Validation error: {}", e.getMessage());
+    } catch (SecurityException e) {
+        response.setStatus(SlingHttpServletResponse.SC_FORBIDDEN);
+        LOG.error("Security error: {}", e.getMessage());
+    } catch (Exception e) {
+        response.setStatus(SlingHttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        LOG.error("Unexpected error: ", e);
+    }
+}
+```
+
+### 3. Resource Management
+Properly manage resources and connections:
+
+```java
+@Override
+protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) 
+        throws ServletException, IOException {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+    
+    try {
+        conn = dataSource.getConnection();
+        stmt = conn.prepareStatement("SELECT * FROM articles WHERE category = ?");
+        stmt.setString(1, request.getParameter("category"));
+        rs = stmt.executeQuery();
+        
+        // Process results
+    } finally {
+        // Always close resources in finally block
+        if (rs != null) rs.close();
+        if (stmt != null) stmt.close();
+        if (conn != null) conn.close();
+    }
+}
+```
+
+## Security Considerations
+
+### Cross-Site Request Forgery (CSRF)
+Use AEM's built-in CSRF protection:
+
+```java
+@Reference
+private CsrfTokenGenerator csrfTokenGenerator;
+
+private boolean validateCsrfToken(SlingHttpServletRequest request) {
+    return csrfTokenGenerator.validateToken(request);
+}
+```
+
+### Input Sanitization
+Sanitize all user inputs:
+
+```java
+import org.apache.sling.xss.XSSProtectionException;
+import org.apache.sling.xss.XSSPreventionUtil;
+
+private String sanitizeInput(String input) throws XSSProtectionException {
+    return XSSPreventionUtil.filterHTMLAttrValue(input);
+}
+```
+
+### Access Control
+Implement proper access control:
+
+```java
+private boolean hasAccess(SlingHttpServletRequest request) {
+    return request.getResourceResolver().isResourceType(
+        request.getResource(), 
+        "voltrux/components/content/secure-content"
+    );
+}
+```
+
+## Testing Servlets
+
+Servlets should be thoroughly tested:
+
+```java
+@ExtendWith({SlingMockitoExtension.class})
+class TestDriveFormServletTest {
+
+    @InjectMocks
+    private TestDriveFormServlet servlet;
+
+    @Mock
+    private SlingHttpServletRequest request;
+
+    @Mock
+    private SlingHttpServletResponse response;
+
+    private StringWriter stringWriter;
+    private PrintWriter printWriter;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        stringWriter = new StringWriter();
+        printWriter = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(printWriter);
+    }
+
+    @Test
+    void shouldProcessValidFormSubmission() throws ServletException, IOException {
+        // Set up request parameters
+        when(request.getParameter("firstName")).thenReturn("John");
+        when(request.getParameter("lastName")).thenReturn("Doe");
+        // ... set other parameters
+        
+        // Execute servlet
+        servlet.doPost(request, response);
+        
+        // Verify results
+        verify(response).setStatus(SlingHttpServletResponse.SC_OK);
+        assertTrue(stringWriter.toString().contains("success"));
+    }
+}
+```
+
+## Performance Considerations
+
+### Caching
+Implement caching for expensive operations:
+
+```java
+private final Map<String, Object> cache = new ConcurrentHashMap<>();
+private static final long CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+private Object getCachedResult(String key) {
+    CacheEntry entry = cache.get(key);
+    if (entry != null && System.currentTimeMillis() - entry.timestamp < CACHE_DURATION) {
+        return entry.value;
+    }
+    return null;
+}
+
+private void cacheResult(String key, Object value) {
+    cache.put(key, new CacheEntry(value, System.currentTimeMillis()));
+}
+
+private static class CacheEntry {
+    final Object value;
+    final long timestamp;
+    
+    CacheEntry(Object value, long timestamp) {
+        this.value = value;
+        this.timestamp = timestamp;
+    }
+}
+```
+
+This comprehensive overview covers the essential Servlet implementations used in the Voltrux Motors project, their implementations, and best practices for development, security, and performance.

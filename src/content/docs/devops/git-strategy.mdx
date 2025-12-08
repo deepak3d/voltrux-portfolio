@@ -1,0 +1,449 @@
+---
+title: Git Strategy
+description: Comprehensive guide for Git branching and workflow strategy in Voltrux Motors
+---
+
+# Git Strategy
+
+This document provides a comprehensive overview of the Git branching model, workflow strategy, and best practices for the Voltrux Motors project. It defines how code changes are organized, reviewed, and integrated into the codebase.
+
+## Overview
+
+The Voltrux Motors project follows a structured Git workflow that balances feature development agility with code quality and release stability. The strategy is designed to support both individual contributor work and collaborative team development.
+
+## Branching Model
+
+### Git Flow with Modifications
+
+The project uses a modified version of Git Flow, optimized for AEM development:
+
+```
+main (production-ready)
+├── develop (integration branch)
+    ├── feature/ABC-123-new-feature
+    ├── feature/DEF-456-bugfix
+    ├── release/1.2.0
+    │   ├── hotfix/GHI-789-urgent-fix
+    │   └── release/1.2.1
+    └── release/2.0.0
+```
+
+### Branch Purposes and Lifecycle
+
+#### Main Branch (Production)
+- **Purpose**: Contains production-ready code
+- **Protection**: Branch protection rules enforced
+- **Merging**: Only from release branches via pull requests
+- **Tagging**: Tagged with semantic version numbers (v1.2.3)
+- **CI/CD**: Automatic deployment to production
+
+#### Develop Branch
+- **Purpose**: Integration branch for features
+- **Merging**: Features merge here after review
+- **CI/CD**: Continuous integration and testing
+- **Status**: Should always be in a deployable state
+
+#### Feature Branches
+- **Naming**: `feature/ABC-123-short-description` or `feature/user-story-name`
+- **Source**: Always created from `develop`
+- **Target**: Merged back to `develop`
+- **Lifecycle**: Deleted after merging
+
+#### Release Branches
+- **Naming**: `release/v1.2.0` or `release/1.2.0`
+- **Source**: Created from `develop` when feature freeze is reached
+- **Purpose**: Stabilization and bug fixes before production
+- **Target**: Merged to `main` and `develop` when ready
+
+#### Hotfix Branches
+- **Naming**: `hotfix/GHI-789-urgent-issue` or `hotfix/production-fix`
+- **Source**: Created from `main`
+- **Purpose**: Critical fixes for production
+- **Target**: Merged to both `main` and `develop`
+
+## Branch Naming Conventions
+
+### Feature Branches
+```
+feature/ABC-123-implement-article-list-component
+feature/DEF-456-fix-header-alignment-issue
+feature/FEATURE-NAME-brief-description
+```
+
+### Bugfix Branches
+```
+bugfix/GHI-789-resolve-form-validation-error
+fix/ABC-123-critical-security-fix
+```
+
+### Hotfix Branches
+```
+hotfix/CRITICAL-123-security-patch
+hotfix/urgent-prod-fix
+```
+
+### Release Branches
+```
+release/v1.2.0
+release/1.2.0-stable
+```
+
+## Commit Message Conventions
+
+### Format
+```
+<Type>(Scope): Short description
+
+Longer description explaining the change if needed
+- Lists of related changes or fixes if applicable
+- Closes #issue-number if applicable
+```
+
+### Types
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, missing semi colons, etc)
+- `refactor`: Code refactoring
+- `test`: Adding or modifying tests
+- `chore`: Build process or auxiliary tool changes
+
+### Examples
+```
+feat(article-list): implement category filtering functionality
+
+Add category filtering to article list component
+- Add filter buttons with active state
+- Implement JavaScript filtering logic
+- Update CSS for active filter states
+Closes #123
+```
+
+```
+fix(header): resolve mobile navigation alignment
+
+Correct the positioning of mobile navigation menu
+- Fix z-index issue causing menu to appear behind content
+- Adjust padding for touch targets
+Closes #456
+```
+
+## Pull Request Process
+
+### Creating Pull Requests
+
+1. **Feature PR**: Feature branch → Develop branch
+2. **Release PR**: Release branch → Main branch
+3. **Hotfix PR**: Hotfix branch → Main and Develop
+
+### PR Template
+```markdown
+## Summary
+Brief description of changes and the problem they solve.
+
+## Changes
+- List of specific changes made
+- New features or improvements
+- Breaking changes (if any)
+
+## Testing
+- [ ] Unit tests updated/added
+- [ ] Integration tests updated/added
+- [ ] Manual testing performed
+- [ ] Cross-browser testing completed
+
+## Screenshots (if applicable)
+Upload screenshots showing changes
+
+## Related Issues
+Closes #123, #456
+```
+
+### Review Process
+
+1. **Automated Checks**: Code quality, tests pass, security scans
+2. **Peer Review**: At least one team member reviews the code
+3. **Maintainer Approval**: Code maintainers approve the changes
+4. **Merge**: Approved PRs can be merged
+
+## Code Review Guidelines
+
+### What to Review
+- Code functionality and correctness
+- Code style and standards compliance
+- Performance implications
+- Security considerations
+- Test coverage and quality
+- Documentation updates
+
+### Review Turnaround Time
+- **Standard PRs**: Within 24 hours
+- **Urgent fixes**: Within 4 hours
+- **Large features**: Within 48 hours
+
+### Approval Requirements
+- **Small changes**: 1 reviewer approval
+- **Large features**: 2 reviewer approvals
+- **Breaking changes**: 2 reviewer approvals + maintainer
+
+## AEM-Specific Considerations
+
+### JCR Content Changes
+- Include package exports for JCR content changes
+- Document impact on content authors
+- Include migration scripts if needed
+
+### Client Library Changes
+- Update client library categories properly
+- Consider cache invalidation
+- Test across different browsers
+
+### Template Changes
+- Document impact on existing content
+- Provide migration path if needed
+- Update template policies if applicable
+
+## Tagging and Versioning
+
+### Semantic Versioning
+- **MAJOR**: Breaking changes
+- **MINOR**: New features (backwards compatible)
+- **PATCH**: Bug fixes (backwards compatible)
+
+### Git Tags
+```bash
+# Create annotated tag
+git tag -a v1.2.0 -m "Release version 1.2.0"
+
+# Push tags
+git push origin v1.2.0
+```
+
+## Workflow Examples
+
+### Feature Development Workflow
+
+```bash
+# 1. Update local develop branch
+git checkout develop
+git pull origin develop
+
+# 2. Create feature branch
+git checkout -b feature/ABC-123-new-component
+
+# 3. Make changes and commit
+git add .
+git commit -m "feat(component): implement new article list component"
+
+# 4. Push feature branch
+git push origin feature/ABC-123-new-component
+
+# 5. Create PR in GitHub
+# 6. Get reviews and make changes if needed
+# 7. Merge PR when approved
+# 8. Delete feature branch after merge
+```
+
+### Hotfix Workflow
+
+```bash
+# 1. Create hotfix branch from main
+git checkout main
+git pull origin main
+git checkout -b hotfix/CRITICAL-123
+
+# 2. Make fix and commit
+git add .
+git commit -m "fix(security): resolve critical authentication issue"
+
+# 3. Push hotfix branch
+git push origin hotfix/CRITICAL-123
+
+# 4. Create PR to main
+# 5. After approval, tag the release
+git tag -a v1.2.1 -m "Hotfix release v1.2.1"
+
+# 6. Create PR from hotfix branch to develop to bring changes back
+```
+
+## Hooks and Automation
+
+### Pre-commit Hook
+```bash
+#!/bin/sh
+# .git/hooks/pre-commit
+
+echo "Running pre-commit checks..."
+
+# Check for AEM package conflicts
+if git diff --cached --name-only | grep -E '\.(zip|jar)$' > /dev/null; then
+    echo "Error: AEM packages should not be committed directly. Use package manager."
+    exit 1
+fi
+
+# Run basic Maven checks
+if ! mvn clean validate -q > /dev/null 2>&1; then
+    echo "Error: Maven validation failed. Please fix issues before committing."
+    exit 1
+fi
+
+echo "Pre-commit checks passed!"
+exit 0
+```
+
+### Pre-push Hook
+```bash
+#!/bin/sh
+# .git/hooks/pre-push
+
+remote="$1"
+url="$2"
+
+# Don't block pushes to feature branches
+branch="$(git symbolic-ref --short HEAD)"
+
+if [ "$branch" = "main" ] || [ "$branch" = "develop" ]; then
+    # Ensure these branches have up-to-date local commits
+    git fetch origin $branch
+    
+    if ! git merge-base --is-ancestor origin/$branch HEAD; then
+        echo "Error: Branch is behind remote. Please pull latest changes."
+        exit 1
+    fi
+fi
+
+exit 0
+```
+
+## Branch Protection Rules
+
+### Main Branch Protection
+- **Required reviewers**: 2 maintainers
+- **Required status checks**: CI, tests, security scan
+- **Allow force pushes**: No
+- **Allow deletions**: No
+- **Require up-to-date branches**: Yes
+
+### Develop Branch Protection
+- **Required reviewers**: 1 team member
+- **Required status checks**: Basic CI, tests
+- **Allow force pushes**: No (except maintainers)
+- **Require up-to-date branches**: Yes
+
+## Tools and Integrations
+
+### GitHub Configuration
+- **Pull Request Templates**: Standardized PR format
+- **Issue Templates**: Consistent issue reporting
+- **Branch Protection**: Enforce workflow rules
+- **Status Checks**: Automated validation
+
+### Recommended Git Configuration
+```bash
+# Global Git configuration
+git config --global user.name "Your Name"
+git config --global user.email "your.email@voltrux-motors.com"
+git config --global core.autocrlf true  # Windows
+git config --global pull.rebase true
+git config --global push.default simple
+git config --global credential.helper cache
+
+# AEM-specific excludes
+git config --global core.excludesfile ~/.gitignore_global
+```
+
+Global .gitignore for AEM projects:
+```
+# AEM specific ignores
+/libs/
+/apps/!**/src/**
+!/apps/*/src/main/content/jcr_root/**
+*.jar
+*.zip
+!all/src/main/content/META-INF/vault/definition/**/*
+!all/src/main/content/META-INF/vault/filter.xml
+
+# IDE specific
+.vscode/
+.idea/
+*.iml
+*.iws
+
+# OS specific
+.DS_Store
+Thumbs.db
+```
+
+## Best Practices
+
+### 1. Small, Focused Commits
+Make focused commits that address a single concern:
+```bash
+# Good: Single focused commit
+git commit -m "feat(article): add category filtering to article list"
+
+# Avoid: Large commit with multiple changes
+git commit -m "feat: many changes to articles, fix header, update tests, refactor utils"
+```
+
+### 2. Regular Sync with Develop
+Keep feature branches updated with the latest develop branch:
+```bash
+git checkout feature/ABC-123
+git rebase develop  # or git merge develop
+```
+
+### 3. Meaningful Branch Names
+Use descriptive branch names that indicate the purpose:
+```bash
+# Good
+feature/ABC-123-implement-article-search
+bugfix/DEF-456-fix-mobile-header-alignment
+
+# Avoid
+feature/new-stuff
+bugfix/hotfix
+```
+
+### 4. Clean History
+Squash commits before creating pull requests when appropriate:
+```bash
+# Interactive rebase to clean up commit history
+git rebase -i HEAD~3
+```
+
+### 5. Test Before Push
+Always test changes locally before pushing:
+```bash
+# Run tests and build before push
+mvn clean test
+mvn clean install -PautoInstallPackage
+npm test
+npm run build
+```
+
+### 6. Clear Pull Request Descriptions
+Provide clear, detailed descriptions in pull requests:
+- What changes are being made
+- Why the changes are needed
+- How to test the changes
+- Any breaking changes or migration notes
+
+## Emergency Procedures
+
+### Critical Production Fix
+1. Create hotfix branch from main
+2. Make minimal necessary fix
+3. Create PR with emergency label
+4. Expedited review process (24-hour SLA)
+5. Deploy immediately after approval
+6. Create follow-up PR to develop branch
+
+### Rollback Process
+1. Identify problematic commit/PR
+2. Create revert commit or branch
+3. Follow standard PR process for revert
+4. Deploy rollback to production
+5. Investigate root cause post-rollback
+
+This comprehensive Git strategy ensures consistent, reliable, and efficient development processes across the Voltrux Motors project, supporting both individual and team-based development workflows.

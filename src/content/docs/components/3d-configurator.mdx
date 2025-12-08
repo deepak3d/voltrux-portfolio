@@ -1,0 +1,520 @@
+---
+title: 3D Configurator Component
+description: Comprehensive guide for the 3D Vehicle Configurator component in Voltrux Motors
+---
+
+This document provides a detailed overview of the `vehicleconfigurator` component, which allows users to interactively configure and visualize Voltrux vehicles in 3D.
+
+## Overview
+
+The 3D Configurator component provides an immersive experience that allows customers to customize their vehicles with different colors, wheel styles, interior options, and accessories. The component renders a 3D model of the vehicle that updates in real-time as selections are made.
+
+## Component Structure
+
+The 3D Configurator component consists of several key files that define its functionality and appearance:
+
+### .content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          jcr:description="Voltrux Motors 3D Vehicle Configurator Component"
+          jcr:primaryType="cq:Component"
+          jcr:title="3D Configurator"
+          componentGroup="Voltrux Motors - Content"/>
+```
+
+### _cq_dialog/.content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+          xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured" jcr:title="3D Configurator Configuration"
+          sling:resourceType="cq/gui/components/authoring/dialog">
+    <content jcr:primaryType="nt:unstructured"
+             sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs jcr:primaryType="nt:unstructured"
+                  sling:resourceType="granite/ui/components/coral/foundation/tabs">
+                <items jcr:primaryType="nt:unstructured">
+                    <configuration jcr:primaryType="nt:unstructured"
+                              jcr:title="Configuration"
+                              sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <modelName jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                      fieldLabel="Model Name"
+                                      name="./modelName"
+                                      fieldDescription="Name of the vehicle model to configure"
+                                      emptyText="e.g., Voltrux V-8"/>
+                            <modelPath jcr:primaryType="nt:unstructured"
+                                      sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                      fieldLabel="3D Model Path"
+                                      name="./modelPath"
+                                      rootPath="/content/dam"
+                                      fieldDescription="Path to the 3D model asset in the DAM"/>
+                            <defaultColor jcr:primaryType="nt:unstructured"
+                                         sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                         fieldLabel="Default Color"
+                                         name="./defaultColor"
+                                         fieldDescription="Default color for the vehicle"/>
+                        </items>
+                    </configuration>
+                    <options jcr:primaryType="nt:unstructured"
+                            jcr:title="Configurable Options"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                            <colorOptions jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                        fieldLabel="Color Options"
+                                        composite="{Boolean}true">
+                                <field jcr:primaryType="nt:unstructured"
+                                       sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                       name="./colorOptions">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <name jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                              fieldLabel="Color Name"
+                                              name="./name"/>
+                                        <value jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/colorfield"
+                                               fieldLabel="Color Value"
+                                               name="./value"/>
+                                        <code jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                              fieldLabel="Color Code"
+                                              name="./code"/>
+                                    </items>
+                                </field>
+                            </colorOptions>
+                            <wheelOptions jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                        fieldLabel="Wheel Options"
+                                        composite="{Boolean}true">
+                                <field jcr:primaryType="nt:unstructured"
+                                       sling:resourceType="granite/ui/components/coral/foundation/form/fieldset"
+                                       name="./wheelOptions">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <name jcr:primaryType="nt:unstructured"
+                                              sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                              fieldLabel="Wheel Name"
+                                              name="./name"/>
+                                        <image jcr:primaryType="nt:unstructured"
+                                               sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                               fieldLabel="Wheel Image"
+                                               name="./image"
+                                               rootPath="/content/dam"/>
+                                    </items>
+                                </field>
+                            </wheelOptions>
+                        </items>
+                    </options>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>
+```
+
+### vehicleconfigurator.html
+
+```html
+<sly data-sly-use.model="com.voltrux.aem.core.models.VehicleConfiguratorModel"/>
+
+<!-- New: Added data-component hook for JS -->
+<div class="vehicle-configurator" data-component="vehicle-configurator" data-model="${model.modelName}">
+    <div class="configurator-container">
+        <!-- 3D Viewer Section -->
+        <div class="viewer-section">
+            <div class="model-viewer-container">
+                <div class="model-viewer" id="model-viewer-${resource.name}">
+                    <!-- 3D Model rendered by JavaScript -->
+                    <div class="model-placeholder">
+                        <div class="loading-spinner">Loading 3D Model...</div>
+                    </div>
+                </div>
+                
+                <!-- Viewer Controls -->
+                <div class="viewer-controls">
+                    <button class="rotate-left" aria-label="Rotate Left">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 15a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-2z"/>
+                            <path d="M7 9a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V9z"/>
+                            <path d="M16 6V4a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2"/>
+                        </svg>
+                    </button>
+                    <button class="rotate-right" aria-label="Rotate Right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7 15a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-2z"/>
+                            <path d="M7 9a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V9z"/>
+                            <path d="M16 20v-2a1 1 0 0 1 1-1h2"/>
+                            <path d="M5 6V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v2"/>
+                        </svg>
+                    </button>
+                    <button class="zoom-in" aria-label="Zoom In">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.3-4.3"/>
+                            <path d="M11 8v6"/>
+                            <path d="M8 11h6"/>
+                        </svg>
+                    </button>
+                    <button class="zoom-out" aria-label="Zoom Out">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.3-4.3"/>
+                            <path d="M8 11h6"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Configuration Options Section -->
+        <div class="config-options-section">
+            <h2>Customize Your ${model.modelName}</h2>
+            
+            <!-- Color Selection -->
+            <div class="config-option color-selection">
+                <h3>Exterior Color</h3>
+                <div class="color-options">
+                    <sly data-sly-list.color="${model.colorOptions}">
+                        <label class="color-option" data-color="${color.value}">
+                            <input type="radio" name="color-${resource.name}" value="${color.code}" 
+                                   data-sly-attribute="${color.code == model.defaultColor ? 'checked=checked' : ''}"/>
+                            <div class="color-swatch" style="background-color: ${color.value}"></div>
+                            <div class="color-name">${color.name}</div>
+                        </label>
+                    </sly>
+                </div>
+            </div>
+            
+            <!-- Wheel Selection -->
+            <div class="config-option wheel-selection">
+                <h3>Wheel Design</h3>
+                <div class="wheel-options">
+                    <sly data-sly-list.wheel="${model.wheelOptions}">
+                        <label class="wheel-option">
+                            <input type="radio" name="wheel-${resource.name}" value="${wheel.name}" 
+                                   data-sly-attribute="${wheel.name == model.defaultWheel ? 'checked=checked' : ''}"/>
+                            <div class="wheel-image">
+                                <img src="${wheel.image @ context='uri'}" alt="${wheel.name}" />
+                            </div>
+                            <div class="wheel-name">${wheel.name}</div>
+                        </label>
+                    </sly>
+                </div>
+            </div>
+            
+            <!-- Interior Selection -->
+            <div class="config-option interior-selection">
+                <h3>Interior Design</h3>
+                <div class="interior-options">
+                    <label class="interior-option">
+                        <input type="radio" name="interior-${resource.name}" value="leather-black" checked/>
+                        <div class="interior-preview" style="background: linear-gradient(45deg, #2c2c2c, #444);"></div>
+                        <div class="interior-name">Black Leather</div>
+                    </label>
+                    <label class="interior-option">
+                        <input type="radio" name="interior-${resource.name}" value="leather-brown"/>
+                        <div class="interior-preview" style="background: linear-gradient(45deg, #8B4513, #A0522D);"></div>
+                        <div class="interior-name">Brown Leather</div>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Accessories Selection -->
+            <div class="config-option accessories-selection">
+                <h3>Accessories</h3>
+                <div class="accessories-options">
+                    <label class="accessory-option">
+                        <input type="checkbox" name="accessory-${resource.name}" value="roof-rack"/>
+                        <div class="accessory-name">Roof Rack</div>
+                        <div class="accessory-price">$399</div>
+                    </label>
+                    <label class="accessory-option">
+                        <input type="checkbox" name="accessory-${resource.name}" value="towing-package"/>
+                        <div class="accessory-name">Towing Package</div>
+                        <div class="accessory-price">$1,299</div>
+                    </label>
+                    <label class="accessory-option">
+                        <input type="checkbox" name="accessory-${resource.name}" value="all-weather-mats"/>
+                        <div class="accessory-name">All Weather Floor Mats</div>
+                        <div class="accessory-price">$149</div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Configuration Summary -->
+    <div class="config-summary">
+        <div class="summary-content">
+            <h3>Your Configuration</h3>
+            <div class="summary-details">
+                <div class="summary-item">
+                    <span class="label">Model:</span>
+                    <span class="value">${model.modelName}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Color:</span>
+                    <span class="value" id="summary-color">Black</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Wheels:</span>
+                    <span class="value" id="summary-wheels">Standard</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Total Price:</span>
+                    <span class="value" id="summary-price">${model.basePrice}</span>
+                </div>
+            </div>
+            <div class="summary-actions">
+                <button class="action-btn save-config">Save Configuration</button>
+                <button class="action-btn share-config">Share</button>
+                <button class="action-btn inquire-btn">Inquire Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+### _cq_editConfig.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="cq:EditConfig">
+
+    <!-- This node defines the text that appears when the component is empty -->
+    <cq:emptytext
+            jcr:primaryType="nt:unstructured"
+            text="Please configure the 3D Configurator component with a model and options."/>
+</jcr:root>
+```
+
+## CSS Styles
+
+The component uses the following CSS classes:
+
+### Main Container
+- `.vehicle-configurator` - Main component container
+- `.configurator-container` - Flex container for viewer and options
+- `.config-summary` - Fixed summary panel at the bottom
+
+### Viewer Section
+- `.viewer-section` - Left side containing the 3D viewer
+- `.model-viewer-container` - Container for the 3D model and controls
+- `.model-viewer` - Container where the 3D model is rendered
+- `.model-placeholder` - Placeholder shown while model loads
+- `.viewer-controls` - Set of control buttons for the viewer
+
+### Configuration Options
+- `.config-options-section` - Right side containing configuration options
+- `.config-option` - Container for each configuration category
+- `.color-options` - Grid of color selection options
+- `.wheel-options` - Grid of wheel selection options
+- `.interior-options` - Grid of interior selection options
+- `.accessories-options` - List of accessory options
+
+### Option Items
+- `.color-option` - Individual color selection item
+- `.color-swatch` - Visual representation of the color
+- `.wheel-option` - Individual wheel selection item
+- `.wheel-image` - Image of the wheel design
+- `.interior-option` - Individual interior selection item
+- `.interior-preview` - Visual preview of the interior
+
+### Summary Section
+- `.summary-content` - Content container for the configuration summary
+- `.summary-details` - List of configuration details
+- `.summary-item` - Individual summary item
+- `.summary-actions` - Action buttons at the bottom of the summary
+
+### Interactive Elements
+- `.action-btn` - General class for action buttons
+- `.save-config` - Button to save the current configuration
+- `.share-config` - Button to share the configuration
+- `.inquire-btn` - Primary action button for inquiries
+
+### Responsive Effects
+- Flex layout adjusts to single column on mobile
+- Viewer controls adapt to available space
+- Configuration options stack vertically on smaller screens
+
+## JavaScript Interaction
+
+The component includes JavaScript functionality for the 3D experience:
+
+```javascript
+// Example JavaScript for 3D configurator
+document.addEventListener('DOMContentLoaded', function() {
+  const configurator = document.querySelector('[data-component="vehicle-configurator"]');
+  const modelViewer = document.getElementById(configurator.getAttribute('data-model-viewer'));
+  const colorOptions = configurator.querySelectorAll('input[name^="color-"]');
+  const wheelOptions = configurator.querySelectorAll('input[name^="wheel-"]');
+  const interiorOptions = configurator.querySelectorAll('input[name^="interior-"]');
+  const accessoryOptions = configurator.querySelectorAll('input[name^="accessory-"]');
+  
+  // Initialize the 3D viewer
+  function initViewer() {
+    // Initialize 3D rendering engine (e.g., Three.js)
+    // Load the model specified in the component's configuration
+  }
+  
+  // Update vehicle appearance based on selections
+  colorOptions.forEach(option => {
+    option.addEventListener('change', function() {
+      // Update the 3D model's color material
+      updateModelColor(this.value);
+      updateSummary('color', this.closest('.color-option').querySelector('.color-name').textContent);
+    });
+  });
+  
+  wheelOptions.forEach(option => {
+    option.addEventListener('change', function() {
+      // Update the 3D model's wheel geometry
+      updateModelWheels(this.value);
+      updateSummary('wheels', this.closest('.wheel-option').querySelector('.wheel-name').textContent);
+    });
+  });
+  
+  interiorOptions.forEach(option => {
+    option.addEventListener('change', function() {
+      // Update the 3D model's interior materials
+      updateModelInterior(this.value);
+    });
+  });
+  
+  accessoryOptions.forEach(option => {
+    option.addEventListener('change', function() {
+      // Toggle accessories on/off in the 3D model
+      toggleAccessory(this.value, this.checked);
+      updatePrice();
+    });
+  });
+  
+  // Viewer controls
+  const rotateLeftBtn = configurator.querySelector('.rotate-left');
+  const rotateRightBtn = configurator.querySelector('.rotate-right');
+  const zoomInBtn = configurator.querySelector('.zoom-in');
+  const zoomOutBtn = configurator.querySelector('.zoom-out');
+  
+  if (rotateLeftBtn) {
+    rotateLeftBtn.addEventListener('click', () => rotateModel(-15));
+  }
+  
+  if (rotateRightBtn) {
+    rotateRightBtn.addEventListener('click', () => rotateModel(15));
+  }
+  
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', () => zoomModel(1.2));
+  }
+  
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', () => zoomModel(0.8));
+  }
+  
+  // Initialize the viewer when the component is ready
+  initViewer();
+});
+```
+
+## Dependencies
+
+*   **Sling Model:** `com.voltrux.aem.core.models.VehicleConfiguratorModel`
+*   **3D Library:** Three.js or similar WebGL library
+*   **3D Assets:** glTF/glB format vehicle models
+*   **Super Type:** None
+
+## Previewing in AEM
+
+To properly preview the 3D Configurator component:
+
+### Prerequisites
+- AEM instance running (6.5 or later)
+- Voltrux site structure deployed
+- 3D models and assets uploaded to DAM
+- WebGL-compatible browser for 3D rendering
+
+### Steps to Preview
+
+1. **Deploy the Component**
+   ```bash
+   # Use your build tool to deploy to AEM
+   mvn clean install -PautoInstallPackage
+   ```
+
+2. **Upload 3D Assets**
+   - Upload your glTF/glB models to the DAM
+   - Upload texture images and material definitions
+
+3. **Create or Navigate to a Page**
+   - Go to your site in AEM (e.g., `http://localhost:4502/sites`)
+   - Create a new page or edit an existing one
+
+4. **Add the Component**
+   - Enter edit mode by clicking the "Edit" button
+   - Drag the "3D Configurator" component from the component panel to your page
+   - Configure using the dialog:
+     - Set the "Model Name"
+     - Upload the "3D Model Path"
+     - Define color and wheel options
+     - Set the default color
+
+5. **Preview the Component**
+   - Click "Page Information" → "View as Published" or use Preview mode
+   - Interact with the 3D viewer controls
+   - Change configurations and see the model update in real-time
+
+### Troubleshooting Preview Issues
+- If 3D model doesn't load: Verify that the model path is correct and the file is properly formatted
+- If WebGL is not working: Check browser compatibility and ensure WebGL is enabled
+- If styling is missing: Ensure that all necessary CSS and JavaScript libraries are loaded
+
+### Example Implementation
+
+```html
+<!-- Example usage in a page template -->
+<div class="page-content">
+  <!-- Other components -->
+
+  <!-- 3D Configurator Component -->
+  <sly data-sly-resource="${'3d-configurator-component' @ resourceType='voltrux/components/content/vehicleconfigurator',
+                          modelName='Voltrux V-8',
+                          modelPath='/content/dam/voltrux/models/v-8.gltf',
+                          defaultColor='black'}"></sly>
+
+  <!-- Other components -->
+</div>
+```
+
+## Component Folder Structure
+
+The 3D Configurator component follows the standard AEM component structure:
+
+```
+voltrux/
+└── components/
+    └── content/
+        └── vehicleconfigurator/
+            ├── .content.xml
+            ├── _cq_dialog/
+            │   └── .content.xml
+            ├── _cq_editConfig.xml
+            ├── vehicleconfigurator.html
+            └── js/
+                └── vehicleconfigurator.js
+```
+
+Additional 3D assets would be stored in:
+```
+/content/dam/voltrux/models/
+/content/dam/voltrux/textures/
+```

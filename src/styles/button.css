@@ -1,0 +1,56 @@
+/* button.css - Voltrux Motors Button Component Styles */
+/* Extends base.css variables */
+
+/* Primary Button */
+.btn {
+  display: inline-block;
+  padding: var(--vxt-spacing-md, 15px) var(--vxt-spacing-lg, 20px);
+  font-family: var(--vxt-font-family, "Inter", sans-serif);
+  font-size: var(--vxt-font-size-md, 16px);
+  font-weight: 600;
+  color: white;
+  background-color: var(--vxt-accent-color, #E4002B);
+  border: none;
+  border-radius: var(--vxt-spacing-sm, 10px);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: var(--vxt-shadow-light, 0 2px 4px rgba(0, 0, 0, 0.05));
+}
+
+.btn:hover {
+  background-color: var(--vxt-cta-hover, #B60022);
+  box-shadow: var(--vxt-shadow-medium, 0 4px 10px rgba(0, 0, 0, 0.08));
+  transform: translateY(-2px);
+}
+
+.btn:focus {
+  outline: 2px solid var(--vxt-accent-color, #E4002B);
+  outline-offset: 2px;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  color: var(--vxt-text-color, #1A1A1A);
+  background-color: transparent;
+  border: 2px solid var(--vxt-border-color, #E0E0E0);
+}
+
+.btn-secondary:hover {
+  color: var(--vxt-accent-color, #E4002B);
+  border-color: var(--vxt-accent-color, #E4002B);
+  background-color: rgba(228, 0, 43, 0.05);
+}
+
+/* Small Button */
+.btn-sm {
+  padding: var(--vxt-spacing-sm, 10px) var(--vxt-spacing-md, 15px);
+  font-size: var(--vxt-font-size-sm, 14px);
+}
+
+/* Large Button */
+.btn-lg {
+  padding: var(--vxt-spacing-lg, 20px) var(--vxt-spacing-xl, calc(var(--vxt-spacing-lg, 20px) * 1.5));
+  font-size: var(--vxt-font-size-lg, 18px);
+}

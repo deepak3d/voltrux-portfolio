@@ -1,0 +1,40 @@
+/* base.css - Voltrux Motors Shared Variables */
+:root {
+  --vxt-primary-color: #1A1A1A;
+  --vxt-accent-color: #E4002B;
+  --vxt-neutral-color: #F2F2F2;
+  --vxt-border-color: #E0E0E0;
+  --vxt-link-hover: #D6002A;
+  --vxt-cta-bg: #E4002B;
+  --vxt-cta-hover: #B60022;
+  --vxt-text-color: #1A1A1A;
+  --vxt-text-muted: #666;
+  --vxt-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --vxt-shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --vxt-font-family: "Inter", sans-serif;
+  --vxt-max-width: 1200px;
+  --vxt-spacing-sm: 10px;
+  --vxt-spacing-md: 15px;
+  --vxt-spacing-lg: 20px;
+  --vxt-font-size-sm: 14px;
+  --vxt-font-size-md: 16px;
+  --vxt-font-size-lg: 18px;
+  --vxt-font-size-xl: 24px;
+  --vxt-font-size-xxl: 32px;
+  --vxt-spacing-xxl: 60px; /* Adding a very large spacing variable for sections */
+  --vxt-border-radius-lg: 50px; /* New variable for component radius consistency */
+}
+
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--vxt-font-family);
+  color: var(--vxt-text-color);
+  background-color: #fff;
+  line-height: 1.6;
+}

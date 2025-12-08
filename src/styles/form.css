@@ -1,0 +1,131 @@
+/* form.css - Voltrux Motors Form Component Styles */
+/* Extends base.css variables */
+
+/* Form Container */
+.form-container {
+  background-color: white;
+  padding: var(--vxt-spacing-lg, 20px);
+  border-radius: var(--vxt-spacing-md, 15px);
+  border: 1px solid var(--vxt-border-color, #E0E0E0);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: var(--vxt-spacing-lg, 20px);
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+/* Form Label */
+.form-label {
+  display: block;
+  margin-bottom: var(--vxt-spacing-sm, 10px);
+  font-weight: 600;
+  color: var(--vxt-primary-color, #1A1A1A);
+  font-size: var(--vxt-font-size-md, 16px);
+}
+
+/* Form Input */
+.form-input {
+  width: 100%;
+  padding: var(--vxt-spacing-md, 15px);
+  border: 1px solid var(--vxt-border-color, #E0E0E0);
+  border-radius: var(--vxt-spacing-sm, 10px);
+  font-family: var(--vxt-font-family, "Inter", sans-serif);
+  font-size: var(--vxt-font-size-md, 16px);
+  color: var(--vxt-text-color, #1A1A1A);
+  background-color: white;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--vxt-accent-color, #E4002B);
+  box-shadow: 0 0 0 2px rgba(228, 0, 43, 0.2);
+}
+
+.form-input:disabled {
+  background-color: var(--vxt-neutral-color, #F2F2F2);
+  cursor: not-allowed;
+}
+
+/* Textarea */
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Select */
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%231A1A1A' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right var(--vxt-spacing-md, 15px) center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* Checkbox and Radio */
+.form-checkbox,
+.form-radio {
+  width: 18px;
+  height: 18px;
+  margin-right: var(--vxt-spacing-sm, 10px);
+  accent-color: var(--vxt-accent-color, #E4002B);
+}
+
+.form-check-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--vxt-spacing-md, 15px);
+}
+
+/* Form Button */
+.form-button {
+  padding: var(--vxt-spacing-md, 15px) var(--vxt-spacing-lg, 20px);
+  background-color: var(--vxt-cta-bg, #E4002B);
+  color: white;
+  border: none;
+  border-radius: var(--vxt-spacing-sm, 10px);
+  cursor: pointer;
+  font-family: var(--vxt-font-family, "Inter", sans-serif);
+  font-size: var(--vxt-font-size-md, 16px);
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: var(--vxt-cta-hover, #B60022);
+}
+
+.form-button:disabled {
+  background-color: var(--vxt-border-color, #E0E0E0);
+  cursor: not-allowed;
+}
+
+/* Form Error */
+.form-error {
+  color: #e53e3e;
+  font-size: var(--vxt-font-size-sm, 14px);
+  margin-top: var(--vxt-spacing-sm, 10px);
+  display: block;
+}
+
+/* Form Success */
+.form-success {
+  color: #38a169;
+  font-size: var(--vxt-font-size-sm, 14px);
+  margin-top: var(--vxt-spacing-sm, 10px);
+  display: block;
+}
+
+/* Required indicator */
+.form-required {
+  color: #e53e3e;
+  margin-left: var(--vxt-spacing-sm, 10px);
+}

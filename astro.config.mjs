@@ -3,19 +3,24 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import mermaid from 'astro-mermaid'; // Import astro-mermaid
 import mdx from '@astrojs/mdx';
+import { astroExpressiveCode } from 'astro-expressive-code';
+import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
+		react(),
+		astroExpressiveCode({
+			themes: ['github-dark', 'github-light'],
+		}),
 		starlight({
 			title: 'Voltrux Motors Engineering',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/your-username/voltrux-motors' }],
 			customCss: [
 				'./src/styles/custom.css', // Link to your custom CSS file
+				'./src/styles/article-list-preview.css', // Link to article list preview styles
+				'./src/styles/testdrive-form-preview.css', // Link to test drive form preview styles
 			],
-			expressiveCode: {
-				themes: ['github-dark', 'github-light'],
-			},
 			sidebar: [
 				{
 					label: 'Overview',
@@ -34,6 +39,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Component Catalog', slug: 'components/component-catalog' },
 						{ label: 'Article List', slug: 'components/article-list' },
+						{ label: 'Header', slug: 'components/header' },
 						{ label: 'Test Drive Form', slug: 'components/test-drive' },
 						{ label: 'Truck Lister', slug: 'components/truck-lister' },
 						{ label: '3D Configurator', slug: 'components/3d-configurator' },
