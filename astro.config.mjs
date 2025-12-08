@@ -16,32 +16,32 @@ export default defineConfig({
 				{
 					label: 'Overview',
 					items: [
-						{ label: 'Home', link: '/' },
-						{ label: 'Architecture', link: '/overview/architecture' },
-						{ label: 'Tech Stack', link: '/overview/tech-stack' },
+						{ label: 'Home', slug: 'index' },
+						{ label: 'Architecture', slug: 'overview/architecture' },
+						{ label: 'Tech Stack', slug: 'overview/tech-stack' },
 					],
 				},
 				{
 					label: 'Component Library',
 					items: [
-						{ label: 'Test Drive Form', link: '/components/test-drive' },
-						{ label: 'Truck Lister', link: '/components/truck-lister' },
-						{ label: '3D Configurator', link: '/components/3d-configurator' },
+						{ label: 'Test Drive Form', slug: 'components/test-drive' },
+						{ label: 'Truck Lister', slug: 'components/truck-lister' },
+						{ label: '3D Configurator', slug: 'components/3d-configurator' },
 					],
 				},
 				{
 					label: 'Backend Logic',
 					items: [
-						{ label: 'Sling Models', link: '/backend-logic/sling-models' },
-						{ label: 'Servlets', link: '/backend-logic/servlets' },
-						{ label: 'OSGi Configs', link: '/backend-logic/osgi-configs' },
+						{ label: 'Sling Models', slug: 'backend-logic/sling-models' },
+						{ label: 'Servlets', slug: 'backend-logic/servlets' },
+						{ label: 'OSGi Configs', slug: 'backend-logic/osgi-configs' },
 					],
 				},
 				{
 					label: 'DevOps & Workflow',
 					items: [
-						{ label: 'CI/CD Pipeline', link: '/devops/ci-cd-pipeline' },
-						{ label: 'Git Strategy', link: '/devops/git-strategy' },
+						{ label: 'CI/CD Pipeline', slug: 'devops/ci-cd-pipeline' },
+						{ label: 'Git Strategy', slug: 'devops/git-strategy' },
 					],
 				},
 			],

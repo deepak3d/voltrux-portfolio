@@ -1,15 +1,19 @@
 /* src/styles/custom.css */
 :root {
-  --sl-color-accent-low: #0080801a; /* A light shade of your accent color */
-  --sl-color-accent-low-rgb: 0, 128, 128; /* RGB values for the accent color */
-  --sl-color-accent-high: #008080; /* Your primary accent color */
-  --sl-color-accent-high-rgb: 0, 128, 128; /* RGB values for the accent color */
-
-  /* Optional: Adjust gray colors for dark mode optimization if needed */
-  /* --sl-color-gray-5: #e8e8e8; */
-  /* --sl-color-gray-4: #d1d1d1; */
-  /* --sl-color-gray-3: #ababab; */
-  /* --sl-color-gray-2: #7b7b7b; */
-  /* --sl-color-gray-1: #3b3b3b; */
-  /* --sl-color-gray-0: #1b1b1b; */
+    --voltrux-teal: #008080;
+    --voltrux-teal-darker: #006666; /* Darker teal for accessible contrast on light backgrounds (4.54:1) */
+    --voltrux-teal-rgb: 0, 128, 128;
 }
+
+/* Light theme uses the darker, more accessible teal for links and accents */
+[data-theme='light'] {
+    --sl-color-accent-low: rgba(var(--voltrux-teal-rgb), 0.1);
+    --sl-color-accent-high: var(--voltrux-teal-darker);
+}
+
+/* Dark theme can use the original, brighter teal as it has good contrast on dark backgrounds */
+[data-theme='dark'] {
+    --sl-color-accent-low: rgba(var(--voltrux-teal-rgb), 0.25);
+    --sl-color-accent-high: var(--voltrux-teal);
+}
+
