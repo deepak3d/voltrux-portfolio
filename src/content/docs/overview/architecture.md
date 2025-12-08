@@ -1,6 +1,29 @@
 ---
 title: System Architecture
 ---
+This document provides a comprehensive overview of the Voltrux AEM project, including its structure, modules, backend and frontend components, and other key architectural details.
+
+## Project Configuration
+-   **Name:** Voltrux Motors
+-   **Description:** Voltrux Motors
+-   **Group ID:** com.voltrux.aem
+-   **Artifact ID:** voltrux
+-   **Version:** 0.0.1-SNAPSHOT
+
+## Project Modules
+The project is a standard AEM multi-module project with the following modules:
+*   `all`: Assembles the final deployment package.
+*   `core`: Contains all Java code (Sling Models, Servlets, etc.).
+*   `ui.frontend`: Contains the source code for the frontend assets (JS, CSS, etc.).
+*   `ui.apps`: Contains the AEM components, templates, and client-side libraries.
+*   `ui.apps.structure`: Contains the initial structure of the repository.
+*   `ui.config`: Contains OSGi configurations.
+*   `ui.content`: Contains sample content.
+*   `it.tests`: Integration tests.
+*   `dispatcher`: Apache dispatcher configurations.
+*   `ui.tests`: UI tests (e.g., Cypress).
+
+## Rendering Flow
 
 The Voltrux Motors platform utilizes a hybrid headless architecture designed to balance the rich authoring experience of Adobe Experience Manager (AEM) with the performance and flexibility of a modern front-end. This approach ensures that content is both highly manageable for marketing teams and delivered efficiently to end-users.
 

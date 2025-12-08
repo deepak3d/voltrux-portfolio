@@ -27,6 +27,7 @@ export default defineConfig({
 				{
 					label: 'Component Library',
 					items: [
+						{ label: 'Component Catalog', slug: 'components/component-catalog' },
 						{ label: 'Test Drive Form', slug: 'components/test-drive' },
 						{ label: 'Truck Lister', slug: 'components/truck-lister' },
 						{ label: '3D Configurator', slug: 'components/3d-configurator' },
