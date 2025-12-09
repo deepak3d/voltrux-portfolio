@@ -8,12 +8,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-	alias: {
-		'@components': '/src/components',
-		'@content': '/src/content',
-		'@styles': '/src/styles',
-		'@assets': '/src/assets',
-	},
+	
 	integrations: [
 		react(),
 		astroExpressiveCode({
@@ -36,6 +31,7 @@ export default defineConfig({
 				{
 					label: 'Overview',
 					items: [
+						{ label: 'Home', link: '/' },
 						{ label: 'Architecture', slug: 'overview/architecture' },
 						{ label: 'Tech Stack', slug: 'overview/tech-stack' },
 					],
