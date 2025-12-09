@@ -1,0 +1,491 @@
+<style>
+  .cq-dialog {
+    font-family: adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f7f7f7;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-width: 768px;
+    margin: 0 auto;
+  }
+  
+  .cq-dialog-header {
+    background: #007eb5;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .cq-dialog-title {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+  }
+  
+  .cq-dialog-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cq-dialog-content {
+    background: white;
+    padding: 0;
+  }
+  
+  .cq-tabs {
+    display: flex;
+    background: #f5f5f5;
+    border-bottom: 1px solid #d6d6d6;
+  }
+  
+  .cq-tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    border-bottom: 2px solid transparent;
+    color: #666;
+  }
+  
+  .cq-tab.active {
+    border-bottom: 2px solid #007eb5;
+    color: #007eb5;
+  }
+  
+  .cq-tab-panel {
+    display: none;
+    padding: 20px;
+  }
+  
+  .cq-tab-panel.active {
+    display: block;
+  }
+  
+  .cq-form-row {
+    margin-bottom: 16px;
+  }
+  
+  .cq-form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #494949;
+  }
+  
+  .cq-form-field {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    font-size: 14px;
+    background: white;
+  }
+  
+  .cq-textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    font-size: 14px;
+    background: white;
+    min-height: 80px;
+    resize: vertical;
+  }
+  
+  .cq-multifield {
+    border: 1px solid #d6d6d6;
+    border-radius: 2px;
+    background: #f8f8f8;
+    padding: 10px;
+  }
+  
+  .cq-multifield-item {
+    border: 1px solid #d6d6d6;
+    border-radius: 2px;
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .cq-multifield-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e6e6e6;
+  }
+  
+  .cq-multifield-title {
+    font-weight: 500;
+    color: #494949;
+  }
+  
+  .cq-multifield-actions {
+    display: flex;
+    gap: 6px;
+  }
+  
+  .cq-multifield-btn {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #494949;
+  }
+  
+  .cq-multifield-btn.move-up { 
+    font-size: 14px; 
+    padding: 2px 6px; 
+  }
+  .cq-multifield-btn.move-down { 
+    font-size: 14px; 
+    padding: 2px 6px; 
+  }
+  .cq-multifield-btn.remove { 
+    background: #da0010; 
+    color: white; 
+    border-color: #da0010; 
+  }
+  
+  .cq-field-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .cq-fileupload {
+    border: 1px dashed #cccccc;
+    padding: 20px;
+    text-align: center;
+    background: #fafafa;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  
+  .cq-fileupload-label {
+    font-size: 13px;
+    color: #666;
+  }
+  
+  .cq-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 20px;
+    background: #f5f5f5;
+    border-top: 1px solid #d6d6d6;
+  }
+  
+  .cq-dialog-btn {
+    padding: 8px 20px;
+    border-radius: 2px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .cq-dialog-btn.cancel {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    color: #333;
+  }
+  
+  .cq-dialog-btn.done {
+    background: #007eb5;
+    border: 1px solid #007eb5;
+    color: white;
+  }
+</style>
+
+<div class="cq-dialog">
+  <div class="cq-dialog-header">
+    <h3 class="cq-dialog-title">Article List</h3>
+    <button class="cq-dialog-close">&times;</button>
+  </div>
+  
+  <div class="cq-dialog-content">
+    <div class="cq-tabs">
+      <div class="cq-tab active" data-tab="general">General</div>
+      <div class="cq-tab" data-tab="items">Article Items</div>
+    </div>
+    
+    <div class="cq-tab-panel active" data-tab="general">
+      <div class="cq-form-row">
+        <label class="cq-form-label">Section Title</label>
+        <input type="text" class="cq-form-field" placeholder="Enter section title" value="Latest Articles" />
+      </div>
+      
+      <div class="cq-form-row">
+        <label class="cq-form-label">Section Subtitle</label>
+        <textarea class="cq-textarea" placeholder="Enter section subtitle">Stay updated with the latest industry trends and innovations at Voltrux Motors</textarea>
+      </div>
+      
+      <div class="cq-form-row">
+        <label class="cq-form-label">Max Articles to Display</label>
+        <input type="number" class="cq-form-field" placeholder="Number of articles" value="8" />
+      </div>
+    </div>
+    
+    <div class="cq-tab-panel" data-tab="items">
+      <div class="cq-form-row">
+        <label class="cq-form-label">Article Items</label>
+        <div class="cq-multifield">
+          <div class="cq-multifield-item">
+            <div class="cq-multifield-header">
+              <div class="cq-multifield-title">Article 1</div>
+              <div class="cq-multifield-actions">
+                <button class="cq-multifield-btn move-up" title="Move Up">↑</button>
+                <button class="cq-multifield-btn move-down" title="Move Down">↓</button>
+                <button class="cq-multifield-btn remove">-</button>
+              </div>
+            </div>
+            
+            <div class="cq-field-pair">
+              <div>
+                <label class="cq-form-label">Article Image</label>
+                <div class="cq-fileupload">
+                  <div class="cq-fileupload-label">Drop file here or click to browse</div>
+                  <div style="font-size: 11px; color: #999; margin-top: 4px;">(Required)</div>
+                </div>
+              </div>
+              
+              <div>
+                <label class="cq-form-label">Category</label>
+                <select class="cq-form-field">
+                  <option value="technology" selected>Technology</option>
+                  <option value="design">Design</option>
+                  <option value="engineering">Engineering</option>
+                  <option value="news">News</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="cq-field-pair" style="margin-top: 12px;">
+              <div>
+                <label class="cq-form-label">Article Title</label>
+                <input type="text" class="cq-form-field" placeholder="Article Title" value="The Future of Electric Trucks" />
+              </div>
+              
+              <div>
+                <label class="cq-form-label">Author</label>
+                <input type="text" class="cq-form-field" placeholder="Author Name" value="John Smith" />
+              </div>
+            </div>
+            
+            <div class="cq-form-row" style="margin-top: 12px;">
+              <label class="cq-form-label">Excerpt</label>
+              <textarea class="cq-textarea" placeholder="Article excerpt">Explore how Voltrux is revolutionizing the electric truck industry with groundbreaking technology and innovative design solutions.</textarea>
+            </div>
+            
+            <div class="cq-field-pair" style="margin-top: 12px;">
+              <div>
+                <label class="cq-form-label">Publication Date</label>
+                <input type="text" class="cq-form-field" placeholder="Date" value="Dec 5, 2025" />
+              </div>
+              
+              <div>
+                <label class="cq-form-label">Reading Time</label>
+                <input type="text" class="cq-form-field" placeholder="e.g. 5 min read" value="8 min read" />
+              </div>
+            </div>
+          </div>
+          
+          <div class="cq-multifield-item">
+            <div class="cq-multifield-header">
+              <div class="cq-multifield-title">Article 2</div>
+              <div class="cq-multifield-actions">
+                <button class="cq-multifield-btn move-up" title="Move Up">↑</button>
+                <button class="cq-multifield-btn move-down" title="Move Down">↓</button>
+                <button class="cq-multifield-btn remove">-</button>
+              </div>
+            </div>
+            
+            <div class="cq-field-pair">
+              <div>
+                <label class="cq-form-label">Article Image</label>
+                <div class="cq-fileupload">
+                  <div class="cq-fileupload-label">Drop file here or click to browse</div>
+                  <div style="font-size: 11px; color: #999; margin-top: 4px;">(Required)</div>
+                </div>
+              </div>
+              
+              <div>
+                <label class="cq-form-label">Category</label>
+                <select class="cq-form-field">
+                  <option value="design">Design</option>
+                  <option value="technology" selected>Technology</option>
+                  <option value="engineering">Engineering</option>
+                  <option value="news">News</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="cq-field-pair" style="margin-top: 12px;">
+              <div>
+                <label class="cq-form-label">Article Title</label>
+                <input type="text" class="cq-form-field" placeholder="Article Title" value="Top Design Trends for 2026 Trucks" />
+              </div>
+              
+              <div>
+                <label class="cq-form-label">Author</label>
+                <input type="text" class="cq-form-field" placeholder="Author Name" value="John Smith" />
+              </div>
+            </div>
+            
+            <div class="cq-form-row" style="margin-top: 12px;">
+              <label class="cq-form-label">Excerpt</label>
+              <textarea class="cq-textarea" placeholder="Article excerpt">Discover the cutting-edge design elements that will define the next generation of commercial vehicles.</textarea>
+            </div>
+            
+            <div class="cq-field-pair" style="margin-top: 12px;">
+              <div>
+                <label class="cq-form-label">Publication Date</label>
+                <input type="text" class="cq-form-field" placeholder="Date" value="Nov 22, 2025" />
+              </div>
+              
+              <div>
+                <label class="cq-form-label">Reading Time</label>
+                <input type="text" class="cq-form-field" placeholder="e.g. 5 min read" value="5 min read" />
+              </div>
+            </div>
+          </div>
+          
+          <button class="cq-multifield-btn" style="width: 100%; margin-top: 8px;">+ Add Item</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cq-dialog-footer">
+    <button class="cq-dialog-btn cancel">Cancel</button>
+    <button class="cq-dialog-btn done">Done</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.cq-tab');
+    const tabPanels = document.querySelectorAll('.cq-tab-panel');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const tabName = this.getAttribute('data-tab');
+        
+        // Update active tab
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Show corresponding panel
+        tabPanels.forEach(panel => {
+          panel.classList.remove('active');
+          if (panel.getAttribute('data-tab') === tabName) {
+            panel.classList.add('active');
+          }
+        });
+      });
+    });
+    
+    // Close button functionality
+    const closeBtn = document.querySelector('.cq-dialog-close');
+    closeBtn.addEventListener('click', function() {
+      this.closest('.cq-dialog').style.display = 'none';
+    });
+    
+    // Remove multifield item functionality
+    const removeButtons = document.querySelectorAll('.cq-multifield-btn.remove');
+    removeButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.closest('.cq-multifield-item').remove();
+      });
+    });
+    
+    // Add new item functionality
+    const addItemBtn = document.querySelector('.cq-multifield button');
+    if (addItemBtn) {
+      addItemBtn.addEventListener('click', function() {
+        const multifield = this.closest('.cq-multifield');
+        const newItem = document.createElement('div');
+        newItem.className = 'cq-multifield-item';
+        newItem.innerHTML = `
+          <div class="cq-multifield-header">
+            <div class="cq-multifield-title">New Article</div>
+            <div class="cq-multifield-actions">
+              <button class="cq-multifield-btn move-up" title="Move Up">↑</button>
+              <button class="cq-multifield-btn move-down" title="Move Down">↓</button>
+              <button class="cq-multifield-btn remove">-</button>
+            </div>
+          </div>
+          
+          <div class="cq-field-pair">
+            <div>
+              <label class="cq-form-label">Article Image</label>
+              <div class="cq-fileupload">
+                <div class="cq-fileupload-label">Drop file here or click to browse</div>
+                <div style="font-size: 11px; color: #999; margin-top: 4px;">(Required)</div>
+              </div>
+            </div>
+            
+            <div>
+              <label class="cq-form-label">Category</label>
+              <select class="cq-form-field">
+                <option value="technology">Technology</option>
+                <option value="design">Design</option>
+                <option value="engineering">Engineering</option>
+                <option value="news">News</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="cq-field-pair" style="margin-top: 12px;">
+            <div>
+              <label class="cq-form-label">Article Title</label>
+              <input type="text" class="cq-form-field" placeholder="Article Title" />
+            </div>
+            
+            <div>
+              <label class="cq-form-label">Author</label>
+              <input type="text" class="cq-form-field" placeholder="Author Name" />
+            </div>
+          </div>
+          
+          <div class="cq-form-row" style="margin-top: 12px;">
+            <label class="cq-form-label">Excerpt</label>
+            <textarea class="cq-textarea" placeholder="Article excerpt"></textarea>
+          </div>
+          
+          <div class="cq-field-pair" style="margin-top: 12px;">
+            <div>
+              <label class="cq-form-label">Publication Date</label>
+              <input type="text" class="cq-form-field" placeholder="Date" />
+            </div>
+            
+            <div>
+              <label class="cq-form-label">Reading Time</label>
+              <input type="text" class="cq-form-field" placeholder="e.g. 5 min read" />
+            </div>
+          </div>
+        `;
+        multifield.insertBefore(newItem, this);
+        
+        // Add event to new remove button
+        newItem.querySelector('.cq-multifield-btn.remove').addEventListener('click', function() {
+          this.closest('.cq-multifield-item').remove();
+        });
+      });
+    }
+  });
+</script>

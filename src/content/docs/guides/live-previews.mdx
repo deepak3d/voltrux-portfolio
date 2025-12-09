@@ -53,19 +53,18 @@ export default defineConfig({
 
 Create your React component in the `src/components` directory:
 
-```jsx
-// src/components/MyComponentPreview.jsx
-import React from 'react';
+```astro
+---
+// src/components/MyComponentPreview.astro
+---
 
-const MyComponentPreview = () => {
-  return (
-    <div className="my-component-preview">
-      {/* Your component JSX */}
-    </div>
-  );
-};
+<div class="my-component-preview">
+  {/* Your component HTML */}
+</div>
 
-export default MyComponentPreview;
+<style>
+  /* Component styles */
+</style>
 ```
 
 ## Step 4: Add Styles
@@ -102,7 +101,7 @@ Import and use your component in MDX files:
 title: My Component
 ---
 
-import MyComponentPreview from '../components/MyComponentPreview.jsx';
+import MyComponentPreview from '../components/MyComponentPreview.astro';
 
 # My Component
 
@@ -120,9 +119,9 @@ Your documentation content here...
 ### Component Creation Rules
 
 1. **Location**: Place components in `src/components/` directory
-2. **Naming**: Use PascalCase for component names (e.g., `ButtonPreview.jsx`)
-3. **File Extension**: Use `.jsx` for React components
-4. **Export**: Always use default export for MDX components
+2. **Naming**: Use PascalCase for component names (e.g., `ButtonPreview.astro`)
+3. **File Extension**: Use `.astro` for Astro components
+4. **Export**: Astro components are automatically exported
 
 ### Styling Rules
 

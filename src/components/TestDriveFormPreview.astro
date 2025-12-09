@@ -1,0 +1,326 @@
+---
+import BrowserWindow from './BrowserWindow.astro';
+---
+
+<BrowserWindow url="http://voltrux.com/test-drive-form">
+  <div
+    class="test-drive-container"
+    style="display: flex; gap: 2rem; padding: 2rem; background-color: #fff; border: 1px solid #E0E0E0; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08)"
+  >
+    <div
+      class="test-drive-form-col"
+      style="flex: 2; min-width: 0"
+    >
+      <div
+        class="form-header"
+        style="margin-bottom: 2rem"
+      >
+        <h2
+          style="font-size: 32px; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem"
+        >
+          Book Your Test Drive
+        </h2>
+        <p
+          style="font-size: 18px; color: #666; margin: 0"
+        >
+          Select your preferred model and time slot
+        </p>
+      </div>
+
+      <div
+        class="form-wrapper"
+        style="margin-bottom: 1rem"
+      >
+        {/* The Form */}
+        <form
+          id="form-testdrive"
+          style="display: flex; flex-direction: column; gap: 1rem"
+          onsubmit="event.preventDefault(); alert('Test drive request submitted!');"
+        >
+          {/* Standard Form Fields */}
+          <div
+            class="form-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label
+              for="firstName"
+              style="font-weight: 600; color: #1A1A1A"
+            >
+              First Name*
+            </label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              required
+              style="padding: 0.75rem; border: 1px solid #E0E0E0; border-radius: 4px; font-size: 16px; background-color: #fff"
+            />
+          </div>
+
+          <div
+            class="form-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label
+              for="lastName"
+              style="font-weight: 600; color: #1A1A1A"
+            >
+              Last Name*
+            </label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              required
+              style="padding: 0.75rem; border: 1px solid #E0E0E0; border-radius: 4px; font-size: 16px; background-color: #fff"
+            />
+          </div>
+
+          <div
+            class="form-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label
+              for="email"
+              style="font-weight: 600; color: #1A1A1A"
+            >
+              Email*
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              style="padding: 0.75rem; border: 1px solid #E0E0E0; border-radius: 4px; font-size: 16px; background-color: #fff"
+            />
+          </div>
+
+          <div
+            class="form-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label
+              for="phone"
+              style="font-weight: 600; color: #1A1A1A"
+            >
+              Phone
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              style="padding: 0.75rem; border: 1px solid #E0E0E0; border-radius: 4px; font-size: 16px; background-color: #fff"
+            />
+          </div>
+
+          {/* Dynamic Dropdown: Locations */}
+          <div
+            class="form-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label
+              for="location"
+              style="font-weight: 600; color: #1A1A1A"
+            >
+              Preferred Location*
+            </label>
+            <select
+              id="location"
+              name="location"
+              required
+              style="padding: 0.75rem; border: 1px solid #E0E0E0; border-radius: 4px; font-size: 16px; background-color: #fff; appearance: none; background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%231A1A1A\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e'); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 16px; padding-right: 2.5rem"
+            >
+              <option value="" disabled>Select a location</option>
+              <option value="downtown">Downtown Showroom</option>
+              <option value="northside">Northside Dealership</option>
+              <option value="eastside">Eastside Gallery</option>
+            </select>
+          </div>
+
+          {/* Dynamic Dropdown: Models */}
+          <div
+            class="form-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label
+              for="model"
+              style="font-weight: 600; color: #1A1A1A"
+            >
+              Preferred Model*
+            </label>
+            <select
+              id="model"
+              name="model"
+              required
+              style="padding: 0.75rem; border: 1px solid #E0E0E0; border-radius: 4px; font-size: 16px; background-color: #fff; appearance: none; background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%231A1A1A\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e'); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 16px; padding-right: 2.5rem"
+            >
+              <option value="" disabled>Select a model</option>
+              <option value="v8">Voltrux V-8</option>
+              <option value="executive">Voltrux Executive</option>
+              <option value="sport">Voltrux Sport</option>
+              <option value="luxury">Voltrux Luxury</option>
+            </select>
+          </div>
+
+          {/* Dynamic Dropdown: Times */}
+          <div
+            class="form-group"
+            style="display: flex; flex-direction: column; gap: 0.5rem"
+          >
+            <label
+              for="time"
+              style="font-weight: 600; color: #1A1A1A"
+            >
+              Preferred Time*
+            </label>
+            <select
+              id="time"
+              name="time"
+              required
+              style="padding: 0.75rem; border: 1px solid #E0E0E0; border-radius: 4px; font-size: 16px; background-color: #fff; appearance: none; background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 20 20\'%3e%3cpath stroke=\'%231A1A1A\' stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M6 8l4 4 4-4\'/%3e%3c/svg%3e'); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 16px; padding-right: 2.5rem"
+            >
+              <option value="" disabled>Select a time</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="15:00">3:00 PM</option>
+              <option value="16:00">4:00 PM</option>
+            </select>
+          </div>
+
+          {/* Submit Button */}
+          <div
+            class="form-group button-group"
+            style="margin-top: 1rem"
+          >
+            <button
+              type="submit"
+              class="cta-button"
+              style="background-color: #E4002B; color: white; padding: 12px 24px; font-weight: 700; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; font-size: 16px; width: auto"
+            >
+              Book Now
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {/* Info Column */}
+    <div
+      class="test-drive-info-col"
+      style="flex: 1; min-width: 300px; padding: 1.5rem; background-color: #F2F2F2; border-radius: 8px"
+    >
+      {/* Why Test Drive Section */}
+      <div
+        class="info-box why-voltrux"
+        style="margin-bottom: 2rem"
+      >
+        <h3
+          style="font-size: 24px; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #E4002B"
+        >
+          Why Test Drive a Voltrux?
+        </h3>
+        <ul
+          style="list-style: none; padding: 0; margin: 0"
+        >
+          <li
+            style="position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; color: #1A1A1A; font-size: 16px"
+          >
+            <span
+              style="position: absolute; left: 0; top: 0.25rem; color: #E4002B; font-weight: bold"
+            >
+              ✓
+            </span>
+            Experience our cutting-edge technology firsthand
+          </li>
+          <li
+            style="position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; color: #1A1A1A; font-size: 16px"
+          >
+            <span
+              style="position: absolute; left: 0; top: 0.25rem; color: #E4002B; font-weight: bold"
+            >
+              ✓
+            </span>
+            Feel the power of our premium electric engines
+          </li>
+          <li
+            style="position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; color: #1A1A1A; font-size: 16px"
+          >
+            <span
+              style="position: absolute; left: 0; top: 0.25rem; color: #E4002B; font-weight: bold"
+            >
+              ✓
+            </span>
+            Explore luxury features designed for comfort
+          </li>
+          <li
+            style="position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; color: #1A1A1A; font-size: 16px"
+          >
+            <span
+              style="position: absolute; left: 0; top: 0.25rem; color: #E4002B; font-weight: bold"
+            >
+              ✓
+            </span>
+            Discover our revolutionary safety systems
+          </li>
+          <li
+            style="position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; color: #1A1A1A; font-size: 16px"
+          >
+            <span
+              style="position: absolute; left: 0; top: 0.25rem; color: #E4002B; font-weight: bold"
+            >
+              ✓
+            </span>
+            Test our autonomous driving capabilities
+          </li>
+        </ul>
+      </div>
+
+      {/* Other Info Section */}
+      <div
+        class="info-box other-info"
+        style="font-size: 14px; color: #1A1A1A"
+      >
+        <h3
+          style="font-size: 18px; font-weight: 600; color: #1A1A1A; margin-bottom: 0.5rem"
+        >
+          Contact & Location Info
+        </h3>
+        <p>For any questions, please contact us at <a href="tel:+15551234567">(555) 123-4567</a> or visit any of our locations during business hours (9 AM - 8 PM, Mon-Sat).</p>
+        <p>After submitting your request, a representative will contact you within 24 hours to confirm your appointment.</p>
+      </div>
+    </div>
+
+    <style>
+      @media (max-width: 768px) {
+        .test-drive-container {
+          flex-direction: column;
+        }
+
+        .test-drive-info-col {
+          order: -1; /* Move info column to top on mobile */
+        }
+      }
+    </style>
+    <script>
+      // Add event listeners for interactive elements
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add hover effects to CTA button
+        const ctaButton = document.querySelector('.cta-button');
+        if (ctaButton) {
+          ctaButton.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#B60022';
+            this.style.transform = 'translateY(-2px)';
+          });
+
+          ctaButton.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '#E4002B';
+            this.style.transform = 'translateY(0)';
+          });
+        }
+      });
+    </script>
+  </div>
+</BrowserWindow>

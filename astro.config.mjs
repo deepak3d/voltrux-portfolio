@@ -8,6 +8,12 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+	alias: {
+		'@components': '/src/components',
+		'@content': '/src/content',
+		'@styles': '/src/styles',
+		'@assets': '/src/assets',
+	},
 	integrations: [
 		react(),
 		astroExpressiveCode({
@@ -15,19 +21,22 @@ export default defineConfig({
 		}),
 		starlight({
 			title: 'Voltrux Motors Engineering',
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/your-username/voltrux-motors' }],
+			social: [
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/deepak3d/Voltrux' },
+				{ icon: 'external', label: 'Live Site', href: 'https://voltrux-portfolio.vercel.app/' }
+			],
 			customCss: [
 				'./src/styles/custom.css', // Link to your custom CSS file
 				'./src/styles/article-list-preview.css', // Link to article list preview styles
 				'./src/styles/testdrive-form-preview.css', // Link to test drive form preview styles
 				'./src/styles/footer-preview.css', // Link to footer preview styles
-				'./src/styles/header-preview.css', // Link to header preview styles
+				'./src/styles/css-conflict-fixes.css', // Link to CSS conflict fixes
 			],
 			sidebar: [
 				{
 					label: 'Overview',
 					items: [
-						{ label: 'Home', slug: 'index' },
+						{ label: 'Home', link: '/' },
 						{ label: 'Architecture', slug: 'overview/architecture' },
 						{ label: 'Tech Stack', slug: 'overview/tech-stack' },
 					],
@@ -44,7 +53,7 @@ export default defineConfig({
 						{ label: 'Header', slug: 'components/header' },
 						{ label: 'Footer', slug: 'components/footer' },
 						{ label: 'Test Drive Form', slug: 'components/test-drive' },
-						{ label: 'Truck Lister', slug: 'components/truck-lister' },
+						{ label: 'Truck Grid', slug: 'components/truck-grid' },
 						{ label: '3D Configurator', slug: 'components/3d-configurator' },
 					],
 				},

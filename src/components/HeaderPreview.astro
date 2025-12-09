@@ -1,0 +1,235 @@
+---
+import BrowserWindow from './BrowserWindow.astro';
+---
+
+<BrowserWindow url="http://voltrux.com/header">
+  <header
+    class="header"
+    style="background: #fff; border-bottom: 1px solid #e0e0e0; /* border-color */ position: sticky; top: 0; z-index: 1; box-shadow: 0 4px 12px rgba(0,0,0,0.1) /* shadow-medium */; transition: box-shadow 0.3s ease; width: 100%; box-sizing: border-box"
+  >
+    <div
+      class="header__container"
+      style="max-width: 1200px; /* max-width */ margin: 0 auto; padding: 15px 20px; /* spacing-md spacing-lg - reduced padding for better fit */ display: flex; align-items: center; justify-content: space-between; width: 100%; box-sizing: border-box"
+    >
+      <div
+        class="header__logo"
+        style="display: flex; align-items: center; gap: 10px; /* spacing-md */ flex-shrink: 0 /* Prevent logo from shrinking */"
+      >
+        <div
+          class="header__logo-image"
+          style="width: 40px; /* Reduced size for better fit */ height: 40px; /* Reduced size for better fit */ background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0 /* Prevent from shrinking */"
+        >
+          <span style="color: #666; font-size: 8px; font-weight: bold">LOGO</span>
+        </div>
+        <span
+          class="header__logo-text"
+          style="font-size: 16px; /* Reduced size for better fit */ font-weight: 700; color: #333; /* primary-color */ letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap /* Prevent text wrapping */"
+        >
+          Voltrux Motors
+        </span>
+      </div>
+
+      {/* Desktop Navigation */}
+      <nav
+        class="header__nav"
+        style="display: flex; align-items: center; flex-grow: 1; justify-content: center /* Center the navigation */"
+      >
+        <ul
+          class="header__nav-list"
+          style="display: flex; list-style: none; gap: 15px; /* Reduced gap for better fit */ margin: 0; padding: 0; justify-content: center /* Center the list items */"
+        >
+          <li>
+            <a
+              href="/"
+              class="header__nav-link"
+              style="text-decoration: none; color: #333; /* text-color - reduced for better contrast */ font-weight: 500; /* Lighter font weight */ position: relative; padding: 8px 0; font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease; white-space: nowrap; /* Prevent text wrapping */"
+            >
+              Home
+              <span
+                class="nav-underline"
+                style="position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background-color: #E4002B; /* accent-color */ transform: scaleX(0); transition: transform 0.3s ease;"
+              />
+            </a>
+          </li>
+          <li>
+            <a
+              href="/technology"
+              class="header__nav-link"
+              style="text-decoration: none; color: #333; /* text-color - reduced for better contrast */ font-weight: 500; /* Lighter font weight */ position: relative; padding: 8px 0; font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease; white-space: nowrap; /* Prevent text wrapping */"
+            >
+              Technology
+              <span
+                class="nav-underline"
+                style="position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background-color: #E4002B; /* accent-color */ transform: scaleX(0); transition: transform 0.3s ease;"
+              />
+            </a>
+          </li>
+          <li>
+            <a
+              href="/about"
+              class="header__nav-link"
+              style="text-decoration: none; color: #333; /* text-color - reduced for better contrast */ font-weight: 500; /* Lighter font weight */ position: relative; padding: 8px 0; font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease; white-space: nowrap; /* Prevent text wrapping */"
+            >
+              About
+              <span
+                class="nav-underline"
+                style="position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background-color: #E4002B; /* accent-color */ transform: scaleX(0); transition: transform 0.3s ease;"
+              />
+            </a>
+          </li>
+          <li>
+            <a
+              href="/contact"
+              class="header__nav-link"
+              style="text-decoration: none; color: #333; /* text-color - reduced for better contrast */ font-weight: 500; /* Lighter font weight */ position: relative; padding: 8px 0; font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease; white-space: nowrap; /* Prevent text wrapping */"
+            >
+              Contact
+              <span
+                class="nav-underline"
+                style="position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background-color: #E4002B; /* accent-color */ transform: scaleX(0); transition: transform 0.3s ease;"
+              />
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      {/* CTA Button - moved to the right */}
+      <div
+        class="header__cta-wrapper"
+        style="display: flex; align-items: center; flex-shrink: 0 /* Prevent CTA from shrinking */"
+      >
+        <a
+          href="/dealers"
+          class="header__cta-button"
+          style="background-color: #E4002B; /* cta-bg */ color: #fff; padding: 8px 16px; /* Reduced size for better fit */ border-radius: 50px; font-weight: 500; /* Lighter font weight */ font-size: 14px; /* Reduced size for better fit */ text-decoration: none; display: inline-block; transition: all 0.3s ease; white-space: nowrap /* Prevent text wrapping */"
+        >
+          Find a Dealer
+        </a>
+      </div>
+
+      {/* Mobile Menu Toggle */}
+        <button
+          class="header__menu-toggle"
+          style="display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 5px; align-items: center; margin-left: 15px; /* Space from CTA button */ flex-shrink: 0 /* Prevent toggle from shrinking */"
+          aria-label="Toggle navigation menu"
+        >
+          <span
+            class="header__menu-icon"
+            style="width: 24px; height: 3px; background-color: #333; /* primary-color */ border-radius: 2px; transition: all 0.3s ease"
+          />
+          <span
+            class="header__menu-icon"
+            style="width: 24px; height: 3px; background-color: #333; /* primary-color */ border-radius: 2px; transition: all 0.3s ease"
+          />
+          <span
+            class="header__menu-icon"
+            style="width: 24px; height: 3px; background-color: #333; /* primary-color */ border-radius: 2px; transition: all 0.3s ease"
+          />
+        </button>
+      </div>
+
+      {/* Mobile Navigation */}
+      <nav
+        class="header__mobile-nav"
+        style="display: none; flex-direction: column; background: #fff; border-top: 1px solid #e0e0e0; /* border-color */ width: 100%; position: absolute; top: 100%; left: 0; z-index: 1; box-shadow: 0 4px 12px rgba(0,0,0,0.1) /* shadow-medium */"
+      >
+        <ul
+          class="header__mobile-list"
+          style="list-style: none; padding: 15px; /* spacing-md */ margin: 0; display: flex; flex-direction: column; gap: 10px /* spacing-sm */"
+        >
+          <li style="border-bottom: 1px solid #e0e0e0; /* border-color */ padding: 8px 0 /* spacing-sm */">
+            <a
+              href="/"
+              class="header__mobile-link"
+              style="display: block; padding: 8px 0; /* spacing-sm */ color: #333; /* text-color */ text-decoration: none; font-weight: 500; border-bottom: 1px solid #e0e0e0; /* border-color */ padding-bottom: 10px; /* spacing-md */ font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease"
+            >
+              Home
+            </a>
+          </li>
+          <li style="border-bottom: 1px solid #e0e0e0; /* border-color */ padding: 8px 0 /* spacing-sm */">
+            <a
+              href="/technology"
+              class="header__mobile-link"
+              style="display: block; padding: 8px 0; /* spacing-sm */ color: #333; /* text-color */ text-decoration: none; font-weight: 500; border-bottom: 1px solid #e0e0e0; /* border-color */ padding-bottom: 10px; /* spacing-md */ font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease"
+            >
+              Technology
+            </a>
+          </li>
+          <li style="border-bottom: 1px solid #e0e0e0; /* border-color */ padding: 8px 0 /* spacing-sm */">
+            <a
+              href="/about"
+              class="header__mobile-link"
+              style="display: block; padding: 8px 0; /* spacing-sm */ color: #333; /* text-color */ text-decoration: none; font-weight: 500; border-bottom: 1px solid #e0e0e0; /* border-color */ padding-bottom: 10px; /* spacing-md */ font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease"
+            >
+              About
+            </a>
+          </li>
+          <li style="border-bottom: 1px solid #e0e0e0; /* border-color */ padding: 8px 0 /* spacing-sm */">
+            <a
+              href="/contact"
+              class="header__mobile-link"
+              style="display: block; padding: 8px 0; /* spacing-sm */ color: #333; /* text-color */ text-decoration: none; font-weight: 500; border-bottom: 1px solid #e0e0e0; /* border-color */ padding-bottom: 10px; /* spacing-md */ font-size: 14px; /* Reduced size for better fit */ transition: color 0.3s ease"
+            >
+              Contact
+            </a>
+          </li>
+          <li style="padding: 8px 0 /* spacing-sm */">
+            <a
+              href="/dealers"
+              class="header__cta-button--mobile"
+              style="background-color: #E4002B; /* cta-bg */ color: #fff; padding: 8px 16px; /* Reduced size for better fit */ border-radius: 50px; font-weight: 500; font-size: 14px; /* Reduced size for better fit */ text-decoration: none; display: inline-block; width: 100%; text-align: center; transition: all 0.3s ease"
+            >
+              Find a Dealer
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <style>
+      .header__nav-link:hover .nav-underline {
+        transform: scaleX(1);
+      }
+
+      .header__nav-link:hover {
+        color: #E4002B; /* accent-color */
+      }
+
+      .header__cta-button:hover {
+        background-color: #B60022; /* cta-hover */
+        transform: translateY(-2px);
+      }
+
+      .header__cta-button {
+        background-color: #E4002B; /* cta-bg */
+        transition: all 0.3s ease;
+      }
+
+      .header__mobile-link:hover {
+        color: #E4002B; /* accent-color */
+      }
+
+      .header__cta-button--mobile:hover {
+        background-color: #B60022; /* cta-hover */
+      }
+
+      @media (max-width: 768px) {
+        .header__nav {
+          display: none !important;
+        }
+
+        .header__menu-toggle {
+          display: flex !important;
+        }
+
+        .header__cta-wrapper {
+          display: none; /* Hide desktop CTA on mobile */
+        }
+      }
+
+      @media (min-width: 769px) {
+        .header__mobile-nav {
+          display: none !important;
+        }
+      }
+    </style>
+  </BrowserWindow>

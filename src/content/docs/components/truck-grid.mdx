@@ -1,0 +1,350 @@
+---
+title: Truck Grid Component
+description: Comprehensive guide for the Truck Grid component in Voltrux Motors
+---
+
+import TruckGridPreview from '../../../components/TruckGridPreview.astro';
+import TruckGridDialog from '../../../components/TruckGridDialog.astro';
+
+This document provides a detailed overview of the `truckgrid` component, which is used to display a collection of trucks with featured content, dual image views, and responsive design.
+
+## Component Preview
+
+### Live Preview
+
+Here's a live preview of the Truck Grid component (interactive version):
+
+<TruckGridPreview />
+
+The Truck Grid component displays a responsive grid of truck models with dual-image views and detailed information. Here's a description of what you would see when the component is rendered:
+
+## Dialog Configuration
+
+The component includes a comprehensive dialog for content authors, allowing them to customize the grid content and truck items. Here's an interactive preview of the Touch UI dialog:
+
+<TruckGridDialog />
+
+The Touch UI dialog provides an intuitive interface for content authors to:
+
+- Set the section title and subtitle
+- Add multiple truck items with primary and secondary images
+- Configure titles and captions for each truck
+- Easily reorder items using the up/down buttons
+
+### Desktop View
+- Section title and subtitle are prominently displayed at the top
+- Truck cards are displayed in a responsive grid format (typically 3 columns)
+- Each truck card features dual images (front and side views) in a horizontal layout
+- Truck information is displayed below the images with title and caption
+
+### Mobile View
+- Truck grid adjusts to 1 column for better readability on small screens
+- Dual images stack vertically within each card
+- Content remains readable and accessible
+
+### Visual Mockup
+
+Here's a detailed representation of the component when rendered in a browser:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                             Voltrux Motors - Truck Grid                         │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│                          OUR TRUCK COLLECTION                                   │
+│           Discover our premium lineup of electric trucks engineered             │
+│                            for performance                                      │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│  ┌───────────────────────────────────────────────────────────────────────────┐  │
+│  │                           TRUCK CARD #1                                   │  │
+│  │  ┌─────────────┐ ┌─────────────┐                                         │  │
+│  │  │  [FRONT]    │ │ [SIDE VIEW] │                                         │  │
+│  │  │  VIEW       │ │             │                                         │  │
+│  │  │             │ │             │                                         │  │
+│  │  │             │ │             │                                         │  │
+│  │  └─────────────┘ └─────────────┘                                         │  │
+│  │                    VOLTRUX V-8                                            │  │
+│  │  The ultimate electric truck for heavy-duty performance with 800hp and    │  │
+│  │  1000Nm torque.                                                           │  │
+│  └───────────────────────────────────────────────────────────────────────────┘  │
+│  ┌───────────────────────────────────────────────────────────────────────────┐  │
+│  │                           TRUCK CARD #2                                   │  │
+│  │  ┌─────────────┐ ┌─────────────┐                                         │  │
+│  │  │  [FRONT]    │ │ [SIDE VIEW] │                                         │  │
+│  │  │  VIEW       │ │             │                                         │  │
+│  │  │             │ │             │                                         │  │
+│  │  │             │ │             │                                         │  │
+│  │  └─────────────┘ └─────────────┘                                         │  │
+│  │                    VOLTRUX EXECUTIVE                                       │  │
+│  │  Premium luxury electric truck with advanced driver assistance systems    │  │
+│  │  and premium interiors.                                                   │  │
+│  └───────────────────────────────────────────────────────────────────────────┘  │
+│  ┌───────────────────────────────────────────────────────────────────────────┐  │
+│  │                           TRUCK CARD #3                                   │  │
+│  │  ┌─────────────┐ ┌─────────────┐                                         │  │
+│  │  │  [FRONT]    │ │ [SIDE VIEW] │                                         │  │
+│  │  │  VIEW       │ │             │                                         │  │
+│  │  │             │ │             │                                         │  │
+│  │  │             │ │             │                                         │  │
+│  │  └─────────────┘ └─────────────┘                                         │  │
+│  │                    VOLTRUX SPORT                                           │  │
+│  │  Performance-focused electric truck with sport-tuned suspension and       │  │
+│  │  dynamic handling.                                                        │  │
+│  └───────────────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Desktop View:**
+- Grid layout with 3 columns of truck cards
+- Dual images (front and side) displayed horizontally within each card
+- Clean typography with truck titles and descriptions
+- Consistent spacing and alignment
+
+**Mobile View:**
+- Single column grid layout
+- Dual images stack vertically within each card
+- Text remains readable and well-spaced
+- Card layout adapts to smaller screens
+
+## Component Structure
+
+The Truck Grid component consists of several key files that define its functionality and appearance:
+
+### .content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:description="Voltrux Motors Truck Grid Component"
+    jcr:primaryType="cq:Component"
+    jcr:title="Grid Component"
+    componentGroup="Voltrux Motors - Content"/>
+```
+
+### _cq_dialog/.content.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Truck Grid"
+          sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/tabs">
+        <items jcr:primaryType="nt:unstructured">
+            <general
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="General"
+                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                <items jcr:primaryType="nt:unstructured">
+                    <title
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            fieldLabel="Section Title"
+                            name="./title"/>
+                    <subtitle
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                            fieldLabel="Section Subtitle"
+                            name="./subtitle"/>
+                </items>
+            </general>
+            <items
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Truck Items"
+                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                <items jcr:primaryType="nt:unstructured">
+                    <multifield
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                            fieldLabel="Truck Items"
+                            composite="{Boolean}true">
+                        <field
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                name="./items">
+                            <items jcr:primaryType="nt:unstructured">
+                                <imagePrimary
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
+                                        fieldLabel="Primary Image (Front View)"
+                                        fileReferenceParameter="./imagePrimary"
+                                        mimeTypes="[image/jpeg,image/png,image/svg+xml]"
+                                        name="./primaryFile"
+                                        required="{Boolean}true"/>
+                                <imageSecondary
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="cq/gui/components/authoring/dialog/fileupload"
+                                        fieldLabel="Secondary Image (Profile View)"
+                                        fileReferenceParameter="./imageSecondary"
+                                        mimeTypes="[image/jpeg,image/png,image/svg+xml]"
+                                        name="./secondaryFile"
+                                        required="{Boolean}true"/>
+                                <title
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                        fieldLabel="Truck Title"
+                                        name="./title"/>
+                                <caption
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="granite/ui/components/coral/foundation/form/textarea"
+                                        fieldLabel="Caption"
+                                        name="./caption"/>
+                            </items>
+                        </field>
+                    </multifield>
+                </items>
+            </items>
+        </items>
+    </content>
+</jcr:root>
+```
+
+### truckgrid.html
+
+```html
+<sly data-sly-use.grid="com.voltrux.aem.core.models.TruckGridModel">
+    <section class="truck-grid" data-cq-data-path="${resource.path}">
+        <div class="truck-grid__container">
+            <sly data-sly-test="${grid.title}">
+                <h2 class="truck-grid__title">${grid.title}</h2>
+            </sly>
+            <sly data-sly-test="${grid.subtitle}">
+                <p class="truck-grid__subtitle">${grid.subtitle}</p>
+            </sly>
+            <div class="truck-grid__grid">
+                <sly data-sly-list.item="${grid.items}">
+                    <div class="truck-grid__card">
+                        <div class="truck-grid__images">
+                            <sly data-sly-test.primaryPath="${item.imagePrimary}">
+                                <img src="${primaryPath @ extension='jpg'}" alt="${item.title @ format='Primary Image for {0}' || 'Primary Image'}" class="truck-grid__image" />
+                            </sly>
+                            <sly data-sly-test="${!item.imagePrimary}">
+                                <img src="/content/dam/voltrux/fallback-image.jpg" alt="Fallback Primary Image" class="truck-grid__image" />
+                            </sly>
+                            <sly data-sly-test.secondaryPath="${item.imageSecondary}">
+                                <img src="${secondaryPath @ extension='jpg'}" alt="${item.title @ format='Secondary Image for {0}' || 'Secondary Image'}" class="truck-grid__image" />
+                            </sly>
+                            <sly data-sly-test="${!item.imageSecondary}">
+                                <img src="/content/dam/voltrux/fallback-image.jpg" alt="Fallback Secondary Image" class="truck-grid__image" />
+                            </sly>
+                        </div>
+                        <div class="truck-grid__content">
+                            <sly data-sly-test="${item.title}">
+                                <h3 class="truck-grid__card-title">${item.title}</h3>
+                            </sly>
+                            <sly data-sly-test="${item.caption}">
+                                <p class="truck-grid__card-caption">${item.caption}</p>
+                            </sly>
+                        </div>
+                    </div>
+                </sly>
+            </div>
+        </div>
+    </section>
+</sly>
+```
+
+## CSS Styles
+
+The component uses the following CSS classes:
+
+### Main Container
+- `.truck-grid` - Main container with consistent padding
+- `.truck-grid__container` - Centered container with max-width and responsive padding
+- `.truck-grid__title` - Section title with XXL font size, bold weight, and primary color
+- `.truck-grid__subtitle` - Section subtitle with large font size and muted color
+
+### Grid Layout
+- `.truck-grid__grid` - Grid layout for displaying truck cards with responsive columns
+
+### Truck Cards
+- `.truck-grid__card` - Individual truck card with background, rounded corners, overflow hidden and shadow
+- `.truck-grid__images` - Container for truck images with flex layout
+- `.truck-grid__image` - Individual truck image with 50% width and object fit
+- `.truck-grid__content` - Content area with padding and text centering
+
+### Content Elements
+- `.truck-grid__card-title` - Card title with large font size, bold weight, and primary color
+- `.truck-grid__card-caption` - Card caption with medium font size and muted color
+
+### Responsive Effects
+- Uses responsive grid layout that adapts to screen size
+- Dual images stack vertically on mobile
+- Truck cards adjust from multiple columns on desktop to single column on mobile
+
+## Dependencies
+
+*   **Sling Model:** `com.voltrux.aem.core.models.TruckGridModel`
+*   **Super Type:** None
+
+## Previewing in AEM
+
+To properly preview the Truck Grid component:
+
+### Prerequisites
+- AEM instance running (6.5 or later)
+- Voltrux site structure deployed
+- Sample truck inventory created
+
+### Steps to Preview
+
+1. **Deploy the Component**
+   ```bash
+   # Use your build tool to deploy to AEM
+   mvn clean install -PautoInstallPackage
+   ```
+
+2. **Create or Navigate to a Page**
+   - Go to your site in AEM (e.g., `http://localhost:4502/sites`)
+   - Create a new page or edit an existing one
+
+3. **Add the Component**
+   - Enter edit mode by clicking the "Edit" button
+   - Drag the "Truck Grid" component from the component panel to your page
+   - Configure using the dialog:
+     - Set the "Section Title"
+     - Add "Section Subtitle"
+     - Add truck items with primary and secondary images
+
+4. **Preview the Component**
+   - Click "Page Information" → "View as Published" or use Preview mode
+   - Verify responsive behavior by resizing the browser window
+
+### Troubleshooting Preview Issues
+- If no trucks appear: Verify that your truck items have been added with required images
+- If images don't load: Check that image paths are correct and files exist
+- If styling is missing: Ensure client libraries are properly configured
+
+### Example Implementation
+
+```html
+<!-- Example usage in a page template -->
+<div class="page-content">
+  <!-- Other components -->
+
+  <!-- Truck Grid Component -->
+  <sly data-sly-resource="${'truck-grid-component' @ resourceType='voltrux/components/content/truckgrid',
+                          title='Our Truck Collection',
+                          subtitle='Discover our premium lineup of electric trucks engineered for performance'}"></sly>
+
+  <!-- Other components -->
+</div>
+```
+
+## Component Folder Structure
+
+The Truck Grid component follows the standard AEM component structure:
+
+```
+voltrux/
+└── components/
+    └── content/
+        └── truckgrid/
+            ├── .content.xml
+            ├── _cq_dialog/
+            │   └── .content.xml
+            ├── truckgrid.html
+            └── css/
+                └── truck-grid.css
+```

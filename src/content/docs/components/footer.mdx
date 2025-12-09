@@ -3,9 +3,10 @@ title: Footer Component
 description: Comprehensive guide for the Footer component in Voltrux Motors
 ---
 
-import FooterPreview from '../../../components/FooterPreview.jsx';
+import FooterPreview from '../../../components/FooterPreview.astro';
+import FooterDialog from '../../../components/FooterDialog.astro';
 
-This document provides a detailed overview of the `footer/v1` component, which provides consistent site-wide footer functionality with branding, navigation links, and newsletter subscription.
+This document provides a detailed overview of the `footer` component, which provides consistent site-wide footer functionality with branding, navigation links, and newsletter subscription.
 
 ## Component Preview
 
@@ -14,6 +15,19 @@ This document provides a detailed overview of the `footer/v1` component, which p
 Here's a live preview of the Footer component (interactive version):
 
 <FooterPreview />
+
+## Dialog Configuration
+
+The component includes a comprehensive dialog for content authors, allowing them to customize the footer content and links. Here's an interactive preview of the Touch UI dialog:
+
+<FooterDialog />
+
+The Touch UI dialog provides an intuitive interface for content authors to:
+
+- Set company information and copyright text
+- Configure multiple footer link sections
+- Add social media links
+- Customize newsletter section content
 
 The Footer component provides essential site information and navigation at the bottom of pages. Here's what you'll see when the component is rendered:
 
@@ -50,7 +64,7 @@ Here's a detailed representation of the component when rendered in a browser:
 
 ## Dependencies
 
-*   **Sling Model:** `com.voltrux.aem.core.models.FooterV1Model`
+*   **Sling Model:** `com.voltrux.aem.core.models.FooterModel`
 *   **Super Type:** None
 
 ## Files
@@ -63,7 +77,7 @@ Here's a detailed representation of the component when rendered in a browser:
           xmlns:cq="http://www.day.com/jcr/cq/1.0"
           xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="cq:Component"
-          jcr:title="Footer V1"
+          jcr:title="Footer Component"
           componentGroup="Voltrux Motors - Content"/>
 ```
 
@@ -75,36 +89,41 @@ Here's a detailed representation of the component when rendered in a browser:
           xmlns:jcr="http://www.jcp.org/jcr/1.0"
           xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
           jcr:primaryType="nt:unstructured"
-          jcr:title="Footer V1 - Legacy"
+          jcr:title="Footer Properties"
           sling:resourceType="cq/gui/components/authoring/dialog">
-
     <content jcr:primaryType="nt:unstructured"
              sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
             <tabs jcr:primaryType="nt:unstructured"
                   sling:resourceType="granite/ui/components/coral/foundation/tabs">
                 <items jcr:primaryType="nt:unstructured">
-
-                    <branding jcr:primaryType="nt:unstructured"
-                              jcr:title="Branding"
-                              sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <main jcr:primaryType="nt:unstructured"
+                          jcr:title="Content Sources"
+                          sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <tagline jcr:primaryType="nt:unstructured"
                                      sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                      fieldLabel="Tagline"
                                      name="./tagline"
-                                     value="Redefining Electric Luxury Trucks"/>
+                                     value="Redefining Electric Luxury Trucks"
+                                     fieldDescription="Tagline displayed below the brand name"/>
+                            <ctaText jcr:primaryType="nt:unstructured"
+                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                     fieldLabel="Newsletter CTA Text"
+                                     name="./ctaText"
+                                     value="Join the Revolution"
+                                     fieldDescription="Call-to-action text for newsletter sign-up"/>
                         </items>
-                    </branding>
-
+                    </main>
                     <links jcr:primaryType="nt:unstructured"
                            jcr:title="Link Groups"
                            sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
                             <linkGroups jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                        fieldLabel="Add Link Groups"
                                         composite="{Boolean}true"
-                                        fieldLabel="Add Link Group">
+                                        fieldDescription="Define link groups with title and links">
                                 <field jcr:primaryType="nt:unstructured"
                                        sling:resourceType="granite/ui/components/coral/foundation/container"
                                        name="./linkGroups">
@@ -115,7 +134,8 @@ Here's a detailed representation of the component when rendered in a browser:
                                                name="./title"/>
                                         <links jcr:primaryType="nt:unstructured"
                                                sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
-                                               composite="{Boolean}true">
+                                               composite="{Boolean}true"
+                                               fieldDescription="Links within this group">
                                             <field jcr:primaryType="nt:unstructured"
                                                    sling:resourceType="granite/ui/components/coral/foundation/container"
                                                    name="./links">
@@ -126,7 +146,7 @@ Here's a detailed representation of the component when rendered in a browser:
                                                           name="./text"/>
                                                     <path jcr:primaryType="nt:unstructured"
                                                           sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                          fieldLabel="Link URL"
+                                                          fieldLabel="Link Path"
                                                           name="./path"
                                                           rootPath="/content"/>
                                                 </items>
@@ -137,7 +157,6 @@ Here's a detailed representation of the component when rendered in a browser:
                             </linkGroups>
                         </items>
                     </links>
-
                 </items>
             </tabs>
         </items>
@@ -148,330 +167,123 @@ Here's a detailed representation of the component when rendered in a browser:
 ### footer.html
 
 ```html
-<sly data-sly-use.model="com.voltrux.aem.core.models.FooterV1Model"/>
+<sly data-sly-use.model="com.voltrux.aem.core.models.FooterModel"/>
 
-<footer class="footer-v1">
-  <div class="footer-bg"></div>
-  <div class="container">
-    <div class="footer-grid">
-
-      <div class="footer-brand">
-        <h2 class="footer-logo">
-          <span class="vol">VOL</span><span class="trux">TRUX</span>
-        </h2>
-        <p class="footer-tagline">${model.tagline @ context='html'}</p>
-<!--        <div class="social-icons">-->
-<!--          <a href="#" aria-label="Twitter">Twitter</a>-->
-<!--          <a href="#" aria-label="Instagram">Instagram</a>-->
-<!--          <a href="#" aria-label="YouTube">YouTube</a>-->
-<!--          <a href="#" aria-label="LinkedIn">LinkedIn</a>-->
-<!--        </div>-->
-      </div>
-
-      <sly data-sly-repeat.group="${model.linkGroups}">
-        <div class="footer-links">
-          <h4>${group.title @ context='html'}</h4>
-          <ul>
-            <sly data-sly-repeat.link="${group.links}">
-              <li><a href="${link.path}">${link.text @ context='html'}</a></li>
+<footer class="footer" data-component="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>
+                    <span class="vol">VOL</span><span class="trux">TRUX</span>
+                </h2>
+                <p class="tagline">${model.tagline @ context='html'}</p>
+            </div>
+            
+            <div class="footer-newsletter">
+                <h4>${model.newsletterTitle @ context='html'}</h4>
+                <form action="${model.newsletterFormAction @ context='uri'}" method="post" class="newsletter-form">
+                    <input type="email" name="email" placeholder="Your email" required />
+                    <button type="submit">${model.newsletterButtonText @ context='html'}</button>
+                </form>
+                <small>${model.newsletterDisclaimer @ context='html'}</small>
+            </div>
+            
+            <sly data-sly-repeat.group="${model.linkGroups}">
+                <div class="footer-links">
+                    <h4>${group.title @ context='html'}</h4>
+                    <ul>
+                        <sly data-sly-repeat.link="${group.links}">
+                            <li><a href="${link.path @ context='uri'}">${link.text @ context='html'}</a></li>
+                        </sly>
+                    </ul>
+                </div>
             </sly>
-          </ul>
         </div>
-      </sly>
-
-      <div class="footer-newsletter">
-        <h4>Join the Revolution</h4>
-        <form action="/bin/newsletter" method="post" class="footer-form">
-          <input type="email" placeholder="Your email" required />
-          <button type="submit">Subscribe</button>
-        </form>
-        <small>50,000+ owners • No spam ever</small>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="footer-legal">
-        <p>&copy; 2025 Voltrux Motors. All rights reserved.</p>
-        <div class="legal-links">
-          <a href="/content/voltrux/us/en/privacy.html">Privacy Policy</a>
-          <a href="/content/voltrux/us/en/terms.html">Terms of Service</a>
+        
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p>&copy; ${model.copyrightYear @ context='html'} ${model.companyName @ context='html'}. All rights reserved.</p>
+            </div>
+            <div class="legal-links">
+                <a href="${model.privacyPolicyPath @ context='uri'}">Privacy Policy</a>
+                <a href="${model.termsOfServicePath @ context='uri'}">Terms of Service</a>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </footer>
 ```
 
 ## CSS Styles
+
 The component uses the following CSS classes:
 
 ### Main Container
-- `.footer-v1` - Main footer container with dark background, white text, and relative positioning
-- `.footer-bg` - Background element with radial gradients and pointer events disabled
-- `.footer-grid` - Grid layout container for footer sections with responsive columns
+- `.footer` - Main footer container with dark background and appropriate padding
+- `.container` - Centered container with max-width constraint
 
 ### Brand Section
-- `.footer-brand` - Brand information container
-- `.footer-logo` - Logo styling with large font size and heavy weight
-- `.vol` - Styling for the first part of the logo with accent color
-- `.trux` - Styling for the second part of the logo with white color
-- `.footer-tagline` - Tagline text styling with opacity and limited width
-
-### Link Sections
-- `.footer-links` - Container for link groups
-- `.footer-links h4` - Link group titles with accent color
-- `.footer-links ul` - Unstyled list container
-- `.footer-links li` - Individual link items with spacing
-- `.footer-links a` - Link styling with hover effect and color changes
+- `.footer-brand` - Container for brand information with centered layout
+- `.vol` - Styling for the "VOL" portion of the logo in accent color
+- `.trux` - Styling for the "TRUX" portion of the logo in white
+- `.tagline` - Tagline text styling with muted appearance
 
 ### Newsletter Section
-- `.footer-newsletter` - Newsletter subscription container
-- `.footer-form` - Form layout for email subscription
-- `.footer-form input` - Email input field styling
-- `.footer-form button` - Newsletter submit button with accent background
+- `.footer-newsletter` - Container for newsletter signup with centered layout
+- `.newsletter-form` - Form styling with email input and submit button
+- `input[type="email"]` - Email input field styling
+- `button` - Submit button styling with accent background
+
+### Link Sections
+- `.footer-links` - Container for individual link groups
+- `h4` - Link group title styling
+- `ul` - List container for links
+- `li` - Individual link item styling
+- `a` - Link styling with hover effects
 
 ### Bottom Section
-- `.footer-bottom` - Bottom footer area with legal information
-- `.legal-links a` - Legal links styling with hover effects
+- `.footer-bottom` - Bottom section with legal information and links
+- `.footer-legal` - Copyright text container
+- `.legal-links` - Container for legal links like privacy policy and terms
 
 ### Responsive Effects
-- Media queries adjust layout for different screen sizes
-- Responsive grid that changes from 5 columns to 2 columns to 1 column
-- Mobile-specific layout for bottom section
+- On mobile screens, the layout changes to a single column
+- Link groups stack vertically instead of horizontal arrangement
+- Spacing adjusts for smaller screens
+- Elements maintain proper touch targets for mobile interaction
 
-## CSS Code
+## JavaScript Interaction
 
-```css
-/* FOOTER V1 — LEGACY */
-.footer-v1 {
-  position: relative;
-  background: var(--primary-color);
-  color: white;
-  padding: 120px 0 40px;
-  overflow: hidden;
-}
+The component includes JavaScript for:
 
-.footer-bg {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background:
-    radial-gradient(circle at 20% 80%, rgba(228,0,43,0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(228,0,43,0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
-  gap: 60px;
-  margin-bottom: 80px;
-}
-
-.footer-brand h2 {
-  font-size: 48px;
-  font-weight: 900;
-  margin-bottom: 16px;
-  letter-spacing: -2px;
-}
-
-.vol { color: var(--accent-color); }
-.trux { color: white; }
-
-.footer-tagline {
-  font-size: var(--font-size-lg);
-  opacity: 0.8;
-  margin-bottom: 32px;
-  max-width: 300px;
-}
-
-.social-icons {
-  display: flex;
-  gap: 20px;
-}
-
-.social-icons a {
-color: var(--neutral-color)
-  width: 48px;
-  height: 48px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  font-size: 10px;
-}
-
-.social-icons a:hover {
-  background: var(--accent-color);
-  transform: translateY(-8px);
-}
-
-.footer-links h4 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  color: var(--accent-color);
-}
-
-.footer-links ul {
-  list-style: none;
-}
-
-.footer-links li {
-  margin-bottom: 16px;
-}
-
-.footer-links a {
-  color: #ccc;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  font-size: var(--font-size-md);
-}
-
-.footer-links a:hover {
-  color: var(--accent-color);
-}
-
-.footer-newsletter h4 {
-  font-size: 20px;
-  margin-bottom: 20px;
-  color: white;
-}
-
-.footer-form {
-  display: flex;
-  margin-bottom: 16px;
-}
-
-.footer-form input {
-  flex: 1;
-  padding: 16px 24px;
-  border: none;
-  border-radius: 50px 0 0 50px;
-  font-size: var(--font-size-md);
-}
-
-.footer-form button {
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  padding: 16px 32px;
-  border-radius: 0 50px 50px 0;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.footer-form button:hover {
-  background: var(--cta-hover);
-}
-
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.legal-links a {
-  color: #999;
-  margin-left: 24px;
-  font-size: var(--font-size-sm);
-}
-
-.legal-links a:hover {
-  color: var(--accent-color);
-}
-
-@media (max-width: 992px) {
-  .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-  }
-  .footer-newsletter {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 640px) {
-  .footer-grid {
-    grid-template-columns: 1fr;
-  }
-  .footer-bottom {
-    text-align: center;
-    flex-direction: column;
-  }
-}
-```
-
-## Sling Model
-
-The FooterV1Model provides the data for the footer component:
-
-### Java Class Structure
-
-```java
-package com.voltrux.aem.core.models;
-
-import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
-import org.apache.sling.models.annotations.Default;
-
-import javax.annotation.PostConstruct;
-import java.util.List;
-
-@Model(adaptables = SlingHttpServletRequest.class, adapters = FooterV1Model.class, resourceType = "voltrux/components/content/footer/v1")
-public class FooterV1Model {
-
-    @ValueMapValue
-    @Default(values = "Redefining Electric Luxury Trucks")
-    private String tagline;
-
-    private List<LinkGroup> linkGroups;
-
-    @PostConstruct
-    protected void initModel() {
-        // Initialize link groups from component configuration
-        loadLinkGroups();
-    }
-
-    // Getters
-    public String getTagline() { return tagline; }
-    public List<LinkGroup> getLinkGroups() { return linkGroups; }
-
-    private void loadLinkGroups() {
-        // Logic to load link groups from content
-    }
-
-    // Inner class for link groups
-    public static class LinkGroup {
-        private String title;
-        private List<Link> links;
-
-        // Getters and setters
-        public String getTitle() { return title; }
-        public List<Link> getLinks() { return links; }
-    }
-
-    public static class Link {
-        private String text;
-        private String path;
-
-        // Getters and setters
-        public String getText() { return text; }
-        public String getPath() { return path; }
-    }
-}
+```javascript
+// Example: Newsletter form submission
+document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = this.querySelector('input[type="email"]').value;
+    
+    // Implement newsletter signup functionality
+    fetch('/bin/newsletter-signup', {
+        method: 'POST',
+        body: JSON.stringify({email: email}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle response
+        if(data.success) {
+            // Show success message
+        } else {
+            // Show error message
+        }
+    });
+});
 ```
 
 ## Dependencies
 
-*   **Sling Model:** `com.voltrux.aem.core.models.FooterV1Model`
+*   **Sling Model:** `com.voltrux.aem.core.models.FooterModel`
 *   **Super Type:** None
 
 ## Previewing in AEM
@@ -481,34 +293,35 @@ To properly preview the Footer component:
 ### Prerequisites
 - AEM instance running (6.5 or later)
 - Voltrux site structure deployed
+- Sample content created
 
 ### Steps to Preview
 
 1. **Deploy the Component**
    ```bash
-   # Use your build tool to deploy to AEM
+   # Deploy using your build tool
    mvn clean install -PautoInstallPackage
    ```
 
-2. **Create or Navigate to a Page**
-   - Go to your site in AEM (e.g., `http://localhost:4502/sites`)
-   - Create a new page or edit an existing one
+2. **Add Component to Page**
+   - Navigate to your site in AEM (e.g., http://localhost:4502/sites)
+   - Edit a page that supports the footer component
+   - Drag the "Footer" component from the component panel to your page
 
-3. **Add the Component**
-   - Enter edit mode by clicking the "Edit" button
-   - Drag the "Footer V1" component from the component panel to your page
-   - Configure using the dialog:
-     - Set the "Tagline" text
-     - Add link groups with titles and links
+3. **Configure Component**
+   - Set the "Tagline" text
+   - Define "Link Groups" with titles and associated links
+   - Configure newsletter settings
 
 4. **Preview the Component**
-   - Click "Page Information" → "View as Published" or use Preview mode
-   - Verify responsive behavior by resizing the browser window
+   - Use Preview mode to see how the component renders
+   - Test responsive behavior by resizing the browser window
+   - Verify that all links work properly
 
 ### Troubleshooting Preview Issues
-- If styling is missing: Ensure client libraries are properly configured
-- If links don't work: Verify that link paths are correctly configured
-- If tagline doesn't appear: Check that the property is properly saved
+- If styling is not appearing: Check that client libraries are properly configured
+- If links don't work: Verify that link paths are correctly configured in the dialog
+- If newsletter form doesn't submit: Check that the form action path is correct
 
 ## Component Folder Structure
 
@@ -517,14 +330,86 @@ The Footer component follows the standard AEM component structure:
 ```
 voltrux/
 └── components/
-    └── content/
+    └── structure/
         └── footer/
-            ├── v1/
-            │   ├── .content.xml
-            │   ├── _cq_dialog/
-            │   │   └── .content.xml
-            │   ├── footer.html
-            │   └── css/
-            │       └── footer-v1.css
-            └── _cq_editConfig.xml
+            ├── .content.xml
+            ├── _cq_dialog/
+            │   └── .content.xml
+            ├── footer.html
+            └── css/
+                └── footer.css
+```
+
+### Component Files Location
+
+- **Server-side files:**
+  - `apps/voltrux/components/structure/footer/.content.xml` - Component definition
+  - `apps/voltrux/components/structure/footer/footer.html` - Component template
+  - `apps/voltrux/components/structure/footer/css/footer.css` - Component styling
+  - `apps/voltrux/components/structure/footer/_cq_dialog/.content.xml` - Dialog configuration
+
+- **Client-side libraries:**
+  - `apps/voltrux/clientlibs/structure/footer/css/footer.css` - Frontend CSS
+  - `apps/voltrux/clientlibs/structure/footer/js/footer.js` - Frontend JavaScript
+
+## Sling Model
+
+The Footer component uses the following Sling Model:
+
+### Java Class Definition
+```java
+@Model(adaptables = SlingHttpServletRequest.class, adapters = FooterModel.class, resourceType = "voltrux/components/structure/footer")
+public class FooterModel {
+    @ValueMapValue
+    private String tagline;
+
+    @ValueMapValue
+    private String newsletterTitle;
+
+    @ValueMapValue
+    private String newsletterButtonText;
+
+    @ValueMapValue
+    private String newsletterDisclaimer;
+
+    @ValueMapValue
+    private String copyrightYear;
+
+    @ValueMapValue
+    private String companyName;
+
+    @ValueMapValue
+    private String newsletterFormAction;
+
+    @ValueMapValue
+    private String privacyPolicyPath;
+
+    @ValueMapValue
+    private String termsOfServicePath;
+
+    // List of LinkGroup objects with title and List<Link> inside each group
+    private List<LinkGroup> linkGroups;
+
+    // Getters for all properties
+    public String getTagline() { return tagline; }
+    // ... other getters
+}
+
+public class LinkGroup {
+    private String title;
+    private List<Link> links;
+
+    // Getters
+    public String getTitle() { return title; }
+    public List<Link> getLinks() { return links; }
+}
+
+public class Link {
+    private String text;
+    private String path;
+
+    // Getters
+    public String getText() { return text; }
+    public String getPath() { return path; }
+}
 ```

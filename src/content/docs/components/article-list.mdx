@@ -3,7 +3,8 @@ title: Article List Component
 description: Comprehensive guide for the Article List component in Voltrux Motors
 ---
 
-import ArticleListPreview from '../../../components/ArticleListPreview.jsx';
+import ArticleListPreview from '../../../components/ArticleListPreview.astro';
+import ArticleListDialog from '../../../components/ArticleListDialog.astro';
 
 This document provides a detailed overview of the `articlelist` component, which is used to display a collection of articles with featured content, category filtering, and responsive design.
 
@@ -100,6 +101,19 @@ Here's a detailed representation of the component when rendered in a browser:
    - Grid columns adjust based on screen width
    - Font sizes scale appropriately
    - Touch targets remain accessible on mobile
+
+## Dialog Configuration
+
+The component includes a comprehensive dialog for content authors, allowing them to customize the article list content and configuration. Here's an interactive preview of the Touch UI dialog:
+
+<ArticleListDialog />
+
+The Touch UI dialog provides an intuitive interface for content authors to:
+
+- Set the section title and subtitle
+- Configure the maximum number of articles to display
+- Add multiple articles with images, categories, titles, and excerpts
+- Easily reorder articles using the up/down buttons
 
 ## Component Structure
 

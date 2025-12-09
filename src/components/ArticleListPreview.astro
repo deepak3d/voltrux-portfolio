@@ -1,0 +1,246 @@
+---
+import BrowserWindow from './BrowserWindow.astro';
+---
+
+<BrowserWindow url="http://voltrux.com/article-list">
+  <section class="article-list" data-component="article-list" style="padding: 40px 0; background-color: #F2F2F2; /* neutral-color */ max-width: 100%;">
+    <div class="container" style="max-width: 1200px; /* max-width */ margin: 0 auto; padding: 0 20px /* spacing-lg */">
+      {/* Featured Article */}
+      <div class="featured-article-card" style="display: grid; grid-template-columns: 1fr; gap: 20px; /* spacing-lg */ margin-bottom: 60px; /* spacing-xxl */ background-color: #fff; border: 1px solid #E0E0E0; /* border-color */ border-radius: 15px; /* spacing-md */ overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) /* shadow-medium */">
+        <div class="featured-article-image" style="height: 300px; overflow: hidden">
+          <img
+            src="https://placehold.co/800x600/F2F2F2/666?text=Featured+Article"
+            alt="The Future of Electric Trucks: A Comprehensive Overview of Voltrux's Revolutionary Features"
+            style="width: 100%; height: 100%; object-fit: cover"
+          />
+        </div>
+
+        <div class="featured-article-content" style="padding: 32px; display: flex; flex-direction: column">
+          <span class="article-category" style="display: inline-block; padding: 8px 16px; background-color: rgba(228, 0, 43, 0.1); border: 1px solid #E4002B; /* accent-color */ border-radius: 4px; color: #E4002B; /* accent-color */ font-weight: 600; font-size: 14px; /* font-size-sm */ margin-bottom: 15px; /* spacing-md */ text-transform: uppercase">
+            Technology
+          </span>
+
+          <h2 style="font-size: 32px; /* font-size-xxl */ font-weight: 700; margin-bottom: 15px; /* spacing-md */ color: #1A1A1A /* primary-color */">
+            The Future of Electric Trucks: A Comprehensive Overview of Voltrux's Revolutionary Features
+          </h2>
+
+          <p class="excerpt" style="color: #666; /* text-muted */ font-size: 16px; /* font-size-md */ margin-bottom: 20px /* spacing-lg */">
+            Explore how Voltrux is revolutionizing the electric truck industry with groundbreaking technology and innovative design solutions.
+          </p>
+
+          <div class="article-meta" style="display: flex; flex-direction: column; gap: 10px; /* spacing-sm */ font-size: 14px; /* font-size-sm */ color: #666; /* text-muted */ margin-bottom: 20px /* spacing-lg */">
+            <div class="meta-item" style="display: flex; align-items: center; gap: 8px">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span>John Smith</span>
+            </div>
+            <div class="meta-item" style="display: flex; align-items: center; gap: 8px">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                <line x1="16" x2="16" y1="2" y2="6"/>
+                <line x1="8" x2="8" y1="2" y2="6"/>
+                <line x1="3" x2="21" y1="10" y2="10"/>
+              </svg>
+              <span>Dec 5, 2025</span>
+            </div>
+            <div>8 min read</div>
+          </div>
+
+          <a href="#" class="cta-button" style="background-color: #E4002B; /* cta-bg */ color: white; padding: 12px 24px; font-weight: 700; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; width: fit-content">
+            Read Article
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      {/* Category Filters */}
+      <div class="category-filter" style="display: flex; flex-wrap: wrap; gap: 10px; /* spacing-sm */ margin-bottom: 40px; border-bottom: 2px solid #E0E0E0; /* border-color */ padding-bottom: 15px /* spacing-md */">
+        <button data-filter="all" class="active" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #E4002B; /* accent-color */ color: #fff; background-color: #E4002B; /* accent-color */ transition: all 0.3s ease; cursor: pointer; font-weight: 600;">All</button>
+        <button data-filter="technology" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #E40E0E0; /* border-color */ color: #1A1A1A; /* text-color */ background-color: white; transition: all 0.3s ease; cursor: pointer; font-weight: 600;">Technology</button>
+        <button data-filter="design" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #E40E0E0; /* border-color */ color: #1A1A1A; /* text-color */ background-color: white; transition: all 0.3s ease; cursor: pointer; font-weight: 600;">Design</button>
+        <button data-filter="engineering" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #E40E0E0; /* border-color */ color: #1A1A1A; /* text-color */ background-color: white; transition: all 0.3s ease; cursor: pointer; font-weight: 600;">Engineering</button>
+        <button data-filter="news" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #E40E0E0; /* border-color */ color: #1A1A1A; /* text-color */ background-color: white; transition: all 0.3s ease; cursor: pointer; font-weight: 600;">News</button>
+        <button data-filter="sustainability" style="padding: 8px 16px; border-radius: 4px; border: 1px solid #E40E0E0; /* border-color */ color: #1A1A1A; /* text-color */ background-color: white; transition: all 0.3s ease; cursor: pointer; font-weight: 600;">Sustainability</button>
+      </div>
+
+      {/* Articles Grid */}
+      <div class="articles-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px /* spacing-lg */">
+        <a href="#" class="article-card" data-category="design" style="text-decoration: none; color: #1A1A1A; /* text-color */ display: block; border: 1px solid #E0E0E0; /* border-color */ border-radius: 10px; /* spacing-sm */ overflow: hidden; background-color: white; transition: box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.4s ease, transform 0.4s ease; cursor: pointer">
+          <div class="article-card-image" style="height: 192px; overflow: hidden; background-color: #F2F2F2 /* neutral-color */">
+            <img
+              src="https://placehold.co/400x300/F2F2F2/666?text=Article+1"
+              alt="Top Design Trends for 2026 Trucks"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease"
+            />
+          </div>
+
+          <div class="article-card-content" style="padding: 15px /* spacing-md */">
+            <span class="category-label" style="font-size: 14px; /* font-size-sm */ color: #E4002B; /* accent-color */ font-weight: 600; text-transform: uppercase; margin-bottom: 10px; /* spacing-sm */ display: block">
+              Design
+            </span>
+
+            <h3 style="font-size: 18px; /* font-size-lg */ font-weight: 700; margin-bottom: 10px; /* spacing-sm */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; transition: color 0.3s ease">
+              Top Design Trends for 2026 Trucks
+            </h3>
+
+            <p class="card-excerpt" style="color: #666; /* text-muted */ font-size: 14px; /* font-size-sm */ margin-bottom: 15px; /* spacing-md */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2">
+              Discover the cutting-edge design elements that will define the next generation of commercial vehicles.
+            </p>
+
+            <div class="card-meta" style="display: flex; gap: 15px; /* spacing-md */ font-size: 14px; /* font-size-sm */ color: #666 /* text-muted */">
+              <span>John Smith</span>
+              <span>5 min read</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="article-card" data-category="engineering" style="text-decoration: none; color: #1A1A1A; /* text-color */ display: block; border: 1px solid #E0E0E0; /* border-color */ border-radius: 10px; /* spacing-sm */ overflow: hidden; background-color: white; transition: box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.4s ease, transform 0.4s ease; cursor: pointer">
+          <div class="article-card-image" style="height: 192px; overflow: hidden; background-color: #F2F2F2 /* neutral-color */">
+            <img
+              src="https://placehold.co/400x300/F2F2F2/666?text=Article+2"
+              alt="Innovating Truck Safety"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease"
+            />
+          </div>
+
+          <div class="article-card-content" style="padding: 15px /* spacing-md */">
+            <span class="category-label" style="font-size: 14px; /* font-size-sm */ color: #E4002B; /* accent-color */ font-weight: 600; text-transform: uppercase; margin-bottom: 10px; /* spacing-sm */ display: block">
+              Engineering
+            </span>
+
+            <h3 style="font-size: 18px; /* font-size-lg */ font-weight: 700; margin-bottom: 10px; /* spacing-sm */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; transition: color 0.3s ease">
+              Innovating Truck Safety
+            </h3>
+
+            <p class="card-excerpt" style="color: #666; /* text-muted */ font-size: 14px; /* font-size-sm */ margin-bottom: 15px; /* spacing-md */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2">
+              How our engineering team is developing next-gen safety features for commercial vehicles.
+            </p>
+
+            <div class="card-meta" style="display: flex; gap: 15px; /* spacing-md */ font-size: 14px; /* font-size-sm */ color: #666 /* text-muted */">
+              <span>John Smith</span>
+              <span>6 min read</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="article-card" data-category="news" style="text-decoration: none; color: #1A1A1A; /* text-color */ display: block; border: 1px solid #E0E0E0; /* border-color */ border-radius: 10px; /* spacing-sm */ overflow: hidden; background-color: white; transition: box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.4s ease, transform 0.4s ease; cursor: pointer">
+          <div class="article-card-image" style="height: 192px; overflow: hidden; background-color: #F2F2F2 /* neutral-color */">
+            <img
+              src="https://placehold.co/400x300/F2F2F2/666?text=Article+3"
+              alt="Latest News from Voltrux HQ"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease"
+            />
+          </div>
+
+          <div class="article-card-content" style="padding: 15px /* spacing-md */">
+            <span class="category-label" style="font-size: 14px; /* font-size-sm */ color: #E4002B; /* accent-color */ font-weight: 600; text-transform: uppercase; margin-bottom: 10px; /* spacing-sm */ display: block">
+              News
+            </span>
+
+            <h3 style="font-size: 18px; /* font-size-lg */ font-weight: 700; margin-bottom: 10px; /* spacing-sm */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; transition: color 0.3s ease">
+              Latest News from Voltrux HQ
+            </h3>
+
+            <p class="card-excerpt" style="color: #666; /* text-muted */ font-size: 14px; /* font-size-sm */ margin-bottom: 15px; /* spacing-md */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2">
+              Updates on our latest product launches and company developments.
+            </p>
+
+            <div class="card-meta" style="display: flex; gap: 15px; /* spacing-md */ font-size: 14px; /* font-size-sm */ color: #666 /* text-muted */">
+              <span>John Smith</span>
+              <span>3 min read</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="article-card" data-category="technology" style="text-decoration: none; color: #1A1A1A; /* text-color */ display: block; border: 1px solid #E0E0E0; /* border-color */ border-radius: 10px; /* spacing-sm */ overflow: hidden; background-color: white; transition: box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.4s ease, transform 0.4s ease; cursor: pointer">
+          <div class="article-card-image" style="height: 192px; overflow: hidden; background-color: #F2F2F2 /* neutral-color */">
+            <img
+              src="https://placehold.co/400x300/F2F2F2/666?text=Article+4"
+              alt="Battery Tech Updates"
+              style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease"
+            />
+          </div>
+
+          <div class="article-card-content" style="padding: 15px /* spacing-md */">
+            <span class="category-label" style="font-size: 14px; /* font-size-sm */ color: #E4002B; /* accent-color */ font-weight: 600; text-transform: uppercase; margin-bottom: 10px; /* spacing-sm */ display: block">
+              Technology
+            </span>
+
+            <h3 style="font-size: 18px; /* font-size-lg */ font-weight: 700; margin-bottom: 10px; /* spacing-sm */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; transition: color 0.3s ease">
+              Battery Tech Updates
+            </h3>
+
+            <p class="card-excerpt" style="color: #666; /* text-muted */ font-size: 14px; /* font-size-sm */ margin-bottom: 15px; /* spacing-md */ overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2">
+              The latest advancements in battery technology for extended range and efficiency.
+            </p>
+
+            <div class="card-meta" style="display: flex; gap: 15px; /* spacing-md */ font-size: 14px; /* font-size-sm */ color: #666 /* text-muted */">
+              <span>John Smith</span>
+              <span>7 min read</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+  <script>
+    // Add event listeners for interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add hover effects to buttons
+      const buttons = document.querySelectorAll('.category-filter button');
+      buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          buttons.forEach(function(btn) {
+            btn.classList.remove('active');
+          });
+          this.classList.add('active');
+        });
+      });
+
+      // Add hover effects to article cards
+      const cards = document.querySelectorAll('.article-card');
+      cards.forEach(function(card) {
+        card.addEventListener('mouseenter', function() {
+          this.style.borderColor = '#E4002B';
+          this.style.boxShadow = '0 4px 10px rgba(228, 0, 43, 0.2)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+          this.style.borderColor = '#E0E0E0';
+          this.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+        });
+      });
+
+      // Add hover effects to CTA buttons
+      const ctaButtons = document.querySelectorAll('.cta-button');
+      ctaButtons.forEach(function(button) {
+        button.addEventListener('mouseenter', function() {
+          this.style.backgroundColor = '#B60022';
+          this.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.05)';
+        });
+
+        button.addEventListener('mouseleave', function() {
+          this.style.backgroundColor = '#E4002B';
+          this.style.boxShadow = 'none';
+        });
+      });
+
+      // Add hover effects to article titles
+      const articleTitles = document.querySelectorAll('.article-card h3');
+      articleTitles.forEach(function(title) {
+        title.addEventListener('mouseenter', function() {
+          this.style.color = '#E4002B';
+        });
+
+        title.addEventListener('mouseleave', function() {
+          this.style.color = '#1A1A1A';
+        });
+      });
+    });
+  </script>
+</BrowserWindow>

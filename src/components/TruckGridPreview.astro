@@ -1,0 +1,92 @@
+---
+import BrowserWindow from './BrowserWindow.astro';
+---
+
+<BrowserWindow url="http://voltrux.com/truck-grid">
+  <section class="truck-grid" style="background-color: #fff; padding: 32px;">
+    <div class="truck-grid__container" style="max-width: 1200px; margin: 0 auto;">
+      <h2 class="truck-grid__title" style="font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 24px; color: #1A1A1A;">
+        Our Truck Collection
+      </h2>
+      <p class="truck-grid__subtitle" style="font-size: 20px; color: #666; text-align: center; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Discover our premium lineup of electric trucks engineered for performance
+      </p>
+      <div class="truck-grid__grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+        <div class="truck-grid__card" style="background-color: #F2F2F2; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+          <div class="truck-grid__images" style="display: flex; height: 200px;">
+            <img 
+              src="https://placehold.co/300x200/E4002B/FFFFFF?text=Front+View" 
+              alt="Voltrux V-8 Front View" 
+              class="truck-grid__image" 
+              style="width: 50%; height: 100%; object-fit: cover;"
+            />
+            <img 
+              src="https://placehold.co/300x200/28c940/FFFFFF?text=Side+View" 
+              alt="Voltrux V-8 Side View" 
+              class="truck-grid__image" 
+              style="width: 50%; height: 100%; object-fit: cover;"
+            />
+          </div>
+          <div class="truck-grid__content" style="padding: 32px; text-align: center;">
+            <h3 class="truck-grid__card-title" style="font-size: 20px; font-weight: 600; color: #1A1A1A; margin-bottom: 16px;">
+              Voltrux V-8
+            </h3>
+            <p class="truck-grid__card-caption" style="font-size: 16px; color: #666;">
+              The ultimate electric truck for heavy-duty performance with 800hp and 1000Nm torque.
+            </p>
+          </div>
+        </div>
+        
+        <div class="truck-grid__card" style="background-color: #F2F2F2; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+          <div class="truck-grid__images" style="display: flex; height: 200px;">
+            <img 
+              src="https://placehold.co/300x200/F97316/FFFFFF?text=Front+View" 
+              alt="Voltrux Executive Front View" 
+              class="truck-grid__image" 
+              style="width: 50%; height: 100%; object-fit: cover;"
+            />
+            <img 
+              src="https://placehold.co/300x200/8B5CF6/FFFFFF?text=Side+View" 
+              alt="Voltrux Executive Side View" 
+              class="truck-grid__image" 
+              style="width: 50%; height: 100%; object-fit: cover;"
+            />
+          </div>
+          <div class="truck-grid__content" style="padding: 32px; text-align: center;">
+            <h3 class="truck-grid__card-title" style="font-size: 20px; font-weight: 600; color: #1A1A1A; margin-bottom: 16px;">
+              Voltrux Executive
+            </h3>
+            <p class="truck-grid__card-caption" style="font-size: 16px; color: #666;">
+              Premium luxury electric truck with advanced driver assistance systems and premium interiors.
+            </p>
+          </div>
+        </div>
+        
+        <div class="truck-grid__card" style="background-color: #F2F2F2; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+          <div class="truck-grid__images" style="display: flex; height: 200px;">
+            <img 
+              src="https://placehold.co/300x200/10B981/FFFFFF?text=Front+View" 
+              alt="Voltrux Sport Front View" 
+              class="truck-grid__image" 
+              style="width: 50%; height: 100%; object-fit: cover;"
+            />
+            <img 
+              src="https://placehold.co/300x200/3B82F6/FFFFFF?text=Side+View" 
+              alt="Voltrux Sport Side View" 
+              class="truck-grid__image" 
+              style="width: 50%; height: 100%; object-fit: cover;"
+            />
+          </div>
+          <div class="truck-grid__content" style="padding: 32px; text-align: center;">
+            <h3 class="truck-grid__card-title" style="font-size: 20px; font-weight: 600; color: #1A1A1A; margin-bottom: 16px;">
+              Voltrux Sport
+            </h3>
+            <p class="truck-grid__card-caption" style="font-size: 16px; color: #666;">
+              Performance-focused electric truck with sport-tuned suspension and dynamic handling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BrowserWindow>
