@@ -36,7 +36,6 @@ export default defineConfig({
 				{
 					label: 'Overview',
 					items: [
-						{ label: 'Home', link: '/' },
 						{ label: 'Architecture', slug: 'overview/architecture' },
 						{ label: 'Tech Stack', slug: 'overview/tech-stack' },
 					],
