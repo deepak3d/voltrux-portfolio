@@ -6,310 +6,37 @@ import BrowserWindow from './BrowserWindow.astro';
   <header class="header">
     <div class="header__container">
       <div class="header__logo">
-        <div class="header__logo-image">
-          <span>LOGO</span>
-        </div>
+        <img src="/placeholder.svg" alt="Voltrux Motors" class="header__logo-image" />
         <span class="header__logo-text">Voltrux Motors</span>
       </div>
 
-      {/* Desktop Navigation */}
       <nav class="header__nav">
         <ul class="header__nav-list">
-          <li>
-            <a href="/" class="header__nav-link">
-              Home
-              <span class="nav-underline" />
-            </a>
-          </li>
-          <li>
-            <a href="/technology" class="header__nav-link">
-              Technology
-              <span class="nav-underline" />
-            </a>
-          </li>
-          <li>
-            <a href="/about" class="header__nav-link">
-              About
-              <span class="nav-underline" />
-            </a>
-          </li>
-          <li>
-            <a href="/contact" class="header__nav-link">
-              Contact
-              <span class="nav-underline" />
-            </a>
-          </li>
+          <li><a href="#" class="header__nav-link">Home</a></li>
+          <li><a href="#" class="header__nav-link">Technology</a></li>
+          <li><a href="#" class="header__nav-link">About</a></li>
+          <li><a href="#" class="header__nav-link">Contact</a></li>
         </ul>
       </nav>
 
-      {/* CTA Button */}
-      <div class="header__cta-wrapper">
-        <a href="/dealers" class="header__cta-button">
-          Find a Dealer
-        </a>
+      <div class="header__cta">
+        <a href="/dealers" class="header__cta-button">Find a Dealer</a>
       </div>
 
-      {/* Mobile Menu Toggle */}
-      <button class="header__menu-toggle" aria-label="Toggle navigation menu">
-        <span class="header__menu-icon" />
-        <span class="header__menu-icon" />
-        <span class="header__menu-icon" />
+      <button class="header__menu-toggle">
+        <span class="header__menu-icon"></span>
+        <span class="header__menu-icon"></span>
+        <span class="header__menu-icon"></span>
       </button>
     </div>
-
-    {/* Mobile Navigation */}
     <nav class="header__mobile-nav">
       <ul class="header__mobile-list">
-        <li>
-          <a href="/" class="header__mobile-link">Home</a>
-        </li>
-        <li>
-          <a href="/technology" class="header__mobile-link">Technology</a>
-        </li>
-        <li>
-          <a href="/about" class="header__mobile-link">About</a>
-        </li>
-        <li>
-          <a href="/contact" class="header__mobile-link">Contact</a>
-        </li>
-        <li>
-          <a href="/dealers" class="header__cta-button--mobile">
-            Find a Dealer
-          </a>
-        </li>
+        <li><a href="#" class="header__mobile-link">Home</a></li>
+        <li><a href="#" class="header__mobile-link">Technology</a></li>
+        <li><a href="#" class="header__mobile-link">About</a></li>
+        <li><a href="#" class="header__mobile-link">Contact</a></li>
+        <li><a href="/dealers" class="header__cta-button--mobile">Find a Dealer</a></li>
       </ul>
     </nav>
   </header>
 </BrowserWindow>
-
-<style>
-  .header {
-    background: #fff;
-    border-bottom: 1px solid var(--vxt-border-color);
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    box-shadow: var(--vxt-shadow-medium);
-    transition: box-shadow 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .header__container {
-    max-width: var(--vxt-max-width);
-    margin: 0 auto;
-    padding: var(--vxt-spacing-md) var(--vxt-spacing-lg);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .header__logo {
-    display: flex;
-    align-items: center;
-    gap: var(--vxt-spacing-sm);
-    flex-shrink: 0;
-  }
-
-  .header__logo-image {
-    width: 40px;
-    height: 40px;
-    background-color: var(--vxt-neutral-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    flex-shrink: 0;
-  }
-
-  .header__logo-image span {
-    color: var(--vxt-text-muted);
-    font-size: 8px;
-    font-weight: bold;
-  }
-
-  .header__logo-text {
-    font-size: var(--vxt-font-size-md);
-    font-weight: 700;
-    color: var(--vxt-primary-color);
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .header__nav {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-    justify-content: center;
-  }
-
-  .header__nav-list {
-    display: flex;
-    list-style: none;
-    gap: var(--vxt-spacing-md);
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-  }
-
-  .header__nav-link {
-    text-decoration: none;
-    color: var(--vxt-text-color);
-    font-weight: 500;
-    position: relative;
-    padding: 8px 0;
-    font-size: var(--vxt-font-size-sm);
-    transition: color 0.3s ease;
-    white-space: nowrap;
-  }
-
-  .nav-underline {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: var(--vxt-accent-color);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
-
-  .header__nav-link:hover .nav-underline {
-    transform: scaleX(1);
-  }
-
-  .header__nav-link:hover {
-    color: var(--vxt-accent-color);
-  }
-
-  .header__cta-wrapper {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .header__cta-button {
-    background-color: var(--vxt-cta-bg);
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: var(--vxt-border-radius-lg);
-    font-weight: 500;
-    font-size: var(--vxt-font-size-sm);
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-  }
-
-  .header__cta-button:hover {
-    background-color: var(--vxt-cta-hover);
-    transform: translateY(-2px);
-  }
-
-  .header__menu-toggle {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-    align-items: center;
-    margin-left: var(--vxt-spacing-md);
-    flex-shrink: 0;
-  }
-
-  .header__menu-icon {
-    width: 24px;
-    height: 3px;
-    background-color: var(--vxt-primary-color);
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-
-  .header__mobile-nav {
-    display: none;
-    flex-direction: column;
-    background: #fff;
-    border-top: 1px solid var(--vxt-border-color);
-    width: 100%;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1;
-    box-shadow: var(--vxt-shadow-medium);
-  }
-
-  .header__mobile-list {
-    list-style: none;
-    padding: var(--vxt-spacing-md);
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--vxt-spacing-sm);
-  }
-
-  .header__mobile-list li {
-    border-bottom: 1px solid var(--vxt-border-color);
-    padding: 8px 0;
-  }
-
-  .header__mobile-list li:last-child {
-    border-bottom: none;
-  }
-
-  .header__mobile-link {
-    display: block;
-    padding: 8px 0;
-    color: var(--vxt-text-color);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: var(--vxt-font-size-sm);
-    transition: color 0.3s ease;
-  }
-
-  .header__mobile-link:hover {
-    color: var(--vxt-accent-color);
-  }
-
-  .header__cta-button--mobile {
-    background-color: var(--vxt-cta-bg);
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: var(--vxt-border-radius-lg);
-    font-weight: 500;
-    font-size: var(--vxt-font-size-sm);
-    text-decoration: none;
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-    transition: all 0.3s ease;
-  }
-
-  .header__cta-button--mobile:hover {
-    background-color: var(--vxt-cta-hover);
-  }
-
-  @media (max-width: 768px) {
-    .header__nav {
-      display: none !important;
-    }
-
-    .header__menu-toggle {
-      display: flex !important;
-    }
-
-    .header__cta-wrapper {
-      display: none;
-    }
-  }
-
-  @media (min-width: 769px) {
-    .header__mobile-nav {
-      display: none !important;
-    }
-  }
-</style>

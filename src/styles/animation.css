@@ -1,0 +1,144 @@
+/* animations.css - Voltrux Motors Shared Animations */
+.header__logo,
+.footer__group-title,
+.showcase__card,
+.truck-grid__card,
+.hero__cta,
+.cta-section__button,
+.header__cta-button,
+.header__cta-button--mobile,
+.truck-lineup__nav,
+.truck-lineup__dot {
+  transition: all 0.3s ease;
+}
+
+.header__logo:hover,
+.footer__group-title:hover {
+  transform: scale(1.05);
+}
+
+.showcase__card:hover,
+.truck-grid__card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.hero__cta:hover,
+.cta-section__button:hover,
+.header__cta-button:hover,
+.header__cta-button--mobile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  background-color: var(--cta-hover);
+}
+
+.truck-lineup__nav:hover:not(:disabled) {
+  background: var(--cta-hover);
+}
+
+.truck-lineup__dot:hover,
+.truck-lineup__dot--active {
+  background: var(--accent-color);
+}
+
+.header__nav-link,
+.header__mobile-link,
+.showcase__card-link,
+.footer__link,
+.footer__social-link {
+  transition: color 0.3s ease;
+}
+
+.header__nav-link:hover,
+.header__mobile-link:hover,
+.showcase__card-link:hover,
+.footer__link:hover,
+.footer__social-link:hover {
+  color: var(--accent-color);
+}
+
+.header__nav-link::after,
+.footer__group-title::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent-color);
+  transition: width 0.3s ease;
+}
+
+.header__nav-link:hover::after,
+.footer__group-title:hover::after {
+  width: 40px;
+}
+
+.header__menu-icon {
+  transition: all 0.3s ease;
+}
+
+.header__menu-toggle--active .header__menu-icon:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.header__menu-toggle--active .header__menu-icon:nth-child(2) {
+  opacity: 0;
+}
+
+.header__menu-toggle--active .header__menu-icon:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.header__mobile-nav {
+  animation: slideDown 0.3s ease-in-out;
+}
+
+.hero__content,
+.footer__copyright {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+ @keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* animations.css - Add these lines */
+.footer-v1__logo,
+.footer-v1__group-title,
+.footer-v1__link,
+.footer-v1__copyright {
+    transition: all 0.3s ease;
+}
+
+.footer-v1__logo:hover,
+.footer-v1__group-title:hover {
+    transform: scale(1.05);
+}
+
+.footer-v1__link:hover {
+    color: var(--accent-color);
+}
+
+ @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

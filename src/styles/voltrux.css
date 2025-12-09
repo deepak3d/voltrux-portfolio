@@ -1,0 +1,113 @@
+/* /apps/voltrux/clientlibs/voltrux-clientlibs/css/voltrux.css */
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.text-center { text-align: center; }
+.text-accent { color: var(--accent-color); }
+.text-muted { color: var(--text-muted); }
+.bg-accent { background-color: var(--accent-color); }
+.bg-muted { background-color: #f9f9f9; }
+.bg-card { background-color: #fff; }
+.border-accent { border-color: var(--accent-color); }
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 32px;
+  background: var(--accent-color);
+  color: white;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: background 0.3s;
+  text-decoration: none;
+}
+.btn-primary:hover { background: var(--cta-hover); }
+
+.btn-outline {
+  padding: 12px 32px;
+  border: 2px solid white;
+  color: white;
+  background: transparent;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+.btn-outline:hover {
+  background: white;
+  color: #000;
+}
+
+.section-header {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--text-color);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 32px;
+}
+ @media (min-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+ @media (min-width: 768px) {
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blur-bg {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+.model-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.model-card.active {
+  background: #f9f9f9;
+  border: 2px solid var(--accent-color);
+  box-shadow: var(--shadow-medium);
+}
+.model-card:hover {
+  box-shadow: var(--shadow-light);
+}
+
+.gradient-img {
+  height: 192px;
+  border-radius: 12px;
+  background: linear-gradient(to bottom right, #e11d48, #f97316);
+  position: relative;
+  overflow: hidden;
+}
+.gradient-img::after {
+  content: attr(data-name);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  font-weight: 800;
+  color: white;
+  opacity: 0.2;
+}

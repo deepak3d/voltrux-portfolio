@@ -21,11 +21,14 @@ export default defineConfig({
 				{ icon: 'external', label: 'Live Site', href: 'https://voltrux-portfolio.vercel.app/' }
 			],
 			customCss: [
-				'./src/styles/custom.css', // Link to your custom CSS file
-				'./src/styles/article-list-preview.css', // Link to article list preview styles
-				'./src/styles/testdrive-form-preview.css', // Link to test drive form preview styles
-				'./src/styles/footer-preview.css', // Link to footer preview styles
-				'./src/styles/css-conflict-fixes.css', // Link to CSS conflict fixes
+				'./src/styles/custom.css',
+				'./src/styles/voltrux.css',
+				'./src/styles/header-preview.css',
+				'./src/styles/footer-preview.css',
+				'./src/styles/article-list-preview.css',
+				'./src/styles/testdrive-form-preview.css',
+				'./src/styles/animation.css',
+				'./src/styles/css-conflict-fixes.css',
 			],
 			sidebar: [
 				{

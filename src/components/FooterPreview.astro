@@ -3,241 +3,61 @@ import BrowserWindow from './BrowserWindow.astro';
 ---
 
 <BrowserWindow url="http://voltrux.com/footer">
-  <footer class="site-footer">
+  <footer class="footer-v1">
+    <div class="footer-bg"></div>
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <div class="footer-brand">
-            <div class="logo-icon">
-              <span>VM</span>
-            </div>
-            <h3>Voltrux Motors</h3>
-          </div>
-
-          <p>Redefining Electric Luxury Trucks with cutting-edge technology and unmatched performance.</p>
-
-          <div class="social-links">
-            <a href="#">f</a>
-            <a href="#">t</a>
-            <a href="#">in</a>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2><span class="vol">VOLT</span><span class="trux">RUX</span></h2>
+          <p class="footer-tagline">Redefining Electric Luxury Trucks with cutting-edge technology and unmatched performance.</p>
+          <div class="social-icons">
+            <a href="#">FB</a>
+            <a href="#">TW</a>
+            <a href="#">IN</a>
           </div>
         </div>
-
-        <div class="footer-section">
+        <div class="footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/models">Models</a></li>
-            <li><a href="/technology">Technology</a></li>
-            <li><a href="/about">About</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Models</a></li>
+            <li><a href="#">Technology</a></li>
+            <li><a href="#">About</a></li>
           </ul>
         </div>
-
-        <div class="footer-section">
+        <div class="footer-links">
           <h4>Models</h4>
           <ul>
-            <li><a href="/models/v-8">Voltrux V-8</a></li>
-            <li><a href="/models/executive">Voltrux Executive</a></li>
-            <li><a href="/models/sport">Voltrux Sport</a></li>
-            <li><a href="/models/compare">Compare Models</a></li>
+            <li><a href="#">Voltrux V-8</a></li>
+            <li><a href="#">Voltrux Executive</a></li>
+            <li><a href="#">Voltrux Sport</a></li>
+            <li><a href="#">Compare Models</a></li>
           </ul>
         </div>
-
-        <div class="footer-section">
+        <div class="footer-links">
           <h4>Support</h4>
           <ul>
-            <li><a href="/contact">Contact</a></li>
-            <li><a href="/dealers">Find a Dealer</a></li>
-            <li><a href="/service">Service Centers</a></li>
-            <li><a href="/owners">Owner's Portal</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Find a Dealer</a></li>
+            <li><a href="#">Service Centers</a></li>
+            <li><a href="#">Owner's Portal</a></li>
           </ul>
         </div>
+        <div class="footer-newsletter">
+          <h4>Join the Revolution</h4>
+          <form class="footer-form" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="Enter your email" />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
       </div>
-
-      <div class="newsletter-section">
-        <h4>Join the Revolution</h4>
-        <p>50,000+ owners • No spam ever</p>
-        <form onsubmit="event.preventDefault()">
-          <input
-            type="email"
-            placeholder="Enter your email"
-          />
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-
       <div class="footer-bottom">
         <p>&copy; 2025 Voltrux Motors. All rights reserved.</p>
-
-        <div class="footer-links">
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms of Service</a>
+        <div class="legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
         </div>
       </div>
     </div>
   </footer>
 </BrowserWindow>
-<style>
-.site-footer {
-  background: var(--vxt-primary-color);
-  color: white;
-  padding: var(--vxt-spacing-xxl) 0 var(--vxt-spacing-lg);
-}
-.container {
-  max-width: var(--vxt-max-width);
-  margin: 0 auto;
-  padding: 0 var(--vxt-spacing-lg);
-}
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
-  margin-bottom: 40px;
-}
-.footer-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--vxt-spacing-lg);
-}
-.footer-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--vxt-spacing-sm);
-}
-.footer-brand .logo-icon {
-  width: 40px;
-  height: 40px;
-  background-color: var(--vxt-accent-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-}
-.footer-brand .logo-icon span {
-  color: white;
-  font-size: var(--vxt-font-size-sm);
-  font-weight: bold;
-}
-.footer-brand h3 {
-  margin: 0;
-  font-size: var(--vxt-font-size-lg);
-  font-weight: 700;
-}
-.footer-section p {
-  color: var(--vxt-text-muted);
-  margin: 0;
-  line-height: 1.6;
-}
-.social-links {
-  display: flex;
-  gap: var(--vxt-spacing-md);
-}
-.social-links a {
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  background-color: #333;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-.social-links a:hover {
-  background-color: var(--vxt-accent-color);
-}
-.footer-section h4 {
-  font-size: var(--vxt-font-size-md);
-  font-weight: 700;
-  margin: 0 0 var(--vxt-spacing-lg);
-  color: white;
-}
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--vxt-spacing-sm);
-}
-.footer-section ul a {
-  color: var(--vxt-text-muted);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-.footer-section ul a:hover {
-  color: var(--vxt-accent-color);
-}
-.newsletter-section {
-  background: #2a2a2a;
-  padding: 30px;
-  border-radius: 8px;
-  margin-bottom: 40px;
-  text-align: center;
-}
-.newsletter-section h4 {
-  font-size: var(--vxt-font-size-xl);
-  font-weight: 700;
-  margin: 0 0 var(--vxt-spacing-sm);
-  color: white;
-}
-.newsletter-section p {
-  color: var(--vxt-text-muted);
-  margin: 0 0 var(--vxt-spacing-lg);
-}
-.newsletter-section form {
-  display: flex;
-  gap: var(--vxt-spacing-sm);
-  max-width: 500px;
-  margin: 0 auto;
-}
-.newsletter-section input {
-  flex: 1;
-  padding: 12px 15px;
-  border: none;
-  border-radius: 4px;
-  font-size: var(--vxt-font-size-md);
-}
-.newsletter-section button {
-  background-color: var(--vxt-cta-bg);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0 var(--vxt-spacing-lg);
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.newsletter-section button:hover {
-  background-color: var(--vxt-cta-hover);
-}
-.footer-bottom {
-  border-top: 1px solid #333;
-  padding-top: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: var(--vxt-spacing-lg);
-}
-.footer-bottom p {
-  margin: 0;
-  color: var(--vxt-text-muted);
-  font-size: var(--vxt-font-size-sm);
-}
-.footer-links {
-  display: flex;
-  gap: var(--vxt-spacing-lg);
-}
-.footer-links a {
-  color: var(--vxt-text-muted);
-  text-decoration: none;
-  font-size: var(--vxt-font-size-sm);
-  transition: color 0.3s ease;
-}
-.footer-links a:hover {
-  color: var(--vxt-accent-color);
-}
-</style>
